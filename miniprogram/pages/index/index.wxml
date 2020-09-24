@@ -1,0 +1,3 @@
+<button bindtap="toGamePage">挑战饥饿24小时</button>
+<button>进入饥饿餐厅</button>
+<button>捐一餐</button>
