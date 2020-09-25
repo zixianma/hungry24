@@ -1,4 +1,4 @@
-// miniprogram/pages/index/index.js
+// pages/end/end.js
 Page({
 
   /**
@@ -62,11 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  toGamePage() {
-    wx.navigateTo({
-      url: '../challenge/challenge',
-    })
   }
 })

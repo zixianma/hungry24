@@ -1,3 +1,5 @@
-<button bindtap="toGamePage">挑战饥饿24小时</button>
-<button>进入饥饿餐厅</button>
-<button>捐一餐</button>
+<view style="width:100vw;text-align:center;">
+  <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">挑战饥饿24小时</button>
+  <button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
+  <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button>
+</view>
