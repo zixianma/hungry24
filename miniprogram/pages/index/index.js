@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    selectedTab: 0
   },
 
   /**
@@ -67,6 +67,13 @@ Page({
   toGamePage() {
     wx.navigateTo({
       url: '../challenge/challenge',
+    })
+  },
+
+  switchTab(e) {
+    const tabIndex = e.currentTarget.dataset.tabIndex
+    this.setData({
+      selectedTab: tabIndex
     })
   }
 })

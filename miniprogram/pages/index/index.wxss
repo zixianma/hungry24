@@ -2,3 +2,20 @@
 .index-button {
   width:67.2vw;
 }
+
+.navbar {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 2rem;
+}
+
+.navbar-tab {
+  width: 25vw;
+  text-align: center;
+}
+
+.navbar-icon {
+  font-size: 2rem;
+}

@@ -1,5 +1,37 @@
-<view style="width:100vw;text-align:center;">
-  <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">挑战饥饿24小时</button>
-  <button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
-  <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button>
-</view>
+<block wx:if="{{selectedTab == 0}}">
+  <view style="width:100vw;">
+    <view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;margin-top:5rem;">
+      <text class="cuIcon-info" style="font-size:10rem;"></text>
+      <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">挑战饥饿24小时</button>
+      <button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
+      <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button>
+    </view>
+  </view>
+</block>
+<block wx:if="{{selectedTab == 1}}">
+  <view>Page 2</view>
+</block>
+<block wx:if="{{selectedTab == 2}}">
+  <view>Page 3</view>
+</block>
+<block wx:if="{{selectedTab == 3}}">
+  <view>Page 4</view>
+</block>
+<view class="navbar">
+    <view class="navbar-tab" bindtap="switchTab" data-tab-index="0">
+      <text class="cuIcon-info navbar-icon"></text>
+      <view>介绍</view>
+    </view>
+    <view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
+      <text class="cuIcon-info navbar-icon"></text>
+      <view>游戏</view>
+    </view>
+    <view class="navbar-tab" bindtap="switchTab" data-tab-index="2">
+      <text class="cuIcon-info navbar-icon"></text>
+      <view>捐一餐</view>
+    </view>
+    <view class="navbar-tab" bindtap="switchTab" data-tab-index="3">
+      <text class="cuIcon-info navbar-icon"></text>
+      <view>排名</view>
+    </view>
+  </view>
