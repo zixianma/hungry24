@@ -1,12 +1,11 @@
-// miniprogram/pages/index/index.js
+// pages/donation/donation.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    selectedTab: 0,
-    isModalDisplayed: false
+
   },
 
   /**
@@ -63,44 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  toGamePage() {
-    wx.navigateTo({
-      url: '../challenge/challenge',
-    })
-  },
-
-  toIntroPage() {
-    wx.navigateTo({
-      url: '../intro/intro',
-    })
-  },
-
-  switchTab(e) {
-    const tabIndex = e.currentTarget.dataset.tabIndex
-    this.setData({
-      selectedTab: tabIndex
-    })
-  }, 
-
-  showModal() {
-    this.setData({
-      isModalDisplayed: true
-    })
-  },
-
-  hideModal() {
-    this.setData({
-      isModalDisplayed: false
-    })
-  },
-  
-  jumpTo() {
-    wx.navigateTo({
-      url: '../donation/donation',
-    })
   }
-
 })
-

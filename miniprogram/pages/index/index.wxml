@@ -1,37 +1,99 @@
 <block wx:if="{{selectedTab == 0}}">
   <view style="width:100vw;">
-    <view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;margin-top:5rem;">
-      <text class="cuIcon-info" style="font-size:10rem;"></text>
-      <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">挑战饥饿24小时</button>
+    <view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;margin-top:3rem;">
+      <!-- <text class="cuIcon-info" style="font-size:10rem;"></text> -->
+      <image src="../../assets/img/logo.png" style="width:10rem; height:10rem"></image>
+      <text style="text-size:1rem">
+        2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
+      </text>
+      <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toIntroPage">进入游戏</button>
       <button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
-      <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button>
+      <!-- <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button> -->
     </view>
   </view>
 </block>
 <block wx:if="{{selectedTab == 1}}">
-  <view>Page 2</view>
+  <view
+    style="width:100vw; height:100vh; background-image: url('https://image.freepik.com/free-vector/brown-soil-texture-background_1308-20483.jpg');">
+    <view style="width:90vw;margin-left:auto;margin-right:auto;">
+      <!-- <switch class="sm margin-right-sm" bindchange="SetActive"></switch> -->
+      <view class="flex solid-bottom padding justify-between">
+        <text class="cuIcon-back navbar-icon" bindtap="switchTab" data-tab-index="0"></text>
+        <text class="cuIcon-info navbar-icon" bindtap="showModal"></text>
+
+      </view>
+
+      <view class="padding">
+        <text style="text-size:1rem; color:white">
+          剩余时间：
+        </text>
+        <view class="cu-progress round sm striped">
+          <view class="bg-blue" style="width:60vw;">80%</view>
+        </view>
+      </view>
+      <view class="padding">
+        <text style="text-size:1rem; color:white">
+          剩余能量：
+        </text>
+        <view class="cu-progress round sm striped">
+          <view class="bg-green" style="width:60vw;">60%</view>
+        </view>
+      </view>
+      <view class="padding">
+        <text style="text-size:1rem;color:white">
+          剩余铲子：
+        </text>
+        <!-- <image src="../../assets/img/shovel.jpg"></image>
+      <image src="../../assets/img/shovel.jpg"></image>
+      <image src="../../assets/img/shovel.jpg"></image> -->
+        <text class="cuIcon-info navbar-icon"></text>
+        <text class="cuIcon-info navbar-icon"></text>
+        <text class="cuIcon-info navbar-icon"></text>
+      </view>
+      <view class="padding" style="text-align:center">
+        <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">定点收割</button>
+      </view>
+    </view>
+  </view>
+  <view class="cu-modal {{isModalDisplayed?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">Modal标题</view>
+        <view class="action" bindtap="hideModal">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">
+        Modal 内容。
+      </view>
+    </view>
+  </view>
 </block>
 <block wx:if="{{selectedTab == 2}}">
-  <view>Page 3</view>
+  <view class="container">
+    <web-view
+      src="http://www.cfpa.org.cn">
+    </web-view>
+  </view>
 </block>
 <block wx:if="{{selectedTab == 3}}">
   <view>Page 4</view>
 </block>
 <view class="navbar">
-    <view class="navbar-tab" bindtap="switchTab" data-tab-index="0">
-      <text class="cuIcon-info navbar-icon"></text>
-      <view>介绍</view>
-    </view>
-    <view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
-      <text class="cuIcon-info navbar-icon"></text>
-      <view>游戏</view>
-    </view>
-    <view class="navbar-tab" bindtap="switchTab" data-tab-index="2">
-      <text class="cuIcon-info navbar-icon"></text>
-      <view>捐一餐</view>
-    </view>
-    <view class="navbar-tab" bindtap="switchTab" data-tab-index="3">
-      <text class="cuIcon-info navbar-icon"></text>
-      <view>排名</view>
-    </view>
+  <view class="navbar-tab" bindtap="switchTab" data-tab-index="0">
+    <text class="cuIcon-home navbar-icon"></text>
+    <view>主页</view>
   </view>
+  <view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
+    <text class="cuIcon-cardboard navbar-icon"></text>
+    <view>游戏</view>
+  </view>
+  <view class="navbar-tab" bindtap="jumpTo" data-tab-index="2">
+    <text class="cuIcon-present navbar-icon"></text>
+    <view>捐一餐</view>
+  </view>
+  <view class="navbar-tab" bindtap="switchTab" data-tab-index="3">
+    <text class="cuIcon-rank navbar-icon"></text>
+    <view>排名</view>
+  </view>
+</view>

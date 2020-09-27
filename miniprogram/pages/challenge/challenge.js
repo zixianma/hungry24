@@ -1,11 +1,11 @@
-// miniprogram/pages/game/game.js
+// miniprogram/pages/index/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    selectedTab: 0
   },
 
   /**
@@ -62,5 +62,18 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  toGamePage() {
+    wx.navigateTo({
+      url: '../challenge/challenge',
+    })
+  },
+
+  toFarmPage() {
+    wx.navigateTo({
+      url: '../farm/farm',
+    })
   }
+    
 })

@@ -1,2 +1,22 @@
-<!--miniprogram/pages/game/game.wxml-->
-<text>miniprogram/pages/game/game.wxml</text>
+<!--miniprogram/pages/challenge/challenge.wxml-->
+<view style="width:100vw;">
+  <view class="" style="margin-top: 80px">
+    <button class="cu-btn round bg-white" bindtap="toGamePage">饥饿时间</button> <button class="cu-btn round bg-yellow" bindtap="toGamePage">剩余能量</button>
+
+    <view class="padding">
+    <view class="cu-progress round sm striped" style="margin-lg">
+    <view class="bg-green" style="width:65vw;">60%</view>
+  </view>
+  </view>
+</view>
+
+    <view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;margin-top:3rem;">
+      <!-- <switch class="sm margin-right-sm" bindchange="SetActive"></switch> -->
+      <!-- <button class="cu-btn round bg-yellow margin-sm" bindtap="toGamePage">饥饿时间</button> <button class="cu-btn round bg-yellow margin-sm" bindtap="toGamePage">剩余能量</button> -->
+      
+      <text style="text-size:2rem">
+        此时此刻，你在陪伴着全世界xxx位儿童一起“体验”饥饿。你愿意接受饥饿24游戏挑战吗？
+      </text>
+      <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toFarmPage">进入游戏</button>
+    </view>
+  </view>

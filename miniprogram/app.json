@@ -4,7 +4,8 @@
     "pages/challenge/challenge",
     "pages/farm/farm",
     "pages/share/share",
-    "pages/end/end"
+    "pages/end/end",
+    "pages/donation/donation"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
