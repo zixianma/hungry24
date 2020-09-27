@@ -19,3 +19,28 @@
 .navbar-icon {
   font-size: 2rem;
 }
+
+.button-vertical {
+  border: none;
+  border-color: transparent;
+  margin-bottom: 30%;
+  background-color: orange;
+  color: whitesmoke;
+  width: 90%;
+  bottom: 0%;
+  position: fixed;
+  left: 0%
+}
+
+.button-horizontal {
+  border: none;
+  border-color: transparent;
+  display: block;
+  margin-bottom: 30%;
+  background-color: orange;
+  color: whitesmoke;
+  width: 90%;
+  bottom: 0%;
+  position: fixed;
+  right: 0%
+}
