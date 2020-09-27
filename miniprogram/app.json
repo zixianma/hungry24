@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/challenge/challenge",
+    "pages/game/game",
     "pages/farm/farm",
     "pages/share/share",
     "pages/end/end",

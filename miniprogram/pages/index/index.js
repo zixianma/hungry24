@@ -20,7 +20,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.run()
   },
 
   /**
@@ -135,11 +135,11 @@ Page({
         }
   
         cxt.clearRect(0,0,500,700)
-        cxt.setFillStyle('brown')
+        cxt.setFillStyle('orange')
   
         // draw 2 lines
         goUp ? cxt.fillRect(rectX_vertical,rectY_vertical--,414,3) : cxt.fillRect(rectX_vertical,rectY_vertical++,414,3)
-        cxt.setFillStyle('blue')
+        cxt.setFillStyle('orange')
         goRight ? cxt.fillRect(rectX_horizontal--,rectY_horizontal,3,414) : cxt.fillRect(rectX_horizontal++,rectY_horizontal,3,414)
         
         // draw 3 points
@@ -157,7 +157,7 @@ Page({
     const isStopped = this.data.isStopped
     this.setData({
       isStopped: !isStopped,
-      gameStatus: isStopped ? "Pause" : "Resume"
+      gameStatus: isStopped ? "停止" : "继续"
     })
   }
 
