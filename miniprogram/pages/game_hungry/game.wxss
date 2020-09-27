@@ -1,0 +1,38 @@
+/* miniprogram/pages/game/game.wxss */
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.game-interface {
+  
+}
+
+.button-vertical {
+  border: none;
+  border-color: transparent;
+  margin-bottom: 30%;
+  background-color: orange;
+  color: whitesmoke;
+  width: 90%;
+  bottom: 0%;
+  position: fixed;
+  left: 0%
+}
+
+.button-horizontal {
+  border: none;
+  border-color: transparent;
+  display: block;
+  margin-bottom: 30%;
+  background-color: orange;
+  color: whitesmoke;
+  width: 90%;
+  bottom: 0%;
+  position: fixed;
+  right: 0%
+}
