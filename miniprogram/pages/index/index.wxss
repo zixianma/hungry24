@@ -53,8 +53,9 @@
   right: 0%
 }
 
-.width-80 {
-  width: 80vw;
+.width-90-inline {
+  width: 90vw;
+  display:flex;
 }
 
 .horizontal-center {

@@ -138,7 +138,7 @@ Page({
 
     setInterval(function () {
       if (that.data.selectedTab == 1 && !that.data.isStopped) {
-        if (rectY_vertical == 414) {
+        if (rectY_vertical == 380) {
           goUp = true
         } else if (rectY_vertical == 0) {
           goUp = false

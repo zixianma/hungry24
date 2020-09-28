@@ -1,76 +1,83 @@
 <block wx:if="{{selectedTab == 0}}">
-	<view style="width:100vw;">
-		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;margin-top:3rem;">
+	<view style="width:100vw; height:100vh; background-color:#fdfef2">
+		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
 			<!-- <text class="cuIcon-info" style="font-size:10rem;"></text> -->
 			<image src="https://tx-static-2.kevincdn.cn/images/logo.png" style="width:10rem; height:10rem"></image>
 			<text style="text-size:1rem">
-        2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
-      </text>
+				2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
+			</text>
 			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="switchTab" data-tab-index="1">进入游戏</button>
+			<button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
+			<!-- <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button> -->
 		</view>
 	</view>
 </block>
 <block wx:if="{{selectedTab == 1}}">
-<view style="width:100vw;height:100vh;background-image:url('https://tx-static-2.kevincdn.cn/images/game-backgournd.png')">
-<!-- <view> -->
-				
-			<!-- </view> -->
-	
+	<view
+		style="width:100vw; height:100vh; background-image: url('https://image.freepik.com/free-vector/brown-soil-texture-background_1308-20483.jpg')">
+		<!-- <view> -->
+
+		<!-- </view> -->
+
 		<view style="width:90vw;margin-left:auto;margin-right:auto;">
-			<!-- <switch class="sm margin-right-sm" bindchange="SetActive"></switch> -->
+
 			<view class="flex solid-bottom justify-between padding-top-sm">
 				<text class="cuIcon-back navbar-icon" style="color:white" bindtap="switchTab" data-tab-index="0"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white"  bindtap="showModal"></text>
+				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="showModal"></text>
 
 			</view>
 
-			<view class="width-80 horizontal-center" style="margin-top:0;">
-				<text style="text-size:1rem; color:white">
-          剩余时间：
-        </text>
-				<view class="cu-progress round sm striped">
-					<view class="bg-blue" style="width:{{remainPercentage}}%;">{{remainPercentage}}%</view>
+			<view class="width-90-inline horizontal-center" style="margin-top:0">
+				<text style="width:30vw; text-size:1rem; color:white">
+					剩余时间：
+				</text>
+				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
+					<view class="bg-green" style="width:{{remainPercentage}}%;">{{remainPercentage}}</view>
 				</view>
 			</view>
-			<view class="width-80 horizontal-center">
-				<text style="text-size:1rem; color:white">
-          剩余能量：
-        </text>
-				<view class="cu-progress round sm striped">
-					<view class="bg-green" style="width:{{remainPercentage}}%;">{{remainPercentage}}%</view>
+			<view class="width-90-inline horizontal-center">
+				<text style="width:30vw; text-size:1rem; color:white">
+					剩余能量：
+				</text>
+				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
+					<view class="bg-green" style="width:{{remainPercentage}}%;">{{remainPercentage}}</view>
 				</view>
 			</view>
-			<view class="width-80 horizontal-center">
+			<view class="width-90-inline horizontal-center">
 				<text style="text-size:1rem;color:white">
-          剩余铲子：
-        </text>
-				<!-- <image src="../../assets/img/shovel.jpg"></image>
-      <image src="../../assets/img/shovel.jpg"></image>
-      <image src="../../assets/img/shovel.jpg"></image> -->
-				<text class="cuIcon-info navbar-icon" style="color:white"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white"></text>
+					剩余铲子：
+				</text>
+				<view style="margin-top:20rpx">
+					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+				</view>
 			</view>
 
-			<canvas class="width-80 horizontal-center" style="height:40vh;" canvas-id="game"></canvas>
-			<view class="padding" style="text-align:center">
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="gameControl" >{{gameStatus}}</button>
-</view>
-			<!-- <view class="padding" style="text-align:center">
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toGamePage">定点收割</button>
-			</view> -->
+		
 		</view>
+		<canvas style="width:100vw;height:50vh;" canvas-id="game"></canvas>
+			<view class="padding" style="text-align:center">
+				<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
+					bindtap="gameControl">{{gameStatus}}</button>
+			</view>
 	</view>
 	<view class="cu-modal {{isModalDisplayed?'show':''}}">
 		<view class="cu-dialog">
 			<view class="cu-bar bg-white justify-end">
-				<view class="content">Modal标题</view>
+				<view class="content">游戏规则</view>
 				<view class="action" bindtap="hideModal">
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
 			<view class="padding-xl">
-				Modal 内容。
+				1.你的能量随着时间迁移而消耗，每1小时减少1份能量哦。
+				2.每收割一种作物，你会获取相应的能量。
+				3.每次作物收割完，土地上会长出新的作物。
+				4. 每次作物更新后，你的定点坐标线移动速度加快。
+				5. 铲子用尽时，你可以通过邀请一位好友增加一把铲子。
+				6. 24小时过去后，若你的能量大于0，挑战成功；若等于0，挑战失败。
+				开始挑战吧！
 			</view>
 		</view>
 	</view>
@@ -85,20 +92,20 @@
 	<view>Page 4</view>
 </block>
 <view class="navbar">
-	<view class="navbar-tab {{selectedTab == 1 ? 'dark' : 'light'}}" bindtap="switchTab" data-tab-index="0">
-		<text class="cuIcon-home navbar-icon"></text>
-		<view class="navbar-text">主页</view>
+	<view class="navbar-tab" bindtap="switchTab" data-tab-index="0">
+		<text class="cuIcon-home navbar-icon" style="color:orange;"></text>
+		<view style="color:orange">主页</view>
 	</view>
-	<view class="navbar-tab {{selectedTab == 1 ? 'dark' : 'light'}}" bindtap="switchTab" data-tab-index="1">
-		<text class="cuIcon-cardboard navbar-icon"></text>
-		<view class="navbar-text">游戏</view>
+	<view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
+		<text class="cuIcon-cardboard navbar-icon" style="color:orange"></text>
+		<view style="color:orange">游戏</view>
 	</view>
-	<view class="navbar-tab {{selectedTab == 1 ? 'dark' : 'light'}}" bindtap="jumpTo" data-tab-index="2">
-		<text class="cuIcon-present navbar-icon"></text>
-		<view class="navbar-text">捐一餐</view>
+	<view class="navbar-tab" bindtap="jumpTo" data-tab-index="2">
+		<text class="cuIcon-present navbar-icon" style="color:orange"></text>
+		<view style="color:orange">捐一餐</view>
 	</view>
-	<view class="navbar-tab {{selectedTab == 1 ? 'dark' : 'light'}}" bindtap="switchTab" data-tab-index="3">
-		<text class="cuIcon-rank navbar-icon"></text>
-		<view class="navbar-text">排名</view>
+	<view class="navbar-tab" bindtap="switchTab" data-tab-index="3">
+		<text class="cuIcon-rank navbar-icon" style="color:orange"></text>
+		<view style="color:orange">排名</view>
 	</view>
 </view>
