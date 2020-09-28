@@ -6,14 +6,26 @@ Page({
    */
   data: {
     selectedTab: 0,
-    isModalDisplayed: false
+    isModalDisplayed: false,
+    gameStatus: "暂停"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    let timer = setInterval(function () {
+      let startTime = Date.parse(new Date("2020-9-28 0:00"))
+      let now = Date.parse(new Date())
+      let remainPercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+      that.setData({
+        remainPercentage
+      })
+    }, 1000);
+    this.setData({
+      timer
+    })
   },
 
   /**
@@ -82,7 +94,7 @@ Page({
     this.setData({
       selectedTab: tabIndex
     })
-  }, 
+  },
 
   showModal() {
     this.setData({
@@ -95,7 +107,7 @@ Page({
       isModalDisplayed: false
     })
   },
-  
+
   jumpTo() {
     wx.navigateTo({
       url: '../donation/donation',
@@ -107,7 +119,7 @@ Page({
   move_vertical(x, y) {
     cxt_horizontal_line.fillRect(x, y, 414, 3)
   },
-  run: function(){
+  run: function () {
     var that = this
     var cxt = wx.createCanvasContext('game')
     let rectX_horizontal = 0
@@ -118,35 +130,33 @@ Page({
     let goRight = false
     // todo add time different 
 
-    setInterval(function() {
-      if (!that.data.isStopped) {
-        if(rectY_vertical == 414) {
+    setInterval(function () {
+      if (that.data.selectedTab == 1 && !that.data.isStopped) {
+        if (rectY_vertical == 414) {
           goUp = true
-        }
-        else if(rectY_vertical == 0) {
+        } else if (rectY_vertical == 0) {
           goUp = false
         }
-    
-        if(rectX_horizontal == 380) {
+
+        if (rectX_horizontal == 380) {
           goRight = true
-        }
-        else if(rectX_horizontal == 0) {
+        } else if (rectX_horizontal == 0) {
           goRight = false
         }
-  
-        cxt.clearRect(0,0,500,700)
+
+        cxt.clearRect(0, 0, 500, 700)
         cxt.setFillStyle('orange')
-  
+
         // draw 2 lines
-        goUp ? cxt.fillRect(rectX_vertical,rectY_vertical--,414,3) : cxt.fillRect(rectX_vertical,rectY_vertical++,414,3)
+        goUp ? cxt.fillRect(rectX_vertical, rectY_vertical--, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical++, 414, 3)
         cxt.setFillStyle('orange')
-        goRight ? cxt.fillRect(rectX_horizontal--,rectY_horizontal,3,414) : cxt.fillRect(rectX_horizontal++,rectY_horizontal,3,414)
-        
+        goRight ? cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414)
+
         // draw 3 points
-        cxt.fillRect(300,70, 10,10)
-        cxt.fillRect(250,300,10,10)
-        cxt.fillRect(126,152,10,10)
-  
+        cxt.fillRect(300, 70, 10, 10)
+        cxt.fillRect(250, 300, 10, 10)
+        cxt.fillRect(126, 152, 10, 10)
+
         cxt.draw()
       }
     })
@@ -162,5 +172,3 @@ Page({
   }
 
 })
-
-
