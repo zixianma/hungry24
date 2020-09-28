@@ -1,4 +1,5 @@
-// miniprogram/pages/index/index.js
+const app = getApp()
+
 Page({
 
   /**
@@ -15,8 +16,14 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+
+    const userInfo = app.globalData.userInfo
+    this.setData({
+      userInfo
+    })
+
     let timer = setInterval(function () {
-      let startTime = Date.parse(new Date("2020-9-28 0:00"))
+      let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
       let now = Date.parse(new Date())
       let remainPercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
       that.setData({
@@ -77,23 +84,22 @@ Page({
 
   },
 
-  toGamePage() {
-    wx.navigateTo({
-      url: '../challenge/challenge',
-    })
-  },
-
-  // toIntroPage() {
-  //   wx.navigateTo({
-  //     url: '../intro/intro',
-  //   })
-  // },
-
   switchTab(e) {
     const tabIndex = e.currentTarget.dataset.tabIndex
     this.setData({
       selectedTab: tabIndex
     })
+
+    if (!this.data.userInfo.challengeStartedAt && tabIndex == 1) {
+      wx.cloud.callFunction({
+        name: 'startChallenge',
+        data: {},
+        success: function (res) {
+          console.log({startChallenge: res.result})
+        },
+        fail: console.error
+      })
+    }
   },
 
   showModal() {
