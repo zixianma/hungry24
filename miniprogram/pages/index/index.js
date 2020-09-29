@@ -12,51 +12,52 @@ Page({
     remainingShovelNumber: 5,
     isShareModalDisplayed: false,
     cropsData: [{
-        'name': '土豆',
-        'val': '1'
-      },
-      {
-        'name': '番薯',
-        'val': '1'
-      },
-      {
-        'name': '木薯',
-        'val': '1'
-      },
-      {
-        'name': '小麦',
-        'val': '2'
-      },
-      {
-        'name': '稻米',
-        'val': '2'
-      },
-      {
-        'name': '大豆',
-        'val': '2'
-      },
-      {
-        'name': '玉米',
-        'val': 3
-      },
-      {
-        'name': '高粱',
-        'val': 3
-      },
-      {
-        'name': '鹰嘴豆',
-        'val': 4
-      },
-      {
-        'name': '苔麸',
-        'val': 5
-      }
+      'name': '土豆',
+      'val': '1'
+    },
+    {
+      'name': '番薯',
+      'val': '1'
+    },
+    {
+      'name': '木薯',
+      'val': '1'
+    },
+    {
+      'name': '小麦',
+      'val': '2'
+    },
+    {
+      'name': '稻米',
+      'val': '2'
+    },
+    {
+      'name': '大豆',
+      'val': '2'
+    },
+    {
+      'name': '玉米',
+      'val': 3
+    },
+    {
+      'name': '高粱',
+      'val': 3
+    },
+    {
+      'name': '鹰嘴豆',
+      'val': 4
+    },
+    {
+      'name': '苔麸',
+      'val': 5
+    }
     ],
 
     crops: [['potato', 'sweet_potato', 'cassava'],
-      ['soybean', 'wheat', 'rice'],
-      ['corn', 'sorghum', 'chickpea', 'teff']] ,
+    ['soybean', 'wheat', 'rice'],
+    ['corn', 'sorghum', 'chickpea', 'teff']],
     currentLevel: 0,
+    currentNumberOfCrops: 3,
     position: [],
     usedCrops: [[0, 0, 0],
     [0, 0, 0],
@@ -147,11 +148,11 @@ Page({
   onShow: function () {
     wx.showShareMenu({
 
-      withShareTicket:true,
-      
-      menus:['shareAppMessage','shareTimeline']
-      
-      })
+      withShareTicket: true,
+
+      menus: ['shareAppMessage', 'shareTimeline']
+
+    })
   },
 
   /**
@@ -191,7 +192,7 @@ Page({
     }
   },
 
- 
+
   switchTab(e) {
     const tabIndex = e.currentTarget.dataset.tabIndex
     this.setData({
@@ -230,11 +231,6 @@ Page({
     })
   },
   drawPlant(cxt) {
-    //randomly generate points if no plant exist
-    // if(exist_plant_number == 0) {
-    // this.setData({
-    //   currentLevel: currentLevel + 1
-    // })
     var currentLevel = this.data.currentLevel
     var currentCrops = this.data.crops[currentLevel]
     var numberOfCrops = currentCrops.length
@@ -247,11 +243,10 @@ Page({
     // }
   },
   line_move: function () {
+    // if (this.data.gameSetting.shovel > 0) {
     var that = this
-
     const screenHeight = app.globalData.screenHeight
     const screenWidth = app.globalData.screenWidth
-
     var cxt = wx.createCanvasContext('game')
     let rectX_horizontal = 0
     const rectY_horizontal = 0
@@ -261,60 +256,71 @@ Page({
     let goRight = false
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
-    let wewanttochange = true
+    let Change_state = true  //for just performing else state once
+
     // todo add time different 
     setInterval(function () {
-      crossPoint_x = rectX_horizontal
-      crossPoint_y = rectY_vertical
-      if (that.data.selectedTab == 1 && !that.data.isStopped) {
-        wewanttochange = true
-        if (rectY_vertical == Math.floor(0.47 * screenHeight)) {
-          goUp = true
-        } else if (rectY_vertical == 0) {
-          goUp = false
-        }
+      if (that.data.gameSetting.shovel > 0) {
+        crossPoint_x = rectX_horizontal
+        crossPoint_y = rectY_vertical
+        if (that.data.selectedTab == 1 && !that.data.isStopped) {
+          Change_state = true
+          if (rectY_vertical >= Math.floor(0.47 * screenHeight)) {
+            goUp = true
+          } else if (rectY_vertical == 0) {
+            goUp = false
+          }
 
-        if (rectX_horizontal == screenWidth) {
-          goRight = true
-        } else if (rectX_horizontal == 0) {
-          goRight = false
+          if (rectX_horizontal >= screenWidth) {
+            goRight = false
+          } else if (rectX_horizontal == 0) {
+            goRight = true
+          }
+          cxt.clearRect(0, 0, 500, 700)
+          cxt.setFillStyle('orange')
+          // draw 3 points
+          that.drawPlant(cxt)
+          // draw 2 line 
+          goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= 1.5, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += 1.5, 414, 3)
+          cxt.setFillStyle('orange')
+          goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
+          cxt.draw()
         }
-        cxt.clearRect(0, 0, 500, 700)
-        cxt.setFillStyle('orange')
-        // draw 3 points
-        that.drawPlant(cxt)
-        // draw 2 line 
-        goUp ? cxt.fillRect(rectX_vertical, rectY_vertical--, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical++, 414, 3)
-        cxt.setFillStyle('orange')
-        goRight ? cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414)
-        cxt.draw()
-      }
-      else if (that.data.selectedTab == 1 && that.data.isStopped) {
-        // cxt.globalAlpha = 0.3
-        // cxt.setFillStyle('orange')
-        // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
-        // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
-        that.drawPlant(cxt)
-        // cxt.globalAlpha = 1
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
-        cxt.draw()
-        // that.imageShake(cxt, crossPoint_x - 50, crossPoint_y - 50, 100, 100)
-        //Calculating the distance and update canvas
-        if (wewanttochange == true) {
-          that.renewDrawPlant(crossPoint_x, crossPoint_y)
+        else if (that.data.selectedTab == 1 && that.data.isStopped) {
+          // cxt.globalAlpha = 0.3
+          // cxt.setFillStyle('orange')
+          // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
+          // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
+          that.drawPlant(cxt)
+          // cxt.globalAlpha = 1
+          cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+          cxt.draw()
+          // that.imageShake(cxt, crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+          //Calculating the distance and update canvas
+          if (Change_state) {
+            that.renewDrawPlant(crossPoint_x, crossPoint_y)
+            let gameSetting = that.data.gameSetting
+            gameSetting.shovel--
+            that.setData({
+              gameSetting
+            })
+          }
+          Change_state = false
         }
-        wewanttochange = false
       }
-
+      else {
+        // console.log('No shovel')
+      }
     })
+    // }
   },
   renewDrawPlant(crossPoint_x, crossPoint_y) {
     const screenWidth = app.globalData.screenWidth
-    let min_distance = screenWidth / 3
+    let min_distance = screenWidth / 4
     let min_distance_index = 5
     for (let i = 0; i < this.data.crops[this.data.currentLevel].length; i++) {
-      //TODO dismiss detected
-      if (this.data.usedCrops[this.data.currentLevel][i] == 1){
+      //detected counted
+      if (this.data.usedCrops[this.data.currentLevel][i] == 1) {
         continue
       }
       let x_dis = Math.abs(this.data.position[this.data.currentLevel][i][0] - crossPoint_x)
@@ -327,22 +333,22 @@ Page({
     }
 
     //if in the range
-    if (min_distance <  screenWidth / 3) {
+    if (min_distance < screenWidth / 4) {
       this.data.usedCrops[this.data.currentLevel][min_distance_index] = 1
       this.data.currentNumberOfCrops = this.data.currentNumberOfCrops - 1
-      console.log(this.data.currentNumberOfCrops)
-    // this.setData({
-    //   usedCrops: usedCrops,
-    //   currentNumberOfCrops: currentNumberOfCrops - 1
+      this.setData({
+        usedCrops,
+        currentNumberOfCrops,
+      })
     }
 
     if (this.data.currentNumberOfCrops == 0 && this.data.currentLevel < 2) {
       this.data.currentLevel++
       this.data.currentNumberOfCrops = this.data.usedCrops[this.data.currentLevel].length
-      // this.setData({
-      //   currentLevel: currentLevel + 1,
-      //   currentNumberOfCrops: this.data.usedCrops[this.data.currentLevel].length
-      // })
+      this.setData({
+        currentLevel,
+        currentNumberOfCrops
+      })
     }
   },
   imageShake(cxt, crossPoint_x, crossPoint_y, width, height) {
@@ -361,16 +367,16 @@ Page({
       cxt.draw()
     })
   },
-  
+
   gameControl(e) {
     const isStopped = this.data.isStopped
     this.setData({
       isStopped: !isStopped,
       gameStatus: isStopped ? "停止" : "继续"
     })
-  }, 
+  },
 
-  goToRestaurant () {
+  goToRestaurant() {
     wx.navigateTo({
       url: '../restaurant/restaurant',
     })
