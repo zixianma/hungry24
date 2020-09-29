@@ -83,19 +83,18 @@ Page({
       userInfo
     })
 
-    let initialEnergy = 0
     const {
-      result: energyResult
+      result: gameSetting
     } = await wx.cloud.callFunction({
-      name: 'getEnergy',
+      name: 'getGameSetting',
       data: {}
     })
     console.log({
-      energyResult
+      gameSetting
     })
-    if (energyResult.length > 0) {
-      initialEnergy = energyResult[0].sum
-    }
+    this.setData({
+      gameSetting
+    })
 
     let timer = setInterval(function () {
       let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
@@ -103,7 +102,7 @@ Page({
       // remaining time
       let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
       // remain energy
-      let remainingEnergy = initialEnergy - ((now - startTime) / (3600 * 1000))
+      let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
       let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
       // set data
       that.setData({

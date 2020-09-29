@@ -49,7 +49,7 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{remainingShovelNumber}}" src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image wx:for="{{gameSetting.shovel}}" src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
 		</view>
