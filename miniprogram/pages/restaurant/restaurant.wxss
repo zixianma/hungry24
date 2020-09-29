@@ -1,7 +1,4 @@
-/* pages/donation/donation.wxss */
-.bg-white-yellow {
-  background-color: #faf8e4;
-}
+/* miniprogram/pages/restaurant.wxss */
 .white-yellow {
   color: #faf8e4;
 }

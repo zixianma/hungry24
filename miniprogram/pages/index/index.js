@@ -101,7 +101,9 @@ Page({
 
     // get the source of the user
     const fromUser = options.from_user
-    console.log({ fromUser })
+    console.log({
+      fromUser
+    })
     if (fromUser) {
       wx.cloud.callFunction({
         name: 'addShareRecord',
@@ -136,7 +138,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
@@ -229,24 +231,8 @@ Page({
   },
 
   toDonate() {
-    wx.cloud.callFunction({
-      name: 'unifiedOrder',
-      data: {
-        totalFee: 0.01
-      },
-      success: res => {
-        const payment = res.result.payment
-        wx.requestPayment({
-          ...payment,
-          success (res) {
-            console.log('pay success', res)
-          },
-          fail (res) {
-            console.error('pay fail', err)
-          }
-        })
-      },
-      fail: console.error,
+    wx.navigateTo({
+      url: '../donation/donation',
     })
   },
 
@@ -314,7 +300,7 @@ Page({
 
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
-    let changeState = true  //for just performing else statement once
+    let changeState = true //for just performing else statement once
 
     const lineMoveTimer = setInterval(function () {
       let gameSetting = that.data.gameSetting
@@ -344,8 +330,7 @@ Page({
           cxt.setFillStyle('orange')
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
           cxt.draw()
-        }
-        else {
+        } else {
           that.drawPlant(cxt)
           // cxt.globalAlpha = 1
           cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
@@ -361,15 +346,14 @@ Page({
               that.setData({
                 freeTrial
               })
-            }
-            else {
+            } else {
               let gameSetting = that.data.gameSetting
               gameSetting.shovel--
               that.setData({
                 gameSetting
               })
             }
-            
+
           }
           changeState = false
         }
@@ -504,6 +488,12 @@ Page({
   stopGame() {
     this.setData({
       modalName: "exit"
+    })
+  },
+
+  toRestaurant() {
+    wx.navigateTo({
+      url: '../restaurant/restaurant',
     })
   },
 
