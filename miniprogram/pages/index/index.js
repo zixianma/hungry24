@@ -213,15 +213,21 @@ Page({
     }
   },
 
-  showModal() {
+  showRuleodal() {
     this.setData({
       isRuleModalDisplayed: true
     })
   },
 
-  hideModal() {
+  hideRuleModal() {
     this.setData({
       isRuleModalDisplayed: false
+    })
+  },
+
+  hideShareModal() {
+    this.setData({
+      isShareModalDisplayed: false
     })
   },
 
@@ -333,14 +339,27 @@ Page({
     }
 
     //if in the range
+    let collectSuccess = false 
     if (min_distance < screenWidth / 4) {
       this.data.usedCrops[this.data.currentLevel][min_distance_index] = 1
       this.data.currentNumberOfCrops = this.data.currentNumberOfCrops - 1
+      collectSuccess = true
       this.setData({
         usedCrops,
-        currentNumberOfCrops,
+        currentNumberOfCrops
       })
+    } else {
+      collectSuccess = false
     }
+    console.log(collectSucces)
+    let isShareModalDisplayed = true
+    this.setData({
+      isShareModalDisplayed,
+      collectSuccess
+    })
+    // setTimeout(function() {
+      
+    // }, 1000)
 
     if (this.data.currentNumberOfCrops == 0 && this.data.currentLevel < 2) {
       this.data.currentLevel++
@@ -376,9 +395,20 @@ Page({
     })
   },
 
-  goToRestaurant() {
-    wx.navigateTo({
-      url: '../restaurant/restaurant',
+  // goToRestaurant() {
+  //   wx.navigateTo({
+  //     url: '../restaurant/restaurant',
+  //   })
+  // },
+
+  shareGame () {
+    const wxGetImageInfo = promisify(wx.getImageInfo)
+    wxGetImageInfo({
+        src: 'http://some-domain/bg.png'
+    }).then(res => {
+        const ctx = wx.createCanvasContext('shareCanvas')
+        ctx.drawImage(res.path, 0, 0, 600, 900)
+        ctx.draw()
     })
-  }
+    }
 })

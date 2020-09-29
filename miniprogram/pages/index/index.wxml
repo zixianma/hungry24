@@ -23,7 +23,7 @@
 
 			<view class="flex solid-bottom justify-between padding-top-sm">
 				<text class="cuIcon-back navbar-icon" style="color:white" bindtap="switchTab" data-tab-index="0"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="showModal"></text>
+				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="showRuleModal"></text>
 				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="shareGame"></text>
 
 			</view>
@@ -63,7 +63,7 @@
 		<view class="cu-dialog">
 			<view class="cu-bar bg-white justify-end">
 				<view class="content">游戏规则</view>
-				<view class="action" bindtap="hideModal">
+				<view class="action" bindtap="hideRuleModal">
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
@@ -82,7 +82,7 @@
   <view class="cu-dialog">
    <view class="cu-bar bg-white justify-end">
     <view class="content"></view>
-    <view class="action">
+    <view class="action" bindtap="hideShareModal">
      <text class="cuIcon-close text-red"></text>
     </view>
    </view>
