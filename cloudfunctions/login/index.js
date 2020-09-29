@@ -15,7 +15,9 @@ exports.main = async (event, context) => {
   var operationResult = {
     openId
   }
-  const {data: openIdResult} = await collection.where({
+  const {
+    data: openIdResult
+  } = await collection.where({
     openId
   }).get()
   if (openIdResult.length > 0) {
