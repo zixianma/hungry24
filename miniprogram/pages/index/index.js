@@ -66,6 +66,8 @@ Page({
   async onLoad(options) {
     var that = this
 
+    console.log(options.from_user)
+
     const {
       result: loginResult
     } = await wx.cloud.callFunction({
@@ -144,7 +146,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showShareMenu({
 
+      withShareTicket:true,
+      
+      menus:['shareAppMessage','shareTimeline']
+      
+      })
   },
 
   /**
@@ -179,9 +187,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      path: '/pages/index/index?from_user=sunnie'
+    }
   },
 
+ 
   switchTab(e) {
     const tabIndex = e.currentTarget.dataset.tabIndex
     this.setData({
@@ -282,6 +293,12 @@ Page({
     this.setData({
       isStopped: !isStopped,
       gameStatus: isStopped ? "停止" : "继续"
+    })
+  }, 
+
+  goToRestaurant () {
+    wx.navigateTo({
+      url: '../restaurant/restaurant',
     })
   }
 })

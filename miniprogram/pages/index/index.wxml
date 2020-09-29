@@ -7,7 +7,7 @@
 				2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
 			</text>
 			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="switchTab" data-tab-index="1">进入游戏</button>
-			<button class="index-button cu-btn round bg-yellow margin-lg">进入饥饿餐厅</button>
+			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="goToRestaurant">进入饥饿餐厅</button>
 			<!-- <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button> -->
 		</view>
 	</view>
@@ -24,6 +24,7 @@
 			<view class="flex solid-bottom justify-between padding-top-sm">
 				<text class="cuIcon-back navbar-icon" style="color:white" bindtap="switchTab" data-tab-index="0"></text>
 				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="showModal"></text>
+				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="shareGame"></text>
 
 			</view>
 
@@ -92,6 +93,23 @@
    <text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
    </text>
    <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
+   </view>
+  </view>
+ </view>
+ <view class="cu-modal {{isResultModalDisplayed?'show':''}}">
+  <view class="cu-dialog">
+   <view class="cu-bar bg-white justify-end">
+    <view class="content"></view>
+    <view class="action">
+     <text class="cuIcon-close text-red"></text>
+    </view>
+   </view>
+   <view class="padding-xl">
+    <text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
+   </text>
+   <text wx:if="{{!finalSuccess}}">哎呀！很遗憾，你的能量为0，没有完成饥饿24挑战，对好友发起挑战吧~
+   </text>
+   <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">分享给好友</button>
    </view>
   </view>
  </view>

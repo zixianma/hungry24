@@ -1,0 +1,10 @@
+<!--miniprogram/pages/restaurant.wxml-->
+<view style="width:100vw; height:100vh; background-color:#fdfef2">
+		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
+			<!-- <text class="cuIcon-info" style="font-size:10rem;"></text> -->
+			<image src="https://tx-static-2.kevincdn.cn/images/logo.png" style="width:10rem; height:10rem"></image>
+			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="switchTab" data-tab-index="1">入席饥饿餐厅</button>
+      <button class="index-button cu-btn round bg-yellow margin-lg">开设饥饿餐厅</button>
+      <button class="index-button cu-btn round bg-yellow margin-lg">查看餐厅排名</button>
+		</view>
+	</view>
