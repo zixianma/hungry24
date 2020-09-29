@@ -48,9 +48,7 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
-					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
-					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image wx:for="{{remainingShovelNumber}}" src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
 		</view>
@@ -60,7 +58,7 @@
 					bindtap="gameControl">{{gameStatus}}</button>
 			</view>
 	</view>
-	<view class="cu-modal {{isModalDisplayed?'show':''}}">
+	<view class="cu-modal {{isRuleModalDisplayed?'show':''}}">
 		<view class="cu-dialog">
 			<view class="cu-bar bg-white justify-end">
 				<view class="content">游戏规则</view>
@@ -79,6 +77,24 @@
 			</view>
 		</view>
 	</view>
+	<view class="cu-modal {{isShareModalDisplayed?'show':''}}">
+  <view class="cu-dialog">
+   <view class="cu-bar bg-white justify-end">
+    <view class="content"></view>
+    <view class="action">
+     <text class="cuIcon-close text-red"></text>
+    </view>
+   </view>
+   <view class="padding-xl">
+    <text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
+    {{cropIntroDict[crop]}}
+   </text>
+   <text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
+   </text>
+   <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
+   </view>
+  </view>
+ </view>
 </block>
 <block wx:if="{{selectedTab == 2}}">
 	<view class="container">

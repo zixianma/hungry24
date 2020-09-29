@@ -7,12 +7,55 @@ Page({
    */
   data: {
     selectedTab: 0,
-    isModalDisplayed: false,
+    isRuleModalDisplayed: false,
     gameStatus: "暂停",
     screenHeight: 0,
     screenWidth: 0,
     crossPoint_x: 0,
     crossPoint_y: 0,
+    remainingShovelNumber: 5,
+    isShareModalDisplayed: false,
+    cropsData: [{
+        'name': '土豆',
+        'val': '1'
+      },
+      {
+        'name': '番薯',
+        'val': '1'
+      },
+      {
+        'name': '木薯',
+        'val': '1'
+      },
+      {
+        'name': '小麦',
+        'val': '2'
+      },
+      {
+        'name': '稻米',
+        'val': '2'
+      },
+      {
+        'name': '大豆',
+        'val': '2'
+      },
+      {
+        'name': '玉米',
+        'val': 3
+      },
+      {
+        'name': '高粱',
+        'val': 3
+      },
+      {
+        'name': '鹰嘴豆',
+        'val': 4
+      },
+      {
+        'name': '苔麸',
+        'val': 5
+      }
+    ]
   },
 
   /**
@@ -140,13 +183,13 @@ Page({
 
   showModal() {
     this.setData({
-      isModalDisplayed: true
+      isRuleModalDisplayed: true
     })
   },
 
   hideModal() {
     this.setData({
-      isModalDisplayed: false
+      isRuleModalDisplayed: false
     })
   },
 
