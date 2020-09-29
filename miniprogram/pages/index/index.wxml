@@ -22,7 +22,7 @@
 			<view class="flex solid-bottom justify-between padding-top-sm">
 				<text class="cuIcon-back navbar-icon warm-yellow"  bindtap="switchTab" data-tab-index="0"></text>
 				<view>
-				<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showRuleModal"></text>
+				<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showModal" data-modal-name="rule"></text>
 				<!-- <text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="stopGame"></text> -->
 				<text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="shareGame"></text>
 			</view>
@@ -59,11 +59,11 @@
 					bindtap="gameControl">{{gameStatus}}</button>
 			</view>
 	</view>
-	<view class="cu-modal {{isRuleModalDisplayed?'show':''}}">
+	<view class="cu-modal {{modalName == 'rule' ? 'show' : ''}}">
 		<view class="cu-dialog">
 			<view class="cu-bar justify-end bg-white-yellow">
 				<view class="content">游戏规则</view>
-				<view class="action" bindtap="hideRuleModal">
+				<view class="action" bindtap="hideModal">
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
@@ -78,11 +78,11 @@
 			</view>
 		</view>
 	</view>
-	<view class="cu-modal {{isShareModalDisplayed?'show':''}}">
+	<view class="cu-modal {{modalName == 'share' ? 'show' : ''}}">
   <view class="cu-dialog">
    <view class="cu-bar justify-end bg-white-yellow" >
     <view class="content"></view>
-    <view class="action" bindtap="hideShareModal">
+		<view class="action" bindtap="hideModal">
      <text class="cuIcon-close text-red"></text>
     </view>
    </view>
@@ -96,11 +96,11 @@
    </view>
   </view>
  </view>
- <view class="cu-modal {{isResultModalDisplayed?'show':''}}">
+ <view class="cu-modal {{modalName == 'result' ? 'show' : ''}}">
   <view class="cu-dialog">
    <view class="cu-bar justify-end bg-white-yellow" >
     <view class="content"> </view>
-    <view class="action" bindtap="hideResultModal">
+    <view class="action" bindtap="hideModal">
      <text class="cuIcon-close text-red"></text>
     </view>
 	 </view>
@@ -114,12 +114,12 @@
    </view> -->
   </view>
  </view>
- <view class="cu-modal {{isExitModalDisplayed?'show':''}} ">
+ <view class="cu-modal {{modalName == 'exit' ? 'show' : ''}} ">
   <view class="cu-dialog">
   
 	<view class="padding-xl bg-white-yellow "><text class="padding-lg" style="font-size:1rem">挖地侠，你饿了么？\n请留步，再挖一点作物获取能量吧\n</text>
 
-			<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideExitModal">再挖一会</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
+			<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再挖一会</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
 	</view> 
   </view>
  </view>

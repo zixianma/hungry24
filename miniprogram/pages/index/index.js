@@ -7,10 +7,8 @@ Page({
    */
   data: {
     selectedTab: 0,
-    isRuleModalDisplayed: false,
     gameStatus: "暂停",
     remainingShovelNumber: 5,
-    isShareModalDisplayed: false,
     cropsData: [{
         'name': '土豆',
         'val': '1'
@@ -203,33 +201,16 @@ Page({
     }
   },
 
-  showRuleModal() {
+  showModal(e) {
+    const modalName = e.currentTarget.dataset.modalName
     this.setData({
-      isRuleModalDisplayed: true
+      modalName
     })
   },
 
-  hideRuleModal() {
+  hideModal() {
     this.setData({
-      isRuleModalDisplayed: false
-    })
-  },
-
-  hideShareModal() {
-    this.setData({
-      isShareModalDisplayed: false
-    })
-  },
-
-  hideExitModal() {
-    this.setData({
-      isExitModalDisplayed: false
-    })
-  },
-
-  hideResultModal() {
-    this.setData({
-      isResultModalDisplayed: false
+      modalName: null
     })
   },
 
@@ -421,7 +402,6 @@ Page({
 
     //if crop is in the range
     let collectSuccess = false
-    let isShareModalDisplayed = true
     let cropCollected = this.data.cropsID[this.data.currentLevel][min_distance_index]
     if (min_distance < screenWidth / 4) {
       let usedCrop = this.data.usedCrop
@@ -429,18 +409,18 @@ Page({
       let currentNumberOfCrop = this.data.currentNumberOfCrop
       let gameSetting = that.data.gameSetting
       gameSetting.energy += that.cropsData[cropCollected]['val']
-      currentNumberOfCrops--
+      currentNumberOfCrop--
       collectSuccess = true
       this.setData({
         gameSetting,
         usedCrop,
-        currentNumberOfCrops
+        currentNumberOfCrop
       })
     } else {
       collectSuccess = false
     }
     this.setData({
-      isShareModalDisplayed,
+      modalName: "share",
       collectSuccess,
       cropCollected,
     })
@@ -509,7 +489,7 @@ Page({
 
   stopGame() {
     this.setData({
-      isExitModalDisplayed: true
+      modalName: "exit"
     })
   },
 
@@ -521,7 +501,7 @@ Page({
         finalSuccess = false
       }
       this.setData({
-        isResultModalDisplayed: true,
+        modalName: "result",
         finalSuccess
       })
     }
