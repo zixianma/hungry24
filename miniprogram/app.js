@@ -27,7 +27,7 @@ App({
       name: 'login',
       data: {},
       success: function (res) {
-        console.log({wxLogin: res.result})
+        console.log({login: res.result})
         that.globalData.userInfo = res.result.userInfo
       },
       fail: console.error
