@@ -9,10 +9,6 @@ Page({
     selectedTab: 0,
     isRuleModalDisplayed: false,
     gameStatus: "暂停",
-    screenHeight: 0,
-    screenWidth: 0,
-    crossPoint_x: 0,
-    crossPoint_y: 0,
     remainingShovelNumber: 5,
     isShareModalDisplayed: false,
     cropsData: [{
@@ -55,7 +51,13 @@ Page({
         'name': '苔麸',
         'val': 5
       }
-    ]
+    ],
+
+    crops: [['potato', 'sweet_potato', 'cassava'],
+      ['soybean', 'wheat', 'rice'],
+      ['corn', 'sorghum', 'chickpea', 'teff']] ,
+    currentLevel: 0,
+    position: [],
   },
 
   /**
@@ -109,6 +111,25 @@ Page({
     }, 1000);
     this.setData({
       timer
+    })
+
+    const screenWidth = app.globalData.screenWidth
+    let position = []
+    for(let i = 0; i < this.data.crops.length; i++) {
+      let position_level = []
+      for(let j = 0; j < this.data.crops[i].length; j++) {
+        let position_point = []
+        for(let t = 0; t < 2; t++) {
+          console.log(screenHeight)
+          console.log(Math.random() * screenWidth)
+          position_point.push(Math.random() * screenWidth)
+        }
+        position_level.push(position_point)
+      }
+      position.push(position_level)
+    }
+    this.setData({
+      position
     })
   },
 
@@ -212,13 +233,11 @@ Page({
     let rectY_vertical = 0
     let goUp = false
     let goRight = false
+    let crossPoint_x = rectX_horizontal
+    let crossPoint_y = rectY_vertical
     // todo add time different 
 
     setInterval(function () {
-      that.setData({
-        crossPoint_x: rectX_horizontal,
-        crossPoint_y: rectY_vertical
-      })
 
       if (rectY_vertical == Math.floor(0.47 * screenHeight)) {
         goUp = true
