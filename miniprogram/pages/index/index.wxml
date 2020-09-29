@@ -11,8 +11,7 @@
 	</view>
 </block>
 <block wx:if="{{selectedTab == 1}}">
-	<view
-		style="width:100vw; height:100vh; background-image: url('https://hunger24.cfpa.org.cn/images/soil.png')">
+	<view style="width:100vw; height:100vh; background-image: url('https://hunger24.cfpa.org.cn/images/soil.png')">
 		<!-- <view> -->
 
 		<!-- </view> -->
@@ -20,12 +19,13 @@
 		<view style="width:90vw;margin-left:auto;margin-right:auto;">
 
 			<view class="flex solid-bottom justify-between padding-top-sm">
-				<text class="cuIcon-back navbar-icon warm-yellow"  bindtap="switchTab" data-tab-index="0"></text>
+				<text class="cuIcon-back navbar-icon warm-yellow" bindtap="switchTab" data-tab-index="0"></text>
 				<view>
-				<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showModal" data-modal-name="rule"></text>
-				<!-- <text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="stopGame"></text> -->
-				<text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="shareGame"></text>
-			</view>
+					<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showModal"
+						data-modal-name="rule"></text>
+					<!-- <text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="stopGame"></text> -->
+					<text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="shareGame"></text>
+				</view>
 			</view>
 
 			<view class="width-90-inline horizontal-center" style="margin-top:0">
@@ -54,10 +54,10 @@
 			</view>
 		</view>
 		<canvas style="width:100vw;height:50vh;" canvas-id="game"></canvas>
-			<view class="padding" style="text-align:center">
-				<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
-					bindtap="gameControl">{{gameStatus}}</button>
-			</view>
+		<view class="padding" style="text-align:center">
+			<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
+				bindtap="gameControl">{{gameStatus}}</button>
+		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'rule' ? 'show' : ''}}">
 		<view class="cu-dialog">
@@ -79,50 +79,54 @@
 		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'share' ? 'show' : ''}}">
-  <view class="cu-dialog">
-   <view class="cu-bar justify-end bg-white-yellow" >
-    <view class="content"></view>
-		<view class="action" bindtap="hideModal">
-     <text class="cuIcon-close text-red"></text>
-    </view>
-   </view>
-   <view class="padding-xl bg-white-yellow">
-    <text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
-    {{cropIntroDict[crop]}}
-   </text>
-   <text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
-   </text>
-   <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
-   </view>
-  </view>
- </view>
- <view class="cu-modal {{modalName == 'result' ? 'show' : ''}}">
-  <view class="cu-dialog">
-   <view class="cu-bar justify-end bg-white-yellow" >
-    <view class="content"> </view>
-    <view class="action" bindtap="hideModal">
-     <text class="cuIcon-close text-red"></text>
-    </view>
-	 </view>
-	 <view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view>
-   <!-- <view class="padding-xl">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+				<text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
+					{{cropIntroDict[crop]}}
+				</text>
+				<text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
+				</text>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
+					data-tab-index="1">邀请好友获取铲子</button>
+			</view>
+		</view>
+	</view>
+	<view class="cu-modal {{modalName == 'result' ? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"> </view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view>
+			<!-- <view class="padding-xl">
     <text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
    </text>
    <text wx:if="{{!finalSuccess}}">哎呀！很遗憾，你的能量为0，没有完成饥饿24挑战，对好友发起挑战吧~
    </text>
    <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">分享给好友</button>
    </view> -->
-  </view>
- </view>
- <view class="cu-modal {{modalName == 'exit' ? 'show' : ''}} ">
-  <view class="cu-dialog">
-  
-	<view class="padding-xl bg-white-yellow "><text class="padding-lg" style="font-size:1rem">挖地侠，你饿了么？\n请留步，再挖一点作物获取能量吧\n</text>
+		</view>
+	</view>
+	<view class="cu-modal {{modalName == 'exit' ? 'show' : ''}}">
+		<view class="cu-dialog">
 
-			<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再挖一会</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
-	</view> 
-  </view>
- </view>
+			<view class="padding-xl bg-white-yellow "><text class="padding-lg"
+					style="font-size:1rem">挖地侠，你饿了么？\n请留步，再挖一点作物获取能量吧\n</text>
+
+				<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button
+					class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再挖一会</button><button
+					class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
+			</view>
+		</view>
+	</view>
 </block>
 <block wx:if="{{selectedTab == 2}}">
 	<view class="container">
