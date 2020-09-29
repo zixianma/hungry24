@@ -7,7 +7,7 @@ Page({
    */
   data: {
     selectedTab: 0,
-    gameStatus: "暂停",
+    gameStatus: "在这儿挖",
     remainingShovelNumber: 5,
     cropsData: [{
         'name': '土豆',
