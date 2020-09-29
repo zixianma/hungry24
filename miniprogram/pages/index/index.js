@@ -58,6 +58,9 @@ Page({
       ['corn', 'sorghum', 'chickpea', 'teff']] ,
     currentLevel: 0,
     position: [],
+    usedCrops: [[0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0, 0]],
   },
 
   /**
@@ -83,19 +86,18 @@ Page({
       userInfo
     })
 
-    let initialEnergy = 0
     const {
-      result: energyResult
+      result: gameSetting
     } = await wx.cloud.callFunction({
-      name: 'getEnergy',
+      name: 'getGameSetting',
       data: {}
     })
     console.log({
-      energyResult
+      gameSetting
     })
-    if (energyResult.length > 0) {
-      initialEnergy = energyResult[0].sum
-    }
+    this.setData({
+      gameSetting
+    })
 
     let timer = setInterval(function () {
       let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
@@ -103,7 +105,7 @@ Page({
       // remaining time
       let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
       // remain energy
-      let remainingEnergy = initialEnergy - ((now - startTime) / (3600 * 1000))
+      let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
       let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
       // set data
       that.setData({
@@ -114,17 +116,20 @@ Page({
     this.setData({
       timer
     })
+  },
 
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
     const screenWidth = app.globalData.screenWidth
     let position = []
-    for(let i = 0; i < this.data.crops.length; i++) {
+    for (let i = 0; i < this.data.crops.length; i++) {
       let position_level = []
-      for(let j = 0; j < this.data.crops[i].length; j++) {
+      for (let j = 0; j < this.data.crops[i].length; j++) {
         let position_point = []
-        for(let t = 0; t < 2; t++) {
-          console.log(screenHeight)
-          console.log(Math.random() * screenWidth)
-          position_point.push(Math.random() * screenWidth)
+        for (let t = 0; t < 2; t++) {
+          position_point.push(Math.random() * 0.8 * screenWidth)
         }
         position_level.push(position_point)
       }
@@ -133,12 +138,6 @@ Page({
     this.setData({
       position
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
     this.line_move()
   },
 
@@ -230,7 +229,23 @@ Page({
       url: '../donation/donation',
     })
   },
-
+  drawPlant(cxt) {
+    //randomly generate points if no plant exist
+    // if(exist_plant_number == 0) {
+    // this.setData({
+    //   currentLevel: currentLevel + 1
+    // })
+    var currentLevel = this.data.currentLevel
+    var currentCrops = this.data.crops[currentLevel]
+    var numberOfCrops = currentCrops.length
+    //Generating the position of crops
+    for (let i = 0; i < numberOfCrops; i++) {
+      if (this.data.usedCrops[currentLevel][i] == 0) {
+        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
+      }
+    }
+    // }
+  },
   line_move: function () {
     var that = this
 
@@ -246,48 +261,107 @@ Page({
     let goRight = false
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
+    let wewanttochange = true
     // todo add time different 
-
     setInterval(function () {
-
-      if (rectY_vertical == Math.floor(0.47 * screenHeight)) {
-        goUp = true
-      } else if (rectY_vertical == 0) {
-        goUp = false
-      }
-
-      if (rectX_horizontal == screenWidth) {
-        goRight = true
-      } else if (rectX_horizontal == 0) {
-        goRight = false
-      }
-
-      cxt.clearRect(0, 0, 500, 700)
-      cxt.setFillStyle('orange')
-
-      // draw 3 points
-      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/cassava.png', 100, 70, 100, 100)
-      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/potato.png', 250, 100, 100, 100)
-      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/sweet_potato.png', 126, 152, 100, 100)
-
+      crossPoint_x = rectX_horizontal
+      crossPoint_y = rectY_vertical
       if (that.data.selectedTab == 1 && !that.data.isStopped) {
+        wewanttochange = true
+        if (rectY_vertical == Math.floor(0.47 * screenHeight)) {
+          goUp = true
+        } else if (rectY_vertical == 0) {
+          goUp = false
+        }
+
+        if (rectX_horizontal == screenWidth) {
+          goRight = true
+        } else if (rectX_horizontal == 0) {
+          goRight = false
+        }
+        cxt.clearRect(0, 0, 500, 700)
+        cxt.setFillStyle('orange')
+        // draw 3 points
+        that.drawPlant(cxt)
         // draw 2 line 
         goUp ? cxt.fillRect(rectX_vertical, rectY_vertical--, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical++, 414, 3)
         cxt.setFillStyle('orange')
         goRight ? cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414)
         cxt.draw()
-      } else if (that.data.selectedTab == 1 && that.data.isStopped) {
+      }
+      else if (that.data.selectedTab == 1 && that.data.isStopped) {
         // cxt.globalAlpha = 0.3
         // cxt.setFillStyle('orange')
         // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
         // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
+        that.drawPlant(cxt)
         // cxt.globalAlpha = 1
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', that.data.crossPoint_x - screenHeight / 16, that.data.crossPoint_y - screenHeight / 16, screenHeight / 8, screenHeight / 8)
+        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
         cxt.draw()
+        // that.imageShake(cxt, crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+        //Calculating the distance and update canvas
+        if (wewanttochange == true) {
+          that.renewDrawPlant(crossPoint_x, crossPoint_y)
+        }
+        wewanttochange = false
       }
+
     })
   },
+  renewDrawPlant(crossPoint_x, crossPoint_y) {
+    const screenWidth = app.globalData.screenWidth
+    let min_distance = screenWidth / 3
+    let min_distance_index = 5
+    for (let i = 0; i < this.data.crops[this.data.currentLevel].length; i++) {
+      //TODO dismiss detected
+      if (this.data.usedCrops[this.data.currentLevel][i] == 1){
+        continue
+      }
+      let x_dis = Math.abs(this.data.position[this.data.currentLevel][i][0] - crossPoint_x)
+      let y_dis = Math.abs(this.data.position[this.data.currentLevel][i][1] - crossPoint_y)
+      let distance = Math.sqrt(Math.pow(x_dis, 2) + Math.pow(y_dis, 2))
+      if (distance < min_distance) {
+        min_distance = distance
+        min_distance_index = i
+      }
+    }
 
+    //if in the range
+    if (min_distance <  screenWidth / 3) {
+      this.data.usedCrops[this.data.currentLevel][min_distance_index] = 1
+      this.data.currentNumberOfCrops = this.data.currentNumberOfCrops - 1
+      console.log(this.data.currentNumberOfCrops)
+    // this.setData({
+    //   usedCrops: usedCrops,
+    //   currentNumberOfCrops: currentNumberOfCrops - 1
+    }
+
+    if (this.data.currentNumberOfCrops == 0 && this.data.currentLevel < 2) {
+      this.data.currentLevel++
+      this.data.currentNumberOfCrops = this.data.usedCrops[this.data.currentLevel].length
+      // this.setData({
+      //   currentLevel: currentLevel + 1,
+      //   currentNumberOfCrops: this.data.usedCrops[this.data.currentLevel].length
+      // })
+    }
+  },
+  imageShake(cxt, crossPoint_x, crossPoint_y, width, height) {
+    var x = crossPoint_x
+    var y = crossPoint_y
+    var border = - 50
+    var goRight_shovel = false
+    setInterval(function () {
+      cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
+      this.drawPlant()
+      if (border != 0 && x - crossPoint_x == border) {
+        goRight_shovel = !goRight_shovel
+        border = (-border > 0) ? (-border - 1) : (-border + 1)
+      }
+      goRight_shovel ? ctx.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', x++, y, width, height) : ctx.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', x--, y, width, height)
+      cxt.draw()
+    })
+  },
+  
   gameControl(e) {
     const isStopped = this.data.isStopped
     this.setData({

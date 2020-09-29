@@ -11,24 +11,41 @@ exports.main = async (event, context) => {
   // cloud db
   const db = cloud.database()
   const _ = db.command
-  const collection = db.collection('user')
   // function body
   var operationResult = {
     openId
   }
   const {
     data: openIdResult
-  } = await collection.where({
+  } = await db.collection('user').where({
     openId,
     challengeStartedAt: _.exists(false)
   }).get()
   if (openIdResult.length > 0) {
-    operationResult.dbStatus = await collection.where({
+    operationResult.dbStatus1 = await db.collection('user').where({
       openId
     }).update({
       data: {
-        challengeStartedAt: new Date(),
-        currEnergy: 0
+        challengeStartedAt: new Date()
+      },
+      success: function (res) {
+        console.log(res)
+      }
+    })
+    operationResult.dbStatus2 = await db.collection('energy').add({
+      data: {
+        openId,
+        value: 2
+      },
+      success: function (res) {
+        console.log(res)
+      }
+    })
+    operationResult.dbStatus3 = await db.collection('shovel').add({
+      data: {
+        openId,
+        number: 5,
+        reason: "initialize"
       },
       success: function (res) {
         console.log(res)
