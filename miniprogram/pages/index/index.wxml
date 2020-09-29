@@ -142,7 +142,7 @@
 		<text class="cuIcon-cardboard navbar-icon" style="color:orange"></text>
 		<view style="color:orange">游戏</view>
 	</view>
-	<view class="navbar-tab" bindtap="jumpTo" data-tab-index="2">
+	<view class="navbar-tab" bindtap="toDonate" data-tab-index="2">
 		<text class="cuIcon-like navbar-icon" style="color:orange"></text>
 		<view style="color:orange">捐一餐</view>
 	</view>
