@@ -348,7 +348,7 @@ Page({
         else {
           that.drawPlant(cxt)
           // cxt.globalAlpha = 1
-          cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+          cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
           cxt.draw()
           //Calculating the distance and update canvas
           if (changeState) {
@@ -387,7 +387,7 @@ Page({
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
+        cxt.drawImage('https://hunger24.cfpa.org.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
       }
     }
     // }
@@ -475,9 +475,9 @@ Page({
     //   finalSuccess: true
     // })
     Promise.all([
-      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/铲子.png"),
-      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/玉米.png"),
-      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/稻米.png")
+      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/铲子.png"),
+      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/玉米.png"),
+      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/稻米.png")
     ]).then(res => {
       const ctx = wx.createCanvasContext('shareResult')
 

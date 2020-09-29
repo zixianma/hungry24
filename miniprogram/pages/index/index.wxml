@@ -1,7 +1,7 @@
 <block wx:if="{{selectedTab == 0}}">
 	<view class="bg-white-yellow" style="width:100vw; height:100vh">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
-			<image src="https://tx-static-2.kevincdn.cn/images/logo.png" style="width:10rem; height:10rem"></image>
+			<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:10rem; height:10rem"></image>
 			<text style="text-size:1rem">
 				2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
 			</text>
@@ -49,7 +49,7 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel}}" src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image wx:for="{{gameSetting.shovel}}" src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
 		</view>
