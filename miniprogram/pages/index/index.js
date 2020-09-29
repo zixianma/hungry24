@@ -83,10 +83,6 @@ Page({
   async onLoad(options) {
     var that = this
 
-    // get the source of the user
-    const fromUser = options.from_user
-    console.log({ fromUser })
-
     // login
     const {
       result: loginResult
@@ -102,6 +98,24 @@ Page({
     this.setData({
       userInfo
     })
+
+    // get the source of the user
+    const fromUser = options.from_user
+    console.log({ fromUser })
+    if (fromUser) {
+      wx.cloud.callFunction({
+        name: 'addShareRecord',
+        data: {
+          fromUser
+        },
+        success: function (res) {
+          console.log({
+            addShareRecord: res.result
+          })
+        },
+        fail: console.error
+      })
+    }
 
     // get game setting
     const {
