@@ -70,21 +70,48 @@ Page({
 
   }, 
 
-  showPayModal() {
+  showModal(e) {
+    const modalName = e.currentTarget.dataset.modalName
     this.setData({
-      isPayModalDisplayed: true
+      modalName
     })
   },
 
-  hidePayModal() {
+  hideModal() {
     this.setData({
-      isPayModalDisplayed: false
+      modalName: null
     })
   },
 
-  submitPayment (){
-    this.hidePayModal()
+  onInput(e) {
+    this.setData({
+      amount: e.detail.value
+    })
   },
+
+  toPay() {
+    const amount = this.data.amount
+    wx.cloud.callFunction({
+      name: 'unifiedOrder',
+      data: {
+        totalFee: amount
+      },
+      success: (res) => {
+        // const payment = res.result.payment
+        // wx.requestPayment({
+        //   ...payment,
+        //   success (res) {
+        //     console.log('pay success', res)
+        //   },
+        //   fail (res) {
+        //     console.error('pay fail', err)
+        //   }
+        // })
+      },
+      fail: console.error
+    })
+  },
+
   showCertificate(){
     this.setData({
       isCertificateShow: true

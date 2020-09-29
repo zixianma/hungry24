@@ -14,13 +14,11 @@
   </view>
   <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg"></image>
   <view class="cu-bar tabbar border shop text-center">
-
     <view class="action">
       <!-- <button class="cu-btn bg-green shadow" bindtap="showModal" data-target="bottomModal">Bottom</button> -->
-      <button class="bg-red submit" data-target="isPayModalDisplayed" bindtap="showPayModal"
-        style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
+      <button class="bg-red submit" bindtap="showModal" data-modal-name="pay" style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
     </view>
-    <view class="cu-modal bottom-modal {{isPayModalDisplayed ? 'show' : ''}}">
+    <view class="cu-modal bottom-modal {{modalName == 'pay' ? 'show' : ''}}">
       <view class="cu-dialog">
         <view class="padding-xl" style="text-align: left">
           请输入您想捐赠的金额：
@@ -29,16 +27,16 @@
               <!-- <text class="text-black text-bold">您的捐款已提交成功！</text> -->
               <view class="cu-form-group margin-top">
                 <!-- <view class="title">捐款金额</view> -->
-                <input placeholder="请填写1以上的整数"></input>
+                <input placeholder="请填写1以上的整数" bindinput="onInput"></input>
               </view>
             </view>
             <!-- <view class="padding">感谢您为孩子捐赠能量~</view> -->
-            <view class="padding" style="text-align: left">*一餐=4.2元</view>
+            <view class="padding" style="text-align:left;">*一餐=4.2元</view>
           </view>
         </view>
         <view class="cu-bar bg-white-yellow">
-          <text class="action text-red" bindtap="submitPayment">确定</text>
-          <text class="action text-yellow" style="text-size:3rem" bindtap="hidePayModal">取消</text>
+          <view class="action text-red" bindtap="toPay">确定</view>
+          <view class="action text-yellow" style="text-size:3rem;" bindtap="hideModal">取消</view>
         </view>
       </view>
     </view>
