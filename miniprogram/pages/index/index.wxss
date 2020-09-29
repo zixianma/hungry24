@@ -62,9 +62,11 @@
   margin-left:auto;
   margin-right:auto;
 }
+
 .animation-shake {
   animation-name: shake;
 }
+
 @keyframes shake {
 
   0%,
@@ -107,4 +109,20 @@
   90% {
       transform: translateX(-1px)
   }
+}
+
+.bg-white-yellow {
+  background-color: #faf8e4;
+}
+
+.white-yellow {
+  color: #faf8e4;
+}
+
+.bg-warm-yellow {
+  background-color: #f5ab2e;
+}
+
+.warm-yellow {
+  color: #f5ab2e;
 }
