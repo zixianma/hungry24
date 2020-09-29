@@ -243,7 +243,7 @@ Page({
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrops[currentLevel][i] == 0) {
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
+        cxt.drawImage('https://hunger24.cfpa.org.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
       }
     }
     // }
@@ -299,7 +299,7 @@ Page({
           // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
           that.drawPlant(cxt)
           // cxt.globalAlpha = 1
-          cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+          cxt.drawImage('https://hunger24.cfpa.org.cn/images/shovel.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
           cxt.draw()
           // that.imageShake(cxt, crossPoint_x - 50, crossPoint_y - 50, 100, 100)
           //Calculating the distance and update canvas
@@ -382,7 +382,7 @@ Page({
         goRight_shovel = !goRight_shovel
         border = (-border > 0) ? (-border - 1) : (-border + 1)
       }
-      goRight_shovel ? ctx.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', x++, y, width, height) : ctx.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', x--, y, width, height)
+      goRight_shovel ? ctx.drawImage('https://hunger24.cfpa.org.cn/images/shovel.png', x++, y, width, height) : ctx.drawImage('https://hunger24.cfpa.org.cn/images/shovel.png', x--, y, width, height)
       cxt.draw()
     })
   },
