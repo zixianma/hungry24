@@ -53,8 +53,6 @@
 					<image src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
-
-		
 		</view>
 		<canvas style="width:100vw;height:50vh;" canvas-id="game"></canvas>
 			<view class="padding" style="text-align:center">

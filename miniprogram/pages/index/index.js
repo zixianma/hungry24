@@ -8,7 +8,11 @@ Page({
   data: {
     selectedTab: 0,
     isModalDisplayed: false,
-    gameStatus: "暂停"
+    gameStatus: "暂停",
+    screenHeight: 0,
+    screenWidth: 0,
+    crossPoint_x: 0,
+    crossPoint_y: 0,
   },
 
   /**
@@ -16,12 +20,18 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-
     const userInfo = app.globalData.userInfo
     this.setData({
       userInfo
     })
-
+    wx.getSystemInfo({
+      success: function(res) {
+        that.setData({
+          screenHeight: res.screenHeight, 
+          screenWidth: res.screenWidth,
+        })
+      },
+    })
     let timer = setInterval(function () {
       let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
       let now = Date.parse(new Date())
@@ -39,7 +49,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.run()
+    this.line_move()
   },
 
   /**
@@ -119,13 +129,9 @@ Page({
       url: '../donation/donation',
     })
   },
-  move_horizontal(x, y) {
-    cxt_vertical_line.fillRect(x, y, 3, 414)
-  },
-  move_vertical(x, y) {
-    cxt_horizontal_line.fillRect(x, y, 414, 3)
-  },
-  run: function () {
+
+
+  line_move: function () {
     var that = this
     var cxt = wx.createCanvasContext('game')
     let rectX_horizontal = 0
@@ -137,32 +143,45 @@ Page({
     // todo add time different 
 
     setInterval(function () {
+      that.setData({
+        crossPoint_x: rectX_horizontal,
+        crossPoint_y: rectY_vertical
+      })
+
+      if (rectY_vertical == Math.floor(0.47 * that.data.screenHeight)) {
+        goUp = true
+      } else if (rectY_vertical == 0) {
+        goUp = false
+      }
+
+      if (rectX_horizontal == that.data.screenWidth) {
+        goRight = true
+      } else if (rectX_horizontal == 0) {
+        goRight = false
+      }
+
+      cxt.clearRect(0, 0, 500, 700)
+      cxt.setFillStyle('orange')
+
+      // draw 3 points
+      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/cassava.png', 100, 70, 100, 100)
+      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/potato.png', 250, 100, 100, 100)
+      cxt.drawImage('https://tx-static-2.kevincdn.cn/images/sweet_potato.png', 126, 152, 100, 100)
+
       if (that.data.selectedTab == 1 && !that.data.isStopped) {
-        if (rectY_vertical == 380) {
-          goUp = true
-        } else if (rectY_vertical == 0) {
-          goUp = false
-        }
-
-        if (rectX_horizontal == 380) {
-          goRight = true
-        } else if (rectX_horizontal == 0) {
-          goRight = false
-        }
-
-        cxt.clearRect(0, 0, 500, 700)
-        cxt.setFillStyle('orange')
-
-        // draw 2 lines
+        // draw 2 line 
         goUp ? cxt.fillRect(rectX_vertical, rectY_vertical--, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical++, 414, 3)
         cxt.setFillStyle('orange')
         goRight ? cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414)
-
-        // draw 3 points
-        cxt.fillRect(300, 70, 10, 10)
-        cxt.fillRect(250, 300, 10, 10)
-        cxt.fillRect(126, 152, 10, 10)
-
+        cxt.draw()
+      }
+      else if(that.data.selectedTab == 1 && that.data.isStopped) {
+        // cxt.globalAlpha = 0.3
+        // cxt.setFillStyle('orange')
+        // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
+        // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
+        // cxt.globalAlpha = 1
+        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', that.data.crossPoint_x - that.data.screenHeight / 16, that.data.crossPoint_y - that.data.screenHeight / 16, that.data.screenHeight / 8, that.data.screenHeight / 8)
         cxt.draw()
       }
     })
@@ -176,5 +195,4 @@ Page({
       gameStatus: isStopped ? "停止" : "继续"
     })
   }
-
 })

@@ -27,7 +27,8 @@ exports.main = async (event, context) => {
       openId
     }).update({
       data: {
-        challengeStartedAt: new Date()
+        challengeStartedAt: new Date(),
+        currEnergy: 0
       },
       success: function (res) {
         console.log(res)
