@@ -3,6 +3,13 @@ App({
   onLaunch: function () {
     var that = this
 
+    wx.getSystemInfo({
+      success: function(res) {
+        that.globalData.screenHeight = res.screenHeight
+        that.globalData.screenWidth = res.screenWidth
+      },
+    })
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {

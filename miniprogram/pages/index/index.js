@@ -20,18 +20,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+
     const userInfo = app.globalData.userInfo
+
     this.setData({
       userInfo
     })
-    wx.getSystemInfo({
-      success: function(res) {
-        that.setData({
-          screenHeight: res.screenHeight, 
-          screenWidth: res.screenWidth,
-        })
-      },
-    })
+    
     let timer = setInterval(function () {
       let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
       let now = Date.parse(new Date())
@@ -43,6 +38,8 @@ Page({
     this.setData({
       timer
     })
+
+
   },
 
   /**
@@ -133,6 +130,10 @@ Page({
 
   line_move: function () {
     var that = this
+
+    const screenHeight = app.globalData.screenHeight
+    const screenWidth = app.globalData.screenWidth
+
     var cxt = wx.createCanvasContext('game')
     let rectX_horizontal = 0
     const rectY_horizontal = 0
@@ -148,13 +149,13 @@ Page({
         crossPoint_y: rectY_vertical
       })
 
-      if (rectY_vertical == Math.floor(0.47 * that.data.screenHeight)) {
+      if (rectY_vertical == Math.floor(0.47 * screenHeight)) {
         goUp = true
       } else if (rectY_vertical == 0) {
         goUp = false
       }
 
-      if (rectX_horizontal == that.data.screenWidth) {
+      if (rectX_horizontal == screenWidth) {
         goRight = true
       } else if (rectX_horizontal == 0) {
         goRight = false
@@ -181,7 +182,7 @@ Page({
         // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
         // cxt.fillRect(rectX_horizontal, rectY_horizontal, 3, 414)
         // cxt.globalAlpha = 1
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', that.data.crossPoint_x - that.data.screenHeight / 16, that.data.crossPoint_y - that.data.screenHeight / 16, that.data.screenHeight / 8, that.data.screenHeight / 8)
+        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/shovel.png', that.data.crossPoint_x - screenHeight / 16, that.data.crossPoint_y - screenHeight / 16, screenHeight / 8, screenHeight / 8)
         cxt.draw()
       }
     })
