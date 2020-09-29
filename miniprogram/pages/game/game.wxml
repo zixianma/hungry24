@@ -1,4 +1,0 @@
-<view>
-	<canvas style="width:100vw;height:80vh;" canvas-id="game"></canvas>
-	<button bindtap="gameControl">{{gameStatus}}</button>
-</view>

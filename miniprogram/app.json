@@ -1,13 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/challenge/challenge",
-    "pages/game/game",
-    "pages/farm/farm",
-    "pages/share/share",
-    "pages/end/end",
-    "pages/donation/donation",
-    "pages/restaurant"
+    "pages/donation/donation"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
