@@ -1,6 +1,7 @@
 const app = getApp()
 
 Page({
+
   /**
    * 页面的初始数据
    */
@@ -11,53 +12,56 @@ Page({
     remainingShovelNumber: 5,
     isShareModalDisplayed: false,
     cropsData: [{
-      'name': '土豆',
-      'val': '1'
-    },
-    {
-      'name': '番薯',
-      'val': '1'
-    },
-    {
-      'name': '木薯',
-      'val': '1'
-    },
-    {
-      'name': '小麦',
-      'val': '2'
-    },
-    {
-      'name': '稻米',
-      'val': '2'
-    },
-    {
-      'name': '大豆',
-      'val': '2'
-    },
-    {
-      'name': '玉米',
-      'val': 3
-    },
-    {
-      'name': '高粱',
-      'val': 3
-    },
-    {
-      'name': '鹰嘴豆',
-      'val': 4
-    },
-    {
-      'name': '苔麸',
-      'val': 5
-    }
+        'name': '土豆',
+        'val': '1'
+      },
+      {
+        'name': '番薯',
+        'val': '1'
+      },
+      {
+        'name': '木薯',
+        'val': '1'
+      },
+      {
+        'name': '小麦',
+        'val': '2'
+      },
+      {
+        'name': '稻米',
+        'val': '2'
+      },
+      {
+        'name': '大豆',
+        'val': '2'
+      },
+      {
+        'name': '玉米',
+        'val': 3
+      },
+      {
+        'name': '高粱',
+        'val': 3
+      },
+      {
+        'name': '鹰嘴豆',
+        'val': 4
+      },
+      {
+        'name': '苔麸',
+        'val': 5
+      }
     ],
     cropsID: [
       [0, 1, 2],
       [3, 4, 5],
-      [6, 7, 8, 9]],
-    cropsChinese: [['土豆', '番薯', '木薯'],
-    ['大豆', '小麦', '稻米'],
-    ['玉米', '高粱', '鹰嘴豆', '苔麸']],
+      [6, 7, 8, 9]
+    ],
+    cropsChinese: [
+      ['土豆', '番薯', '木薯'],
+      ['大豆', '小麦', '稻米'],
+      ['玉米', '高粱', '鹰嘴豆', '苔麸']
+    ],
 
     crops: [
       ['potato', 'sweet_potato', 'cassava'],
@@ -120,7 +124,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
@@ -170,6 +174,7 @@ Page({
     }
   },
 
+
   switchTab(e) {
     const tabIndex = e.currentTarget.dataset.tabIndex
     this.setData({
@@ -213,6 +218,18 @@ Page({
   hideShareModal() {
     this.setData({
       isShareModalDisplayed: false
+    })
+  },
+
+  hideExitModal() {
+    this.setData({
+      isExitModalDisplayed: false
+    })
+  },
+
+  hideResultModal() {
+    this.setData({
+      isResultModalDisplayed: false
     })
   },
 
@@ -430,14 +447,69 @@ Page({
     })
   },
 
-  shareGame() {
-    const wxGetImageInfo = promisify(wx.getImageInfo)
-    wxGetImageInfo({
-      src: 'http://some-domain/bg.png'
-    }).then(res => {
-      const ctx = wx.createCanvasContext('shareCanvas')
-      ctx.drawImage(res.path, 0, 0, 600, 900)
-      ctx.draw()
+  promiseGetImageInfo(src) {
+    return new Promise((resolve, reject) => {
+      wx.getImageInfo({
+        src,
+        success: (res) => {
+          resolve(res)
+        }
+      })
     })
-  }
+  },
+
+  shareGame() {
+    var that = this
+    // this.setData({
+    //   isResultModalDisplayed: true,
+    //   finalSuccess: true
+    // })
+    Promise.all([
+      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/铲子.png"),
+      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/玉米.png"),
+      that.promiseGetImageInfo("https://tx-static-2.kevincdn.cn/images/稻米.png")
+    ]).then(res => {
+      const ctx = wx.createCanvasContext('shareResult')
+
+      // 底图
+      if (finalSuccess) {
+        console.log("Success!")
+        ctx.drawImage(res[0].path, 0, 0, 600, 900)
+      } else {
+        ctx.drawImage(res[1].path, 0, 0, 600, 900)
+      }
+      // 作者名称
+      ctx.setTextAlign('center') // 文字居中
+      ctx.setFillStyle('#000000') // 文字颜色：黑色
+      ctx.setFontSize(22) // 文字字号：22px
+      ctx.fillText("作者： 张杰", 600 / 2, 500)
+      // 小程序码
+      // const qrImgSize = 180
+      // ctx.drawImage(res[1].path, (600 - qrImgSize) / 2, 530, qrImgSize, qrImgSize)
+      // ctx.stroke()
+      // ctx.draw()
+    })
+  },
+
+  stopGame() {
+    this.setData({
+      isExitModalDisplayed: true
+    })
+  },
+
+  checkFinalGameStatus() {
+    if (remainingTimePercentage == 0) {
+      if (remainingEnergy > 0) {
+        finalSuccess = true
+      } else {
+        finalSuccess = false
+      }
+      this.setData({
+        isResultModalDisplayed: true,
+        finalSuccess
+      })
+    }
+  },
+
+  exitGame() {}
 })

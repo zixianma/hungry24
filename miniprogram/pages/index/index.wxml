@@ -1,14 +1,12 @@
 <block wx:if="{{selectedTab == 0}}">
-	<view style="width:100vw; height:100vh; background-color:#fdfef2">
+	<view class="bg-white-yellow" style="width:100vw; height:100vh">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
-			<!-- <text class="cuIcon-info" style="font-size:10rem;"></text> -->
 			<image src="https://tx-static-2.kevincdn.cn/images/logo.png" style="width:10rem; height:10rem"></image>
 			<text style="text-size:1rem">
 				2020年10月16日是联合国确定的第40个世界粮食日，中国扶贫基金会联合多家平台、媒体、单位共同发起“饥饿24小时公益体验活动”（简称：饥饿24），倡导18-60周岁有条件的人在10月16日8：00-17日24：00期间，挑战24小时不吃饭。体验饥饿，珍惜粮食，并捐出一天餐费帮助我国儿童改善营养，帮助发展中国家抗击饥饿。
 			</text>
 			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="switchTab" data-tab-index="1">进入游戏</button>
 			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="goToRestaurant">进入饥饿餐厅</button>
-			<!-- <button class="index-button cu-btn round bg-yellow margin-lg">捐一餐</button> -->
 		</view>
 	</view>
 </block>
@@ -22,13 +20,16 @@
 		<view style="width:90vw;margin-left:auto;margin-right:auto;">
 
 			<view class="flex solid-bottom justify-between padding-top-sm">
-				<text class="cuIcon-back navbar-icon" style="color:white" bindtap="switchTab" data-tab-index="0"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="showRuleModal"></text>
-				<text class="cuIcon-info navbar-icon" style="color:white" bindtap="shareGame"></text>
+				<text class="cuIcon-back navbar-icon warm-yellow"  bindtap="switchTab" data-tab-index="0"></text>
+				<view>
+				<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showRuleModal"></text>
+				<!-- <text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="stopGame"></text> -->
+				<text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="shareGame"></text>
+			</view>
 			</view>
 
 			<view class="width-90-inline horizontal-center" style="margin-top:0">
-				<text style="width:30vw; text-size:1rem; color:white">
+				<text class="text-white" style="width:30vw; text-size:1rem">
 					剩余时间：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
@@ -36,19 +37,19 @@
 				</view>
 			</view>
 			<view class="width-90-inline horizontal-center">
-				<text style="width:30vw; text-size:1rem; color:white">
+				<text class="text-white" style="width:30vw; text-size:1rem">
 					剩余能量：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
-					<view class="bg-green" style="width:{{remainingEnergyPercentage}}%;">{{remainingEnergyPercentage}}</view>
+					<view class="bg-red" style="width:{{remainingEnergyPercentage}}%;">{{remainingEnergyPercentage}}</view>
 				</view>
 			</view>
 			<view class="width-90-inline horizontal-center">
-				<text style="text-size:1rem;color:white">
+				<text class="text-white" style="text-size:1rem">
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel}}" src="https://tx-static-2.kevincdn.cn/images/铲子.png" style="width:3rem; height:3rem"></image>
+					<image wx:for="{{gameSetting.shovel}}" src="https://tx-static-2.kevincdn.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
 		</view>
@@ -60,13 +61,13 @@
 	</view>
 	<view class="cu-modal {{isRuleModalDisplayed?'show':''}}">
 		<view class="cu-dialog">
-			<view class="cu-bar bg-white justify-end">
+			<view class="cu-bar justify-end bg-white-yellow">
 				<view class="content">游戏规则</view>
 				<view class="action" bindtap="hideRuleModal">
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-xl">
+			<view class="padding-xl bg-white-yellow">
 				1.你的能量随着时间迁移而消耗，每1小时减少1份能量哦。
 				2.每收割一种作物，你会获取相应的能量。
 				3.每次作物收割完，土地上会长出新的作物。
@@ -79,14 +80,14 @@
 	</view>
 	<view class="cu-modal {{isShareModalDisplayed?'show':''}}">
   <view class="cu-dialog">
-   <view class="cu-bar bg-white justify-end">
+   <view class="cu-bar justify-end bg-white-yellow" >
     <view class="content"></view>
     <view class="action" bindtap="hideShareModal">
      <text class="cuIcon-close text-red"></text>
     </view>
    </view>
-   <view class="padding-xl">
-    <text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropsData[cropCollected]['name']}}能量值+{{cropsData[cropCollected]['val']}}~\n
+   <view class="padding-xl bg-white-yellow">
+    <text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
     {{cropIntroDict[crop]}}
    </text>
    <text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
@@ -97,19 +98,29 @@
  </view>
  <view class="cu-modal {{isResultModalDisplayed?'show':''}}">
   <view class="cu-dialog">
-   <view class="cu-bar bg-white justify-end">
-    <view class="content"></view>
-    <view class="action">
+   <view class="cu-bar justify-end bg-white-yellow" >
+    <view class="content"> </view>
+    <view class="action" bindtap="hideResultModal">
      <text class="cuIcon-close text-red"></text>
     </view>
-   </view>
-   <view class="padding-xl">
+	 </view>
+	 <view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view>
+   <!-- <view class="padding-xl">
     <text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
    </text>
    <text wx:if="{{!finalSuccess}}">哎呀！很遗憾，你的能量为0，没有完成饥饿24挑战，对好友发起挑战吧~
    </text>
    <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">分享给好友</button>
-   </view>
+   </view> -->
+  </view>
+ </view>
+ <view class="cu-modal {{isExitModalDisplayed?'show':''}} ">
+  <view class="cu-dialog">
+  
+	<view class="padding-xl bg-white-yellow "><text class="padding-lg" style="font-size:1rem">挖地侠，你饿了么？\n请留步，再挖一点作物获取能量吧\n</text>
+
+			<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideExitModal">再挖一会</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
+	</view> 
   </view>
  </view>
 </block>
@@ -132,7 +143,7 @@
 		<view style="color:orange">游戏</view>
 	</view>
 	<view class="navbar-tab" bindtap="jumpTo" data-tab-index="2">
-		<text class="cuIcon-present navbar-icon" style="color:orange"></text>
+		<text class="cuIcon-like navbar-icon" style="color:orange"></text>
 		<view style="color:orange">捐一餐</view>
 	</view>
 	<view class="navbar-tab" bindtap="switchTab" data-tab-index="3">
