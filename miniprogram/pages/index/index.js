@@ -262,7 +262,7 @@ Page({
     let goRight = false
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
-    let Change_state = true  //for just performing else state once
+    let changeState = true  //for just performing else state once
 
     // todo add time different 
     setInterval(function () {
@@ -270,7 +270,7 @@ Page({
         crossPoint_x = rectX_horizontal
         crossPoint_y = rectY_vertical
         if (that.data.selectedTab == 1 && !that.data.isStopped) {
-          Change_state = true
+          changeState = true
           if (rectY_vertical >= Math.floor(0.47 * screenHeight)) {
             goUp = true
           } else if (rectY_vertical == 0) {
@@ -303,7 +303,7 @@ Page({
           cxt.draw()
           // that.imageShake(cxt, crossPoint_x - 50, crossPoint_y - 50, 100, 100)
           //Calculating the distance and update canvas
-          if (Change_state) {
+          if (changeState) {
             that.renewDrawPlant(crossPoint_x, crossPoint_y)
             let gameSetting = that.data.gameSetting
             gameSetting.shovel--
@@ -311,7 +311,7 @@ Page({
               gameSetting
             })
           }
-          Change_state = false
+          changeState = false
         }
       }
       else {
