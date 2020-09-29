@@ -12,56 +12,60 @@ Page({
     remainingShovelNumber: 5,
     isShareModalDisplayed: false,
     cropsData: [{
-      'name': '土豆',
-      'val': '1'
-    },
-    {
-      'name': '番薯',
-      'val': '1'
-    },
-    {
-      'name': '木薯',
-      'val': '1'
-    },
-    {
-      'name': '小麦',
-      'val': '2'
-    },
-    {
-      'name': '稻米',
-      'val': '2'
-    },
-    {
-      'name': '大豆',
-      'val': '2'
-    },
-    {
-      'name': '玉米',
-      'val': 3
-    },
-    {
-      'name': '高粱',
-      'val': 3
-    },
-    {
-      'name': '鹰嘴豆',
-      'val': 4
-    },
-    {
-      'name': '苔麸',
-      'val': 5
-    }
+        'name': '土豆',
+        'val': '1'
+      },
+      {
+        'name': '番薯',
+        'val': '1'
+      },
+      {
+        'name': '木薯',
+        'val': '1'
+      },
+      {
+        'name': '小麦',
+        'val': '2'
+      },
+      {
+        'name': '稻米',
+        'val': '2'
+      },
+      {
+        'name': '大豆',
+        'val': '2'
+      },
+      {
+        'name': '玉米',
+        'val': 3
+      },
+      {
+        'name': '高粱',
+        'val': 3
+      },
+      {
+        'name': '鹰嘴豆',
+        'val': 4
+      },
+      {
+        'name': '苔麸',
+        'val': 5
+      }
     ],
 
-    crops: [['potato', 'sweet_potato', 'cassava'],
-    ['soybean', 'wheat', 'rice'],
-    ['corn', 'sorghum', 'chickpea', 'teff']],
+    crops: [
+      ['potato', 'sweet_potato', 'cassava'],
+      ['soybean', 'wheat', 'rice'],
+      ['corn', 'sorghum', 'chickpea', 'teff']
+    ],
     currentLevel: 0,
     currentNumberOfCrops: 3,
     position: [],
-    usedCrops: [[0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0, 0]],
+    usedCrops: [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0, 0]
+    ],
   },
 
   /**
@@ -231,11 +235,12 @@ Page({
     })
   },
 
-  jumpTo() {
+  toDonate() {
     wx.navigateTo({
       url: '../donation/donation',
     })
   },
+
   drawPlant(cxt) {
     var currentLevel = this.data.currentLevel
     var currentCrops = this.data.crops[currentLevel]
@@ -248,6 +253,7 @@ Page({
     }
     // }
   },
+
   line_move: function () {
     // if (this.data.gameSetting.shovel > 0) {
     var that = this
@@ -262,7 +268,7 @@ Page({
     let goRight = false
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
-    let changeState = true  //for just performing else state once
+    let changeState = true //for just performing else state once
 
     // todo add time different 
     setInterval(function () {
@@ -291,8 +297,7 @@ Page({
           cxt.setFillStyle('orange')
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
           cxt.draw()
-        }
-        else if (that.data.selectedTab == 1 && that.data.isStopped) {
+        } else if (that.data.selectedTab == 1 && that.data.isStopped) {
           // cxt.globalAlpha = 0.3
           // cxt.setFillStyle('orange')
           // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
@@ -313,13 +318,13 @@ Page({
           }
           changeState = false
         }
-      }
-      else {
+      } else {
         // console.log('No shovel')
       }
     })
     // }
   },
+
   renewDrawPlant(crossPoint_x, crossPoint_y) {
     const screenWidth = app.globalData.screenWidth
     let min_distance = screenWidth / 4
@@ -339,7 +344,7 @@ Page({
     }
 
     //if in the range
-    let collectSuccess = false 
+    let collectSuccess = false
     if (min_distance < screenWidth / 4) {
       this.data.usedCrops[this.data.currentLevel][min_distance_index] = 1
       this.data.currentNumberOfCrops = this.data.currentNumberOfCrops - 1
@@ -358,7 +363,7 @@ Page({
       collectSuccess
     })
     // setTimeout(function() {
-      
+
     // }, 1000)
 
     if (this.data.currentNumberOfCrops == 0 && this.data.currentLevel < 2) {
@@ -370,10 +375,11 @@ Page({
       })
     }
   },
+
   imageShake(cxt, crossPoint_x, crossPoint_y, width, height) {
     var x = crossPoint_x
     var y = crossPoint_y
-    var border = - 50
+    var border = -50
     var goRight_shovel = false
     setInterval(function () {
       cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
@@ -395,20 +401,14 @@ Page({
     })
   },
 
-  // goToRestaurant() {
-  //   wx.navigateTo({
-  //     url: '../restaurant/restaurant',
-  //   })
-  // },
-
-  shareGame () {
+  shareGame() {
     const wxGetImageInfo = promisify(wx.getImageInfo)
     wxGetImageInfo({
-        src: 'http://some-domain/bg.png'
+      src: 'http://some-domain/bg.png'
     }).then(res => {
-        const ctx = wx.createCanvasContext('shareCanvas')
-        ctx.drawImage(res.path, 0, 0, 600, 900)
-        ctx.draw()
+      const ctx = wx.createCanvasContext('shareCanvas')
+      ctx.drawImage(res.path, 0, 0, 600, 900)
+      ctx.draw()
     })
-    }
+  }
 })

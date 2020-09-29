@@ -49,15 +49,16 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel}}" src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:3rem; height:3rem"></image>
+					<image wx:for="{{gameSetting.shovel}}" src="https://hunger24.cfpa.org.cn/images/shovel.png"
+						style="width:3rem; height:3rem"></image>
 				</view>
 			</view>
 		</view>
 		<canvas style="width:100vw;height:50vh;" canvas-id="game"></canvas>
-			<view class="padding" style="text-align:center">
-				<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
-					bindtap="gameControl">{{gameStatus}}</button>
-			</view>
+		<view class="padding" style="text-align:center">
+			<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
+				bindtap="gameControl">{{gameStatus}}</button>
+		</view>
 	</view>
 	<view class="cu-modal {{isRuleModalDisplayed?'show':''}}">
 		<view class="cu-dialog">
@@ -79,40 +80,42 @@
 		</view>
 	</view>
 	<view class="cu-modal {{isShareModalDisplayed?'show':''}}">
-  <view class="cu-dialog">
-   <view class="cu-bar bg-white justify-end">
-    <view class="content"></view>
-    <view class="action" bindtap="hideShareModal">
-     <text class="cuIcon-close text-red"></text>
-    </view>
-   </view>
-   <view class="padding-xl">
-    <text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
-    {{cropIntroDict[crop]}}
-   </text>
-   <text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
-   </text>
-   <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
-   </view>
-  </view>
- </view>
- <view class="cu-modal {{isResultModalDisplayed?'show':''}}">
-  <view class="cu-dialog">
-   <view class="cu-bar bg-white justify-end">
-    <view class="content"></view>
-    <view class="action">
-     <text class="cuIcon-close text-red"></text>
-    </view>
-   </view>
-   <view class="padding-xl">
-    <text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
-   </text>
-   <text wx:if="{{!finalSuccess}}">哎呀！很遗憾，你的能量为0，没有完成饥饿24挑战，对好友发起挑战吧~
-   </text>
-   <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">分享给好友</button>
-   </view>
-  </view>
- </view>
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white justify-end">
+				<view class="content"></view>
+				<view class="action" bindtap="hideShareModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl">
+				<text wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropCollected}}能量值+ {{cropValDict[cropCollected]}}~\n
+					{{cropIntroDict[crop]}}
+				</text>
+				<text wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
+				</text>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
+					data-tab-index="1">邀请好友获取铲子</button>
+			</view>
+		</view>
+	</view>
+	<view class="cu-modal {{isResultModalDisplayed?'show':''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white justify-end">
+				<view class="content"></view>
+				<view class="action">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl">
+				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
+				</text>
+				<text wx:if="{{!finalSuccess}}">哎呀！很遗憾，你的能量为0，没有完成饥饿24挑战，对好友发起挑战吧~
+				</text>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
+					data-tab-index="1">分享给好友</button>
+			</view>
+		</view>
+	</view>
 </block>
 <block wx:if="{{selectedTab == 2}}">
 	<view class="container">
@@ -132,7 +135,7 @@
 		<text class="cuIcon-cardboard navbar-icon" style="color:orange"></text>
 		<view style="color:orange">游戏</view>
 	</view>
-	<view class="navbar-tab" bindtap="jumpTo" data-tab-index="2">
+	<view class="navbar-tab" bindtap="toDonate" data-tab-index="2">
 		<text class="cuIcon-present navbar-icon" style="color:orange"></text>
 		<view style="color:orange">捐一餐</view>
 	</view>
