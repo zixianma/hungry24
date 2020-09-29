@@ -32,7 +32,7 @@ App({
       },
       fail: console.error
     })
+  },
 
-    this.globalData = {}
-  }
+  globalData: {}
 })
