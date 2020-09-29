@@ -6,7 +6,8 @@
     "pages/farm/farm",
     "pages/share/share",
     "pages/end/end",
-    "pages/donation/donation"
+    "pages/donation/donation",
+    "pages/restaurant"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
