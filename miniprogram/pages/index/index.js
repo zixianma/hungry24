@@ -18,28 +18,55 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  async onLoad(options) {
     var that = this
 
-    const userInfo = app.globalData.userInfo
-
+    const {
+      result: loginResult
+    } = await wx.cloud.callFunction({
+      name: 'login',
+      data: {}
+    })
+    console.log({
+      loginResult
+    })
+    const userInfo = loginResult.userInfo
+    app.globalData.userInfo = userInfo
     this.setData({
       userInfo
     })
-    
+
+    let initialEnergy = 0
+    const {
+      result: energyResult
+    } = await wx.cloud.callFunction({
+      name: 'getEnergy',
+      data: {}
+    })
+    console.log({
+      energyResult
+    })
+    if (energyResult.length > 0) {
+      initialEnergy = energyResult[0].sum
+    }
+
     let timer = setInterval(function () {
       let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
       let now = Date.parse(new Date())
-      let remainPercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+      // remaining time
+      let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+      // remain energy
+      let remainingEnergy = initialEnergy - ((now - startTime) / (3600 * 1000))
+      let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
+      // set data
       that.setData({
-        remainPercentage
+        remainingTimePercentage,
+        remainingEnergyPercentage
       })
     }, 1000);
     this.setData({
       timer
     })
-
-
   },
 
   /**
@@ -102,7 +129,9 @@ Page({
         name: 'startChallenge',
         data: {},
         success: function (res) {
-          console.log({startChallenge: res.result})
+          console.log({
+            startChallenge: res.result
+          })
         },
         fail: console.error
       })
@@ -126,7 +155,6 @@ Page({
       url: '../donation/donation',
     })
   },
-
 
   line_move: function () {
     var that = this
@@ -175,8 +203,7 @@ Page({
         cxt.setFillStyle('orange')
         goRight ? cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414)
         cxt.draw()
-      }
-      else if(that.data.selectedTab == 1 && that.data.isStopped) {
+      } else if (that.data.selectedTab == 1 && that.data.isStopped) {
         // cxt.globalAlpha = 0.3
         // cxt.setFillStyle('orange')
         // cxt.fillRect(rectX_vertical, rectY_vertical, 414, 3)
@@ -186,9 +213,8 @@ Page({
         cxt.draw()
       }
     })
-
-
   },
+
   gameControl(e) {
     const isStopped = this.data.isStopped
     this.setData({

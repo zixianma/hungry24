@@ -32,7 +32,7 @@
 					剩余时间：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
-					<view class="bg-green" style="width:{{remainPercentage}}%;">{{remainPercentage}}</view>
+					<view class="bg-green" style="width:{{remainingTimePercentage}}%;">{{remainingTimePercentage}}</view>
 				</view>
 			</view>
 			<view class="width-90-inline horizontal-center">
@@ -40,7 +40,7 @@
 					剩余能量：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
-					<view class="bg-green" style="width:{{remainPercentage}}%;">{{remainPercentage}}</view>
+					<view class="bg-green" style="width:{{remainingEnergyPercentage}}%;">{{remainingEnergyPercentage}}</view>
 				</view>
 			</view>
 			<view class="width-90-inline horizontal-center">

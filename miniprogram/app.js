@@ -22,16 +22,6 @@ App({
         traceUser: true,
       })
     }
-
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: function (res) {
-        console.log({login: res.result})
-        that.globalData.userInfo = res.result.userInfo
-      },
-      fail: console.error
-    })
   },
 
   globalData: {}
