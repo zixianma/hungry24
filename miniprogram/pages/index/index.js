@@ -210,8 +210,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    const userId = this.data.userInfo._id
     return {
-      path: '/pages/index/index?from_user=sunnie'
+      path: '/pages/index/index?from_user=' + userId
     }
   },
 
