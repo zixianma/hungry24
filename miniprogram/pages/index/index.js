@@ -138,7 +138,24 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    // get random position
+    const screenWidth = app.globalData.screenWidth
+    let position = this.data.position
+    for (let i = 0; i < this.data.crops.length; i++) {
+      let positionLevel = []
+      for (let j = 0; j < this.data.crops[i].length; j++) {
+        let positionPoint = []
+        for (let t = 0; t < 2; t++) {
+          positionPoint.push(Math.random() * 0.6 * screenWidth)
+        }
+        positionLevel.push(positionPoint)
+      }
+      position.push(positionLevel)
+    }
 
+    this.setData({
+      position
+    })
   },
 
   /**
@@ -210,6 +227,10 @@ Page({
 
     if (tabIndex == 1) {
       this.startProgressBarTimer()
+      let isStopped = this.data.isStopped
+      this.setData({
+        isStopped: false
+      })
       this.startLineMove()
     } else {
       clearInterval(this.data.lineMoveTimer)
@@ -263,24 +284,6 @@ Page({
 
   startLineMove() {
     if (this.data.gameSetting) {
-
-      // get random position
-      const screenWidth = app.globalData.screenWidth
-      let position = []
-      for (let i = 0; i < this.data.crops.length; i++) {
-        let positionLevel = []
-        for (let j = 0; j < this.data.crops[i].length; j++) {
-          let positionPoint = []
-          for (let t = 0; t < 2; t++) {
-            positionPoint.push(Math.random() * 0.6 * screenWidth)
-          }
-          positionLevel.push(positionPoint)
-        }
-        position.push(positionLevel)
-      }
-      this.setData({
-        position
-      })
       this.lineMove()
     }
   },
@@ -309,7 +312,6 @@ Page({
         crossPoint_y = rectY_vertical
         if (!that.data.isStopped) {
           changeState = true
-
           if (rectY_vertical >= Math.floor(0.47 * screenHeight)) {
             goUp = true
           } else if (rectY_vertical == 0) {
@@ -331,15 +333,22 @@ Page({
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
           cxt.draw()
         } else {
-          that.drawPlant(cxt)
-          // cxt.globalAlpha = 1
-          cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
-          cxt.draw()
+          // that.drawPlant(cxt)
+          // // cxt.globalAlpha = 1
+          // cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
+          // cxt.draw()
+
           //Calculating the distance and update canvas
           if (changeState) {
+            that.shovelShaking(cxt, crossPoint_x, crossPoint_y, 50, 50)
             setTimeout(function () {
               that.renewDrawPlant(crossPoint_x, crossPoint_y)
-            }, 1000)
+              cxt.clearRect(0, 0, 500, 700)
+              cxt.setFillStyle('orange')
+              that.drawPlant(cxt)
+              cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x, crossPoint_y, 50, 50)
+              cxt.draw()
+            }, 1200)
             if (that.data.freeTrial > 0) {
               let freeTrial = that.data.freeTrial
               freeTrial--
@@ -357,10 +366,10 @@ Page({
           }
           changeState = false
         }
-        that.setData({
-          lineMoveTimer
-        })
       }
+    })
+    that.setData({
+      lineMoveTimer
     })
   },
 
@@ -405,8 +414,8 @@ Page({
       let usedCrop = this.data.usedCrop
       usedCrop[this.data.currentLevel][min_distance_index] = 1
       let currentNumberOfCrop = this.data.currentNumberOfCrop
-      let gameSetting = that.data.gameSetting
-      gameSetting.energy += that.cropsData[cropCollected]['val']
+      let gameSetting = this.data.gameSetting
+      gameSetting.energy += parseInt(this.data.cropsData[cropCollected]['val'])
       currentNumberOfCrop--
       collectSuccess = true
       this.setData({
@@ -431,6 +440,31 @@ Page({
         currentNumberOfCrops
       })
     }
+  },
+
+  shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
+    var x = crossPoint_x
+    var y = crossPoint_y
+    var border = -30
+    var goRight_shovel = false
+    var that = this
+    var shaking = setInterval(function () {
+      cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
+      that.drawPlant(cxt)
+      if (border == 0) {
+        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x, crossPoint_y , width, height)
+        cxt.draw()
+        clearInterval(shaking)
+      }
+      else if (x - crossPoint_x == border) {
+        goRight_shovel = !goRight_shovel
+        border = (-border > 0) ? (-border - 5) : (-border + 5)
+      }
+      else {
+        goRight_shovel ? cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', x++, y, width, height) : cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', x--, y, width, height)
+        cxt.draw()
+      }
+    })
   },
 
   gameControl(e) {
