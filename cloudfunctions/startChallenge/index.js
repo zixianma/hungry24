@@ -35,7 +35,8 @@ exports.main = async (event, context) => {
     operationResult.dbStatus2 = await db.collection('energy').add({
       data: {
         openId,
-        value: 2
+        value: 2,
+        reason: "initialize"
       },
       success: function (res) {
         console.log(res)
