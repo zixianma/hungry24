@@ -97,16 +97,16 @@ Page({
         totalFee: amount
       },
       success: (res) => {
-        // const payment = res.result.payment
-        // wx.requestPayment({
-        //   ...payment,
-        //   success (res) {
-        //     console.log('pay success', res)
-        //   },
-        //   fail (res) {
-        //     console.error('pay fail', err)
-        //   }
-        // })
+        const payment = res.result.payment
+        wx.requestPayment({
+          ...payment,
+          success (res) {
+            console.log('pay success', res)
+          },
+          fail (res) {
+            console.error('pay fail', err)
+          }
+        })
       },
       fail: console.error
     })
