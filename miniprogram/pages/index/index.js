@@ -93,6 +93,10 @@ Page({
   async onLoad(options) {
     var that = this
 
+    wx.showLoading({
+      title: '加载中',
+    })
+
     // login
     const {
       result: loginResult
@@ -103,12 +107,16 @@ Page({
     console.log({
       loginResult
     })
-    const userInfo = loginResult.userInfo
-    app.globalData.userInfo = userInfo
-    this.setData({
-      userInfo
-    })
-
+    if (loginResult) {
+      const userInfo = loginResult.userInfo
+      app.globalData.userInfo = userInfo
+      this.setData({
+        userInfo
+      }, () => {
+        wx.hideLoading()
+      })
+    }
+    
     // get the source of the user
     const fromUser = options.from_user
     console.log({
@@ -223,22 +231,25 @@ Page({
       selectedTab: tabIndex
     })
 
-    if (!this.data.userInfo.challengeStartedAt && tabIndex == 1) {
-      wx.cloud.callFunction({
-        name: 'startChallenge',
-        data: {},
-        success: function (res) {
-          console.log({
-            startChallenge: res.result
+    if (tabIndex == 1) {
+      if (this.data.userInfo) {
+        if (!this.data.userInfo.challengeStartedAt) {
+          wx.cloud.callFunction({
+            name: 'startChallenge',
+            data: {},
+            success: function (res) {
+              console.log({
+                startChallenge: res.result
+              })
+            },
+            fail: console.error
           })
-        },
-        fail: console.error
-      })
+        }
+      }
     }
 
     if (tabIndex == 1) {
       this.startProgressBarTimer()
-      let isStopped = this.data.isStopped
       this.setData({
         isStopped: false
       })
@@ -277,15 +288,28 @@ Page({
         let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
         let now = Date.parse(new Date())
         // remaining time
-        let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+        let remainingTimePercentage = (100 - (now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+        remainingTimePercentage = remainingTimePercentage > 0 ? remainingTimePercentage : 0
         // remain energy
         let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
         let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
+        remainingEnergyPercentage = remainingEnergyPercentage > 0 ? remainingEnergyPercentage : 0
         // set data
         that.setData({
           remainingTimePercentage,
           remainingEnergyPercentage
         })
+        // check if game ends
+        if (remainingTimePercentage == 0) {
+          let finalSuccess = false
+          if (remainingEnergy > 0) {
+            finalSuccess = true
+          }
+          that.setData({
+            modalName: "result",
+            finalSuccess
+          })
+        }
       }, 1000);
       this.setData({
         progressBarTimer
@@ -426,7 +450,21 @@ Page({
       usedCrop[this.data.currentLevel][min_distance_index] = 1
       let currentNumberOfCrop = this.data.currentNumberOfCrop
       let gameSetting = this.data.gameSetting
-      gameSetting.energy += parseInt(this.data.cropsData[cropCollected]['val'])
+      let gainedEnergy = parseInt(this.data.cropsData[cropCollected]['val'])
+      gameSetting.energy += gainedEnergy
+      // upload game setting to db
+      wx.cloud.callFunction({
+        name: 'addGameResult',
+        data: {
+          value: gainedEnergy
+        },
+        success: function (res) {
+          console.log({
+            addGameResult: res.result
+          })
+        },
+        fail: console.error
+      })
       currentNumberOfCrop--
       collectSuccess = true
       this.setData({
@@ -540,20 +578,6 @@ Page({
     wx.navigateTo({
       url: '../restaurant/restaurant',
     })
-  },
-
-  checkFinalGameStatus() {
-    if (remainingTimePercentage == 0) {
-      if (remainingEnergy > 0) {
-        finalSuccess = true
-      } else {
-        finalSuccess = false
-      }
-      this.setData({
-        modalName: "result",
-        finalSuccess
-      })
-    }
   },
 
   exitGame() {}
