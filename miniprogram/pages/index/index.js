@@ -426,12 +426,7 @@ Page({
     } else {
       collectSuccess = false
     }
-    this.setData({
-      modalName: "share",
-      collectSuccess,
-      cropCollected,
-    })
-    if (this.data.currentNumberOfCrops == 0 && this.data.currentLevel < 2) {
+    if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel < 2) {
       let currentLevel = this.data.currentLevel
       currentLevel++
       let currentNumberOfCrops = this.data.usedCrop[this.data.currentLevel].length
@@ -440,6 +435,11 @@ Page({
         currentNumberOfCrops
       })
     }
+    this.setData({
+      modalName: "share",
+      collectSuccess,
+      cropCollected,
+    })
   },
 
   shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
