@@ -84,7 +84,7 @@ Page({
       [0, 0, 0],
       [0, 0, 0, 0]
     ],
-    freeTrial: 2
+    showRules: true
   },
 
   /**
@@ -164,7 +164,7 @@ Page({
       for (let j = 0; j < this.data.crops[i].length; j++) {
         let positionPoint = []
         for (let t = 0; t < 2; t++) {
-          positionPoint.push(Math.random() * 0.6 * screenWidth)
+          positionPoint.push(Math.random() * 0.7 * screenWidth)
         }
         positionLevel.push(positionPoint)
       }
@@ -300,16 +300,16 @@ Page({
           remainingEnergyPercentage
         })
         // check if game ends
-        if (remainingTimePercentage == 0) {
-          let finalSuccess = false
-          if (remainingEnergy > 0) {
-            finalSuccess = true
-          }
-          that.setData({
-            modalName: "result",
-            finalSuccess
-          })
-        }
+        // if (remainingTimePercentage == 0) {
+        //   let finalSuccess = false
+        //   if (remainingEnergy > 0) {
+        //     finalSuccess = true
+        //   }
+        //   that.setData({
+        //     modalName: "result",
+        //     finalSuccess
+        //   })
+        // }
       }, 1000);
       this.setData({
         progressBarTimer
@@ -319,6 +319,13 @@ Page({
 
   startLineMove() {
     if (this.data.gameSetting) {
+      // show rules when user starts the game
+      if (this.data.showRules) {
+        this.setData({
+          modalName: "rule",
+          showRules: false
+        })
+      }
       this.lineMove()
     }
   },
@@ -342,7 +349,7 @@ Page({
 
     const lineMoveTimer = setInterval(function () {
       let gameSetting = that.data.gameSetting
-      if (that.data.freeTrial > 0 || gameSetting.shovel > 0) {
+      if (gameSetting.shovel > 0) {
         crossPoint_x = rectX_horizontal
         crossPoint_y = rectY_vertical
         if (!that.data.isStopped) {
@@ -363,9 +370,13 @@ Page({
 
           that.drawPlant(cxt)
           // draw 2 lines
-          goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= 1.5, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += 1.5, 414, 3)
+          cxt.globalAlpha = 0.2
+          let updateSpeed = 1 * (that.data.currentLevel + 1)
+          goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= updateSpeed, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += 1.5, 414, 3)
           cxt.setFillStyle('orange')
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
+          cxt.globalAlpha = 1
+          cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
         } else {
           // that.drawPlant(cxt)
@@ -375,29 +386,25 @@ Page({
 
           //Calculating the distance and update canvas
           if (changeState) {
-            that.shovelShaking(cxt, crossPoint_x, crossPoint_y, 50, 50)
+            //update existing crops
+            that.shovelShaking(cxt, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
             setTimeout(function () {
               that.renewDrawPlant(crossPoint_x, crossPoint_y)
               cxt.clearRect(0, 0, 500, 700)
               cxt.setFillStyle('orange')
               that.drawPlant(cxt)
-              cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x, crossPoint_y, 50, 50)
+              cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x - 25, crossPoint_y - 25, 50, 50)
               cxt.draw()
             }, 1200)
-            if (that.data.freeTrial > 0) {
-              let freeTrial = that.data.freeTrial
-              freeTrial--
-              that.setData({
-                freeTrial
-              })
-            } else {
-              let gameSetting = that.data.gameSetting
-              gameSetting.shovel--
-              that.setData({
-                gameSetting
-              })
-            }
 
+
+            // update shovel number
+            let gameSetting = that.data.gameSetting
+            gameSetting.shovel--
+            that.setData({
+              gameSetting
+            })
+            changeState = false
           }
           changeState = false
         }
@@ -415,7 +422,7 @@ Page({
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
-        cxt.drawImage('https://hunger24.cfpa.org.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 100, 100)
+        cxt.drawImage('https://hunger24.cfpa.org.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
       }
     }
     // }
@@ -424,7 +431,7 @@ Page({
   //update the plant we need to draw
   renewDrawPlant(crossPoint_x, crossPoint_y) {
     const screenWidth = app.globalData.screenWidth
-    let min_distance = screenWidth / 4 //the range of the shovel
+    let min_distance = screenWidth / 6 //the range of the shovel
     let min_distance_index = 5
     for (let i = 0; i < this.data.crops[this.data.currentLevel].length; i++) {
       //detected counted
@@ -445,7 +452,7 @@ Page({
     //if crop is in the range
     let collectSuccess = false
     let cropCollected = this.data.cropsID[this.data.currentLevel][min_distance_index]
-    if (min_distance < screenWidth / 4) {
+    if (min_distance < screenWidth / 6) {
       let usedCrop = this.data.usedCrop
       usedCrop[this.data.currentLevel][min_distance_index] = 1
       let currentNumberOfCrop = this.data.currentNumberOfCrop
@@ -472,9 +479,19 @@ Page({
         usedCrop,
         currentNumberOfCrop
       })
-    } else {
+    } 
+    else {
       collectSuccess = false
     }
+
+
+    this.setData({
+      modalName: "share",
+      collectSuccess,
+      cropCollected,
+    })
+
+    // Continue to next level
     if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel < 2) {
       let currentLevel = this.data.currentLevel
       currentLevel++
@@ -484,11 +501,6 @@ Page({
         currentNumberOfCrops
       })
     }
-    this.setData({
-      modalName: "share",
-      collectSuccess,
-      cropCollected,
-    })
   },
 
   shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
