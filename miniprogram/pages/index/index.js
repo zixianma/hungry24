@@ -226,14 +226,21 @@ Page({
 
 
   switchTab(e) {
+    var that = this
+
     const tabIndex = e.currentTarget.dataset.tabIndex
     this.setData({
       selectedTab: tabIndex
     })
 
+    let userInfo = this.data.userInfo
+
     if (tabIndex == 1) {
-      if (this.data.userInfo) {
-        if (!this.data.userInfo.challengeStartedAt) {
+      if (userInfo) {
+        if (!userInfo.challengeStartedAt) {
+          wx.showLoading({
+            title: '加载中',
+          })
           wx.cloud.callFunction({
             name: 'startChallenge',
             data: {},
@@ -241,20 +248,34 @@ Page({
               console.log({
                 startChallenge: res.result
               })
+              userInfo.challengeStartedAt = new Date()
+              that.setData({
+                userInfo,
+                gameSetting: {shovel: 5, energy: 2}
+              }, () => {
+                wx.hideLoading()
+              })
+              if (that.data.showRules) {
+                that.setData({
+                  modalName: "rule",
+                  showRules: false
+                })
+              }
+              that.lineMove()
             },
             fail: console.error
           })
         }
       }
-    }
-
-    if (tabIndex == 1) {
       this.startProgressBarTimer()
-      this.setData({
-        isStopped: false
-      })
-      this.startLineMove()
-    } else {
+      if (this.data.gameSetting.shovel > 0) {
+        this.setData({
+          isStopped: false
+        })
+        this.lineMove()
+      }
+    }
+    else {
       clearInterval(this.data.lineMoveTimer)
       clearInterval(this.data.progressBarTimer)
     }
@@ -317,19 +338,6 @@ Page({
     }
   },
 
-  startLineMove() {
-    if (this.data.gameSetting) {
-      // show rules when user starts the game
-      if (this.data.showRules) {
-        this.setData({
-          modalName: "rule",
-          showRules: false
-        })
-      }
-      this.lineMove()
-    }
-  },
-
   lineMove: function () {
     var that = this
     const screenHeight = app.globalData.screenHeight
@@ -354,15 +362,15 @@ Page({
         crossPoint_y = rectY_vertical
         if (!that.data.isStopped) {
           changeState = true
-          if (rectY_vertical >= Math.floor(0.47 * screenHeight)) {
+          if (rectY_vertical > Math.floor(0.47 * screenHeight)) {
             goUp = true
-          } else if (rectY_vertical == 0) {
+          } else if (rectY_vertical < 0) {
             goUp = false
           }
 
-          if (rectX_horizontal >= screenWidth) {
+          if (rectX_horizontal > screenWidth) {
             goRight = false
-          } else if (rectX_horizontal == 0) {
+          } else if (rectX_horizontal < 0) {
             goRight = true
           }
           cxt.clearRect(0, 0, 500, 700)
@@ -376,7 +384,8 @@ Page({
           cxt.setFillStyle('orange')
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
           cxt.globalAlpha = 1
-          cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
+          const shovelPath = that.returnShovelPath()
+          cxt.drawImage(shovelPath, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
         } else {
           // that.drawPlant(cxt)
@@ -393,7 +402,8 @@ Page({
               cxt.clearRect(0, 0, 500, 700)
               cxt.setFillStyle('orange')
               that.drawPlant(cxt)
-              cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x - 25, crossPoint_y - 25, 50, 50)
+              const shovelPath = that.returnShovelPath()
+              cxt.drawImage(shovelPath, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
               cxt.draw()
             }, 1200)
 
@@ -415,20 +425,24 @@ Page({
         })
         clearInterval(that.data.lineMoveTimer)
       }
-    })
+    }, 1)
     that.setData({
       lineMoveTimer
     })
   },
+  async returnShovelPath() {
+    return (await that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/shovel.png')).path
+  },
 
-  drawPlant(cxt) {
+  async drawPlant(cxt) {
     var currentLevel = this.data.currentLevel
-    var currentCrops = this.data.cropsChinese[currentLevel]
+    var currentCrops = this.data.cropsID[currentLevel]
     var numberOfCrops = currentCrops.length
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
-        cxt.drawImage('https://hunger24.cfpa.org.cn/images/' + currentCrops[i] + '.png', this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
+        let {path: cropImage} = await that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/' + currentCrops[i] + '.png')
+        cxt.drawImage(cropImage, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
       }
     }
     // }
@@ -508,7 +522,7 @@ Page({
     }
   },
 
-  shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
+  async shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
     var x = crossPoint_x
     var y = crossPoint_y
     var border = -30
@@ -518,17 +532,19 @@ Page({
       cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
       that.drawPlant(cxt)
       if (border == 0) {
-        cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', crossPoint_x, crossPoint_y, width, height)
+        const shovelPath = that.returnShovelPath()
+        cxt.drawImage(shovelImage, crossPoint_x, crossPoint_y, width, height)
         cxt.draw()
         clearInterval(shaking)
       } else if (x - crossPoint_x == border) {
         goRight_shovel = !goRight_shovel
         border = (-border > 0) ? (-border - 5) : (-border + 5)
       } else {
-        goRight_shovel ? cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', x++, y, width, height) : cxt.drawImage('https://tx-static-2.kevincdn.cn/images/铲子.png', x--, y, width, height)
+        const shovelPath = that.returnShovelPath()
+        goRight_shovel ? cxt.drawImage(shovelImage, x++, y, width, height) : cxt.drawImage(shovelImage, x--, y, width, height)
         cxt.draw()
       }
-    })
+    },1)
   },
 
   gameControl(e) {
@@ -549,40 +565,6 @@ Page({
       })
     })
   },
-
-  shareGame() {
-    var that = this
-    // this.setData({
-    //   isResultModalDisplayed: true,
-    //   finalSuccess: true
-    // })
-    Promise.all([
-      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/铲子.png"),
-      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/玉米.png"),
-      that.promiseGetImageInfo("https://hunger24.cfpa.org.cn/images/稻米.png")
-    ]).then(res => {
-      const ctx = wx.createCanvasContext('shareResult')
-
-      // 底图
-      if (finalSuccess) {
-        console.log("Success!")
-        ctx.drawImage(res[0].path, 0, 0, 600, 900)
-      } else {
-        ctx.drawImage(res[1].path, 0, 0, 600, 900)
-      }
-      // 作者名称
-      ctx.setTextAlign('center') // 文字居中
-      ctx.setFillStyle('#000000') // 文字颜色：黑色
-      ctx.setFontSize(22) // 文字字号：22px
-      ctx.fillText("作者： 张杰", 600 / 2, 500)
-      // 小程序码
-      // const qrImgSize = 180
-      // ctx.drawImage(res[1].path, (600 - qrImgSize) / 2, 530, qrImgSize, qrImgSize)
-      // ctx.stroke()
-      // ctx.draw()
-    })
-  },
-
   stopGame() {
     this.setData({
       modalName: "exit"
