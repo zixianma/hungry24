@@ -259,7 +259,7 @@ Page({
     let userInfo = this.data.userInfo
 
     if (tabIndex == 1) {
-      if (userInfo) {
+      if (userInfo && this.data.isImageLoaded) {
         if (!userInfo.challengeStartedAt) {
           wx.showLoading({
             title: '加载中',

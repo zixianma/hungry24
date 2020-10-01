@@ -51,10 +51,14 @@
 				</view>
 			</view>
 		</view>
-		<canvas style="width:100vw;height:56.222vh;" canvas-id="game"></canvas>
+		<view class="flex align-center" style="position:fixed; top:41vw; bottom:17vw;">
+			<view class="" style="margin-top:auto; margin-bottom:auto;">
+		<canvas style="width:100vw;height:90vw;" canvas-id="game"></canvas>
 		<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
 			<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
 				bindtap="gameControl">{{gameStatus}}</button>
+			</view>
+		</view>
 		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'rule' ? 'show' : ''}}">
