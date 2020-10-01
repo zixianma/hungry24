@@ -403,10 +403,11 @@ Page({
           that.drawPlant(cxt)
           // draw 2 lines
           cxt.globalAlpha = 0.2
-          let updateSpeed = 0.5 * (that.data.currentLevel + 1)
-          goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= updateSpeed, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += 1.5, 414, 3)
+          let updateSpeed_x = 0.3 * (that.data.currentLevel + 1)
+          let updateSpeed_y = 0.5 * (that.data.currentLevel + 1)
+          goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= updateSpeed_y, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += updateSpeed_y, 414, 3)
           cxt.setFillStyle('orange')
-          goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
+          goRight ? cxt.fillRect(rectX_horizontal += updateSpeed_x, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal -= updateSpeed_x, rectY_horizontal, 3, 414)
           cxt.globalAlpha = 1
           cxt.drawImage(shovel, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
