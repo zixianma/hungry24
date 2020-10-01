@@ -4,18 +4,16 @@
     </web-view>
   </view> -->
 <view>
-  <image src="https://hunger24.cfpa.org.cn/images/donation_banner.png"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/新海报.jpg" style="width:100vw; height:62.685vh;"></image>
   <view class="cu-bar justify-center bg-white">
-    <view class="action sub-title">
-      <text class="text-xl text-bold warm-yellow">关于我们</text>
+    <view class="sub-title">
+      <text class="text-xl text-bold warm-yellow">项目介绍</text>
       <text class="bg-warm-yellow" style="width:2rem"></text>
-      <!-- last-child选择器-->
     </view>
   </view>
-  <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg" style="width:100vw; height:375.115vh"></image>
   <view class="cu-bar tabbar border shop text-center">
     <view class="action">
-      <!-- <button class="cu-btn bg-green shadow" bindtap="showModal" data-target="bottomModal">Bottom</button> -->
       <button class="bg-red submit" bindtap="showModal" data-modal-name="pay" style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
     </view>
     <view class="cu-modal bottom-modal {{modalName == 'pay' ? 'show' : ''}}">
@@ -24,19 +22,16 @@
           请输入您想捐赠的金额：
           <view class="flex-sub">
             <view class="solid-bottom text-xl padding">
-              <!-- <text class="text-black text-bold">您的捐款已提交成功！</text> -->
               <view class="cu-form-group margin-top">
-                <!-- <view class="title">捐款金额</view> -->
                 <input placeholder="请填写1以上的整数" bindinput="onInput"></input>
               </view>
             </view>
-            <!-- <view class="padding">感谢您为孩子捐赠能量~</view> -->
-            <view class="padding" style="text-align:left;">*一餐=4.2元</view>
+            <view class="padding" style="text-align:left;">*一日餐费约为4元</view>
           </view>
         </view>
         <view class="cu-bar bg-white-yellow">
-          <view class="action text-red" bindtap="toPay">确定</view>
-          <view class="action text-yellow" style="text-size:3rem;" bindtap="hideModal">取消</view>
+          <view class="action text-red" style="text-size:3rem;" bindtap="hideModal">取消</view>
+          <view class="action text-yellow" bindtap="toPay">确认</view>
         </view>
       </view>
     </view>
