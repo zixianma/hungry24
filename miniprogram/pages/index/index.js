@@ -10,55 +10,55 @@ Page({
     gameStatus: "在这儿挖",
     remainingShovelNumber: 5,
     cropsData: [{
-        'name': '土豆',
-        'val': '1',
-        'intro': '土豆，别称马铃薯、地蛋、洋芋等，茄科茄属，一年生草本植物。马铃薯是中国五大主食之一，其营养价值高、适应力强、产量大，是全球重要的粮食作物。'
-      },
-      {
-        'name': '番薯',
-        'val': '1',
-        'intro': '番薯，别称地瓜、红薯、红苕等。一年生草本植物，番薯是一种高产而适应性强的粮食作物，全世界的热带、亚热带地区广泛栽培，中国大多数地区普遍栽培。 '
-      },
-      {
-        'name': '木薯',
-        'val': '1',
-        'intro': '木薯，直立灌木，块根圆柱状。原产巴西，现全世界热带地区广泛栽培。中国福建、台湾、广东、海南、广西、贵州及云南等省区有栽培。非洲的木薯产量占全世界60%，木薯在非洲的地位相当于我国的小麦、稻米,它是非洲人民的主食之一。'
-      },
-      {
-        'name': '小麦',
-        'val': '2',
-        'intro': '小麦是小麦系植物的统称，是一种在世界各地广泛种植的禾木科植物，人类的主食之一，小麦是三大谷物之。中国是世界最早种植小麦的国家之一。'
-      },
-      {
-        'name': '稻米',
-        'val': '2',
-        'intro': '稻米也叫稻或水稻，脱壳的粮食是大米，是我国的主要粮食作物之一。稻米不仅是食粮，同时还可以作为酿酒、制造饴糖的原料。全世界有一半的人口食用它，因能维持较多人口的生活，联合国规定2004年为"国际稻米"年。'
-      },
-      {
-        'name': '大豆',
-        'val': '2',
-        'intro': '大豆，通称黄豆。豆科大豆属一年生草本，原产中国，中国各地均有栽培，东北为主产区，亦广泛栽培于世界各地，已有五千年栽培历史，。大豆是中国重要粮食作物之一，含有丰富植物蛋白质的作物，常用来做各种豆制品、榨取豆油、 酿造酱油和提取蛋白质。'
-      },
-      {
-        'name': '玉米',
-        'val': 3,
-        'intro': '玉米是禾本科玉蜀黍属一年生草本植物，是重要的粮食作物和饲料作物，全世界总产量最高的农作物。玉米原产于中南美洲，现在世界各地均有栽培，我国的玉米主要产区是东北、华北和西南山区。'
-      },
-      {
-        'name': '高粱',
-        'val': 3,
-        'intro': '高粱是禾本科一年生草本植物。秆较粗壮，直立，基部节上具支撑根。性喜温暖，抗旱、耐涝。中国栽培较广，以东北各地为最多。食用高粱谷粒供食用、酿酒。'
-      },
-      {
-        'name': '鹰嘴豆',
-        'val': 4,
-        'intro': '鹰嘴豆为豆科草本植物，起源于亚洲西部和近东地区，是世界上栽培面积较大的豆类植物，其中印度和巴基斯坦两国的种植面积 占全世界的80%以上，中国只有零星分布。鹰嘴豆因其面形奇特，尖如鹰嘴，故称此名。鹰嘴豆的淀粉具有板栗香味，加上奶粉制成豆乳粉，易于吸收消化，是上乘的营养食品。'
-      },
-      {
-        'name': '苔麸',
-        'val': 5,
-        'intro': '苔麸，又称埃塞俄比亚画眉草，是一种禾本科谷物，生活在埃塞俄比亚和厄立特里亚海拔3000多米高原上的一种作物。埃塞俄比亚人和厄立特里亚人最喜爱的主食"英吉拉"的原材料，产量极低，只适应埃塞俄比亚和厄立特里亚的高原气候。'
-      }
+      'name': '土豆',
+      'val': '1',
+      'intro': '土豆，别称马铃薯、地蛋、洋芋等，茄科茄属，一年生草本植物。马铃薯是中国五大主食之一，其营养价值高、适应力强、产量大，是全球重要的粮食作物。'
+    },
+    {
+      'name': '番薯',
+      'val': '1',
+      'intro': '番薯，别称地瓜、红薯、红苕等。一年生草本植物，番薯是一种高产而适应性强的粮食作物，全世界的热带、亚热带地区广泛栽培，中国大多数地区普遍栽培。 '
+    },
+    {
+      'name': '木薯',
+      'val': '1',
+      'intro': '木薯，直立灌木，块根圆柱状。原产巴西，现全世界热带地区广泛栽培。中国福建、台湾、广东、海南、广西、贵州及云南等省区有栽培。非洲的木薯产量占全世界60%，木薯在非洲的地位相当于我国的小麦、稻米,它是非洲人民的主食之一。'
+    },
+    {
+      'name': '小麦',
+      'val': '2',
+      'intro': '小麦是小麦系植物的统称，是一种在世界各地广泛种植的禾木科植物，人类的主食之一，小麦是三大谷物之。中国是世界最早种植小麦的国家之一。'
+    },
+    {
+      'name': '稻米',
+      'val': '2',
+      'intro': '稻米也叫稻或水稻，脱壳的粮食是大米，是我国的主要粮食作物之一。稻米不仅是食粮，同时还可以作为酿酒、制造饴糖的原料。全世界有一半的人口食用它，因能维持较多人口的生活，联合国规定2004年为"国际稻米"年。'
+    },
+    {
+      'name': '大豆',
+      'val': '2',
+      'intro': '大豆，通称黄豆。豆科大豆属一年生草本，原产中国，中国各地均有栽培，东北为主产区，亦广泛栽培于世界各地，已有五千年栽培历史，。大豆是中国重要粮食作物之一，含有丰富植物蛋白质的作物，常用来做各种豆制品、榨取豆油、 酿造酱油和提取蛋白质。'
+    },
+    {
+      'name': '玉米',
+      'val': 3,
+      'intro': '玉米是禾本科玉蜀黍属一年生草本植物，是重要的粮食作物和饲料作物，全世界总产量最高的农作物。玉米原产于中南美洲，现在世界各地均有栽培，我国的玉米主要产区是东北、华北和西南山区。'
+    },
+    {
+      'name': '高粱',
+      'val': 3,
+      'intro': '高粱是禾本科一年生草本植物。秆较粗壮，直立，基部节上具支撑根。性喜温暖，抗旱、耐涝。中国栽培较广，以东北各地为最多。食用高粱谷粒供食用、酿酒。'
+    },
+    {
+      'name': '鹰嘴豆',
+      'val': 4,
+      'intro': '鹰嘴豆为豆科草本植物，起源于亚洲西部和近东地区，是世界上栽培面积较大的豆类植物，其中印度和巴基斯坦两国的种植面积 占全世界的80%以上，中国只有零星分布。鹰嘴豆因其面形奇特，尖如鹰嘴，故称此名。鹰嘴豆的淀粉具有板栗香味，加上奶粉制成豆乳粉，易于吸收消化，是上乘的营养食品。'
+    },
+    {
+      'name': '苔麸',
+      'val': 5,
+      'intro': '苔麸，又称埃塞俄比亚画眉草，是一种禾本科谷物，生活在埃塞俄比亚和厄立特里亚海拔3000多米高原上的一种作物。埃塞俄比亚人和厄立特里亚人最喜爱的主食"英吉拉"的原材料，产量极低，只适应埃塞俄比亚和厄立特里亚的高原气候。'
+    }
     ],
     cropsID: [
       [0, 1, 2],
@@ -84,7 +84,8 @@ Page({
       [0, 0, 0],
       [0, 0, 0, 0]
     ],
-    showRules: true
+    showRules: true,
+    isImageLoaded: false
   },
 
   /**
@@ -150,6 +151,28 @@ Page({
     this.setData({
       gameSetting
     })
+
+    //Load all image
+    Promise.all([
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/shovel.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/0.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/1.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/2.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/3.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/4.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/5.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/6.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/7.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/8.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/9.png'),]
+    ).then(([shovel, potato, sweet_potato, cassava, soybean, wheat, rice, corn, sorghum, chickpea, teff]) => {
+      that.setData({
+        imageObject: [[shovel], [potato, sweet_potato, cassava], [soybean, wheat, rice], [corn, sorghum, chickpea, teff]],
+        isImageLoaded: true
+      })
+    }
+    )
+
   },
 
   /**
@@ -251,7 +274,7 @@ Page({
               userInfo.challengeStartedAt = new Date()
               that.setData({
                 userInfo,
-                gameSetting: {shovel: 5, energy: 2}
+                gameSetting: { shovel: 5, energy: 2 }
               }, () => {
                 wx.hideLoading()
               })
@@ -275,6 +298,7 @@ Page({
         this.lineMove()
       }
     }
+
     else {
       clearInterval(this.data.lineMoveTimer)
       clearInterval(this.data.progressBarTimer)
@@ -354,7 +378,7 @@ Page({
     let crossPoint_x = rectX_horizontal
     let crossPoint_y = rectY_vertical
     let changeState = true //for just performing else statement once
-
+    const shovel = that.data.imageObject[0][0].path
     const lineMoveTimer = setInterval(function () {
       let gameSetting = that.data.gameSetting
       if (gameSetting.shovel > 0) {
@@ -362,7 +386,7 @@ Page({
         crossPoint_y = rectY_vertical
         if (!that.data.isStopped) {
           changeState = true
-          if (rectY_vertical > Math.floor(0.47 * screenHeight)) {
+          if (rectY_vertical > 0.9 * screenWidth) {
             goUp = true
           } else if (rectY_vertical < 0) {
             goUp = false
@@ -379,13 +403,12 @@ Page({
           that.drawPlant(cxt)
           // draw 2 lines
           cxt.globalAlpha = 0.2
-          let updateSpeed = 1 * (that.data.currentLevel + 1)
+          let updateSpeed = 0.5 * (that.data.currentLevel + 1)
           goUp ? cxt.fillRect(rectX_vertical, rectY_vertical -= updateSpeed, 414, 3) : cxt.fillRect(rectX_vertical, rectY_vertical += 1.5, 414, 3)
           cxt.setFillStyle('orange')
           goRight ? cxt.fillRect(rectX_horizontal++, rectY_horizontal, 3, 414) : cxt.fillRect(rectX_horizontal--, rectY_horizontal, 3, 414)
           cxt.globalAlpha = 1
-          const shovelPath = that.returnShovelPath()
-          cxt.drawImage(shovelPath, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
+          cxt.drawImage(shovel, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
         } else {
           // that.drawPlant(cxt)
@@ -397,13 +420,12 @@ Page({
           if (changeState) {
             //update existing crops
             that.shovelShaking(cxt, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
-            setTimeout(function () {
+            setTimeout(async function () {
               that.renewDrawPlant(crossPoint_x, crossPoint_y)
               cxt.clearRect(0, 0, 500, 700)
               cxt.setFillStyle('orange')
               that.drawPlant(cxt)
-              const shovelPath = that.returnShovelPath()
-              cxt.drawImage(shovelPath, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
+              cxt.drawImage(shovel, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
               cxt.draw()
             }, 1200)
 
@@ -430,19 +452,18 @@ Page({
       lineMoveTimer
     })
   },
-  async returnShovelPath() {
-    return (await that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/shovel.png')).path
-  },
 
-  async drawPlant(cxt) {
+
+  drawPlant(cxt) {
+    var that = this
     var currentLevel = this.data.currentLevel
     var currentCrops = this.data.cropsID[currentLevel]
     var numberOfCrops = currentCrops.length
+    const image = that.data.imageObject
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
-        let {path: cropImage} = await that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/' + currentCrops[i] + '.png')
-        cxt.drawImage(cropImage, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
+        cxt.drawImage(image[currentLevel + 1][i].path, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
       }
     }
     // }
@@ -522,29 +543,28 @@ Page({
     }
   },
 
-  async shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
+  shovelShaking(cxt, crossPoint_x, crossPoint_y, width, height) {
     var x = crossPoint_x
     var y = crossPoint_y
     var border = -30
     var goRight_shovel = false
     var that = this
+    const shovel = that.data.imageObject[0][0].path
     var shaking = setInterval(function () {
       cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
       that.drawPlant(cxt)
       if (border == 0) {
-        const shovelPath = that.returnShovelPath()
-        cxt.drawImage(shovelImage, crossPoint_x, crossPoint_y, width, height)
+        cxt.drawImage(shovel, crossPoint_x, crossPoint_y, width, height)
         cxt.draw()
         clearInterval(shaking)
       } else if (x - crossPoint_x == border) {
         goRight_shovel = !goRight_shovel
         border = (-border > 0) ? (-border - 5) : (-border + 5)
       } else {
-        const shovelPath = that.returnShovelPath()
-        goRight_shovel ? cxt.drawImage(shovelImage, x++, y, width, height) : cxt.drawImage(shovelImage, x--, y, width, height)
+        goRight_shovel ? cxt.drawImage(shovel, x++, y, width, height) : cxt.drawImage(shovel, x--, y, width, height)
         cxt.draw()
       }
-    },1)
+    }, 1)
   },
 
   gameControl(e) {
@@ -577,7 +597,7 @@ Page({
     })
   },
 
-  exitGame() {},
+  exitGame() { },
 
   saveImageToAlbum() {
     const imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
