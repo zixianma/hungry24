@@ -113,9 +113,12 @@ Page({
       app.globalData.userInfo = userInfo
       this.setData({
         userInfo
-      }, () => {
-        wx.hideLoading()
-      })
+      }
+        // hideLoading after loading shovel and crops images
+        // , () => {
+        //   wx.hideLoading()
+        // }
+      )
     }
 
     // get the source of the user
@@ -153,7 +156,7 @@ Page({
     })
 
     //Load all image
-    Promise.all([
+    await Promise.all([
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/shovel.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/0.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/1.png'),
@@ -169,6 +172,8 @@ Page({
       that.setData({
         imageObject: [[shovel], [potato, sweet_potato, cassava], [soybean, wheat, rice], [corn, sorghum, chickpea, teff]],
         isImageLoaded: true
+      }, () => {
+        wx.hideLoading()
       })
     }
     )
@@ -187,7 +192,7 @@ Page({
       for (let j = 0; j < this.data.crops[i].length; j++) {
         let positionPoint = []
         for (let t = 0; t < 2; t++) {
-          positionPoint.push(Math.random() * 0.7 * screenWidth)
+          positionPoint.push(Math.random() * 0.9 * screenWidth)
         }
         positionLevel.push(positionPoint)
       }
@@ -297,6 +302,12 @@ Page({
         })
         this.lineMove()
       }
+      else {
+        this.setData({
+          modalName: "shareShovel",
+          isStopped: true
+        })
+      }
     }
 
     else {
@@ -399,9 +410,9 @@ Page({
           }
           cxt.clearRect(0, 0, 500, 700)
           cxt.setFillStyle('orange')
-
           that.drawPlant(cxt)
-          // draw 2 lines
+
+          // draw 2 lines' movement
           cxt.globalAlpha = 0.2
           let updateSpeed_x = 0.3 * (that.data.currentLevel + 1)
           let updateSpeed_y = 0.5 * (that.data.currentLevel + 1)
@@ -411,25 +422,11 @@ Page({
           cxt.globalAlpha = 1
           cxt.drawImage(shovel, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
-        } else {
-          // that.drawPlant(cxt)
-          // // cxt.globalAlpha = 1
-          // cxt.drawImage('https://hunger24.cfpa.org.cn/images/铲子.png', crossPoint_x - 50, crossPoint_y - 50, 100, 100)
-          // cxt.draw()
-
-          //Calculating the distance and update canvas
+        } 
+        else {
           if (changeState) {
-            //update existing crops
+            //shake shovel animation
             that.shovelShaking(cxt, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
-            setTimeout(async function () {
-              that.renewDrawPlant(crossPoint_x, crossPoint_y)
-              cxt.clearRect(0, 0, 500, 700)
-              cxt.setFillStyle('orange')
-              that.drawPlant(cxt)
-              cxt.drawImage(shovel, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
-              cxt.draw()
-            }, 1200)
-
 
             // update shovel number
             let gameSetting = that.data.gameSetting
@@ -438,11 +435,32 @@ Page({
               gameSetting
             })
             changeState = false
+
+            //update existing plant
+            setTimeout(function () {
+              that.renewDrawPlant(crossPoint_x, crossPoint_y)
+              cxt.clearRect(0, 0, 500, 700)
+              cxt.setFillStyle('orange')
+              that.drawPlant(cxt)
+              cxt.drawImage(shovel, crossPoint_x - 25, crossPoint_y - 25, 50, 50)
+              cxt.draw()
+            }, 1200)
+
+            // show shareShovel
+            setTimeout(function () {
+              if (gameSetting.shovel == 0) {
+                that.setData({
+                  modalName: "shareShovel",
+                  isStopped: true
+                })
+                clearInterval(that.data.lineMoveTimer)
+              }
+            }, 2400)
           }
         }
-      } else {
+      }
+      else {
         that.setData({
-          modalName: "shareShovel",
           isStopped: true
         })
         clearInterval(that.data.lineMoveTimer)
@@ -460,13 +478,13 @@ Page({
     var currentCrops = this.data.cropsID[currentLevel]
     var numberOfCrops = currentCrops.length
     const image = that.data.imageObject
+
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
         cxt.drawImage(image[currentLevel + 1][i].path, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
       }
     }
-    // }
   },
 
   //update the plant we need to draw
@@ -474,6 +492,7 @@ Page({
     const screenWidth = app.globalData.screenWidth
     let min_distance = screenWidth / 6 //the range of the shovel
     let min_distance_index = 5
+
     for (let i = 0; i < this.data.crops[this.data.currentLevel].length; i++) {
       //detected counted
       if (this.data.usedCrop[this.data.currentLevel][i] == 1) {
@@ -500,6 +519,7 @@ Page({
       let gameSetting = this.data.gameSetting
       let gainedEnergy = parseInt(this.data.cropsData[cropCollected]['val'])
       gameSetting.energy += gainedEnergy
+
       // upload game setting to db
       wx.cloud.callFunction({
         name: 'addGameResult',
@@ -520,10 +540,10 @@ Page({
         usedCrop,
         currentNumberOfCrop
       })
-    } else {
+    } 
+    else {
       collectSuccess = false
     }
-
 
     this.setData({
       modalName: "share",
@@ -531,7 +551,7 @@ Page({
       cropCollected,
     })
 
-    // Continue to next level
+    // Continue to next level 
     if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel < 2) {
       let currentLevel = this.data.currentLevel
       currentLevel++
@@ -550,6 +570,8 @@ Page({
     var goRight_shovel = false
     var that = this
     const shovel = that.data.imageObject[0][0].path
+    
+    //shaking animation
     var shaking = setInterval(function () {
       cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
       that.drawPlant(cxt)
@@ -597,13 +619,13 @@ Page({
     })
   },
 
-  askForDonation(){
+  askForDonation() {
     this.setData({
-      modalName: "donate" 
+      modalName: "donate"
     })
   },
 
-  stopTimer(){
+  stopTimer() {
     this.hideModal()
   },
 
