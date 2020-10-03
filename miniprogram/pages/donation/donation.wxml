@@ -36,4 +36,21 @@
       </view>
     </view>
   </view>
+
+  <view class="cu-modal {{modalName == 'certificate' ? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+        <!-- show certificate -->
+				<text > 感谢你的好意！你的铲子数量 + 1
+				</text>
+			</view>
+		</view>
+	</view>
+
 </view>

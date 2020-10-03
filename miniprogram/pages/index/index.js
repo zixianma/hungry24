@@ -154,6 +154,7 @@ Page({
     this.setData({
       gameSetting
     })
+    app.globalData.gameSetting = gameSetting
 
     //Load all image
     await Promise.all([
@@ -434,6 +435,7 @@ Page({
             that.setData({
               gameSetting
             })
+            app.globalData.gameSetting = gameSetting
             changeState = false
 
             //update existing plant
@@ -540,6 +542,7 @@ Page({
         usedCrop,
         currentNumberOfCrop
       })
+      app.globalData.gameSetting = gameSetting
     } 
     else {
       collectSuccess = false

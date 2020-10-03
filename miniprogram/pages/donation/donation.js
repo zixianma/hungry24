@@ -1,4 +1,5 @@
-// pages/donation/donation.js
+const app = getApp()
+
 Page({
 
   /**
@@ -91,6 +92,7 @@ Page({
 
   toPay() {
     const amount = this.data.amount
+    var that = this
     wx.cloud.callFunction({
       name: 'unifiedOrder',
       data: {
@@ -102,6 +104,15 @@ Page({
           ...payment,
           success (res) {
             console.log('pay success', res)
+            //add shovel
+            let pages = getCurrentPages()
+            let gamePage = pages[pages.length - 2]
+            let gameSetting = gamePage.data.gameSetting
+            gameSetting.shovel++
+            gamePage.setData({
+              gameSetting
+            })
+            that.showCertificate()
           },
           fail (res) {
             console.error('pay fail', err)
@@ -114,7 +125,7 @@ Page({
 
   showCertificate(){
     this.setData({
-      isCertificateShow: true
+      modalName: "certificate"
     })
   }
 })
