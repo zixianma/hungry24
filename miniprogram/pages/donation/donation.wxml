@@ -26,12 +26,12 @@
                 <input placeholder="请填写1以上的整数" bindinput="onInput"></input>
               </view>
             </view>
-            <view class="padding" style="text-align:left;">*一日餐费约为4元</view>
+            <!-- <view class="padding" style="text-align:left;">*一日餐费约为4元</view> -->
           </view>
         </view>
-        <view class="cu-bar bg-white-yellow">
-          <view class="action text-red" style="text-size:3rem;" bindtap="hideModal">取消</view>
-          <view class="action text-yellow" bindtap="toPay">确认</view>
+        <view class="cu-bar text-lg bg-white-yellow" >
+          <view class="text-red"  bindtap="hideModal"><text class="text-bold" style="text-size:10rem; margin-left:25rpx" >取消</text></view>
+          <view class="text-yellow" bindtap="toPay" ><text class="text-bold" style="text-size:10rem; margin-right:25rpx">确认</text></view>
         </view>
       </view>
     </view>

@@ -439,7 +439,6 @@ Page({
             })
             changeState = false
           }
-          changeState = false
         }
       } else {
         that.setData({
@@ -596,6 +595,16 @@ Page({
     wx.navigateTo({
       url: '../restaurant/restaurant',
     })
+  },
+
+  askForDonation(){
+    this.setData({
+      modalName: "donate" 
+    })
+  },
+
+  stopTimer(){
+    this.hideModal()
   },
 
   exitGame() { },

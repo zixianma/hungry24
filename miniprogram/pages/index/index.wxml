@@ -21,6 +21,8 @@
 				<view>
 					<text class="cuIcon-info navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showModal"
 						data-modal-name="rule"></text>
+						<text class="cuIcon-forward navbar-icon warm-yellow" style="margin-right:10rpx" bindtap="showModal"
+						data-modal-name="forward"></text>
 					<text class="cuIcon-roundclose navbar-icon warm-yellow" bindtap="showModal"
 						data-modal-name="exit"></text>
 				</view>
@@ -53,7 +55,7 @@
 		</view>
 		<view class="flex align-center" style="position:fixed; top:41vw; bottom:17vw;">
 			<view class="" style="margin-top:auto; margin-bottom:auto;">
-		<canvas style="width:100vw;height:90vw;" canvas-id="game"></canvas>
+		<canvas wx:if="{{modalName == null}}" style="width:100vw;height:90vw;" canvas-id="game"></canvas>
 		<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
 			<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
 				bindtap="gameControl">{{gameStatus}}</button>
@@ -122,18 +124,19 @@
 	 <image style="width:80vw; height:80vh" src="https://hunger24.cfpa.org.cn/images/share_poster.png"></image>
 	 <!-- <image wx:if="{{finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/success_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/success_poster.png"></image>
 	 <image wx:if="{{!finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/failure_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/failure_poster.png"></image> -->
-	 <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">分享给好友</button>
+	 
 	 <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
-   </view>
+	 </view>
+	 <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐</button>
 		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'exit' ? 'show' : ''}}">
 		<view class="cu-dialog">
 			<view class="padding-xl bg-white-yellow "><text class="padding-lg"
-					style="font-size:1rem">挖地侠，你饿了么？\n请留步，再挖一点作物获取能量吧\n</text>
-				<button class="index-button cu-btn round bg-yellow margin-sm" open-type="share">获取能量</button> <button
-					class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再挖一会</button><button
-					class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="2">捐能量</button>
+					style="font-size:1rem">24小时饿肚子真的很难，你还能坚持下去继续挑战吗？\n</text>
+				<!-- <button class="index-button cu-btn round bg-yellow margin-sm" open-type="share"></button>  -->
+				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button
+					class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation" >撑不住了</button>
 			</view>
 		</view>
 	</view>
@@ -146,11 +149,48 @@
 				</view>
 			</view>
 			<view class="padding-xl bg-white-yellow">
-				<text >哎呀，铲子没有了！邀请好友获得更多的铲子吧！
+				<text >哎呀，铲子没有了！邀请好友或者捐一餐获得更多的铲子吧！
 				</text>
 				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐</button>
 			</view>
 		</view>
+	</view>
+	<view class="cu-modal {{modalName == 'donate'? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为饥饿孩子捐能量吗？
+				</text>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">当然愿意</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="stopTimer">忍心离去</button>
+			</view>
+		</view>
+	</view>
+	<view class="cu-modal {{modalName == 'forward'? 'show' : ''}}">
+	<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"> </view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-lg" >
+			</view>
+			
+	 <image style="width:80vw; height:80vh" src="https://hunger24.cfpa.org.cn/images/share_poster.png"></image>
+	 
+	 <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
+
+	 <button class="index-button cu-btn round bg-yellow margin-lg" open-type="share">分享获得铲子</button>
+	 <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐获得铲子</button>
+		</view>
+		
 	</view>
 </block>
 
