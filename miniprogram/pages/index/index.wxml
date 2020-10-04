@@ -63,8 +63,7 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel > 5? 5: gameSetting.shovel}}"
-						src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:1.5rem; height:1.5rem"></image>
+					<image wx:for="{{gameSetting.shovel > 5? 5: gameSetting.shovel}}" src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:1.5rem; height:1.5rem"></image>
 				</view>
 			</view>
 		</view>
@@ -72,13 +71,12 @@
 			<view class="" style="margin-top:auto; margin-bottom:auto;">
 				<canvas wx:if="{{modalName == null}}" style="width:100vw;height:90vw;" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
-					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
-						bindtap="gameControl">{{gameStatus}}</button>
+					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px" bindtap="gameControl">{{gameStatus}}</button>
 				</view>
 			</view>
 		</view>
 	</view>
-<!-- modals -->
+	<!-- modals -->
 
 
 	<view class="cu-modal {{modalName == 'rule' ? 'show' : ''}}">
@@ -118,8 +116,7 @@
 				</text>
 				<text style="text-size:2rem" wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
 				</text>
-				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
-					data-tab-index="1">邀请好友获取铲子</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
 			</view>
 		</view>
 	</view>
@@ -153,8 +150,7 @@
 			<view class="padding-xl bg-white-yellow "><text class="padding-lg"
 					style="font-size:1rem">24小时饿肚子真的很难，你还能坚持下去继续挑战吗？\n</text>
 				<!-- <button class="index-button cu-btn round bg-yellow margin-sm" open-type="share"></button>  -->
-				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button
-					class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
+				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
 			</view>
 		</view>
 	</view>

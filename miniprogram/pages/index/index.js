@@ -351,12 +351,12 @@ Page({
       }
 
       //when game is stopped, show result in tab 1
-      if (this.data.earlyTermination) {    
+      if (this.data.earlyTermination) {
         this.setData({
           //TODO modalname and new notification for early termination
           modalName: "result",
           earlyTermination: true
-      })
+        })
       }
       else if (this.data.remainingTimePercentage == 0) {
         that.setData({
