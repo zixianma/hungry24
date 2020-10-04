@@ -186,7 +186,7 @@
 				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为饥饿孩子捐能量吗？
 				</text>
 				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">当然愿意</button>
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="stopTimer">忍心离去</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="stopGame">忍心离去</button>
 			</view>
 		</view>
 	</view>

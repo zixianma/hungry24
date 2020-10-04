@@ -9,6 +9,7 @@ Page({
     selectedTab: 0,
     gameStatus: "在这儿挖",
     remainingShovelNumber: 5,
+    earlyTermination: false,
     cropsData: [{
       'name': '土豆',
       'val': '1',
@@ -93,7 +94,7 @@ Page({
         'userName': 'Sunnie',
         'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
         'userEnergy': 24
-      }, 
+      },
       {
         'id': 2,
         'ranking': 2,
@@ -348,18 +349,34 @@ Page({
           })
         }
       }
-      this.startProgressBarTimer()
-      if (this.data.gameSetting.shovel > 0) {
+
+      //when game is stopped, show result in tab 1
+      if (this.data.earlyTermination) {    
         this.setData({
-          isStopped: false
+          //TODO modalname and new notification for early termination
+          modalName: "result",
+          earlyTermination: true
+      })
+      }
+      else if (this.data.remainingTimePercentage == 0) {
+        that.setData({
+          modalName: "result"
         })
-        this.lineMove()
       }
       else {
-        this.setData({
-          modalName: "shareShovel",
-          isStopped: true
-        })
+        this.startProgressBarTimer()
+        if (this.data.gameSetting.shovel > 0) {
+          this.setData({
+            isStopped: false
+          })
+          this.lineMove()
+        }
+        else {
+          this.setData({
+            modalName: "shareShovel",
+            isStopped: true
+          })
+        }
       }
     }
 
@@ -399,6 +416,7 @@ Page({
         // remaining time
         let remainingTimePercentage = (100 - (now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
         remainingTimePercentage = remainingTimePercentage > 0 ? remainingTimePercentage : 0
+
         // remain energy
         let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
         let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
@@ -408,17 +426,19 @@ Page({
           remainingTimePercentage,
           remainingEnergyPercentage
         })
+
         //check if game ends
-        // if (remainingTimePercentage == 0) {
-        //   let finalSuccess = false
-        //   if (remainingEnergy > 0) {
-        //     finalSuccess = true
-        //   }
-        //   that.setData({
-        //     modalName: "result",
-        //     finalSuccess
-        //   })
-        // }
+        if (remainingTimePercentage == 0) {
+          clearInterval(progressBarTimer)
+          let finalSuccess = false
+          if (remainingEnergy > 0) {
+            finalSuccess = true
+          }
+          that.setData({
+            modalName: "result",
+            finalSuccess
+          })
+        }
       }, 1000);
       this.setData({
         progressBarTimer
@@ -475,7 +495,7 @@ Page({
           cxt.globalAlpha = 1
           cxt.drawImage(shovel, rectX_horizontal - 25, rectY_vertical - 25, 50, 50)
           cxt.draw()
-        } 
+        }
         else {
           if (changeState) {
             //shake shovel animation
@@ -595,7 +615,7 @@ Page({
         currentNumberOfCrop
       })
       app.globalData.gameSetting = gameSetting
-    } 
+    }
     else {
       collectSuccess = false
     }
@@ -625,7 +645,7 @@ Page({
     var goRight_shovel = false
     var that = this
     const shovel = that.data.imageObject[0][0].path
-    
+
     //shaking animation
     var shaking = setInterval(function () {
       cxt.clearRect(0, 0, that.data.screenWidth, that.data.screenHeight)
@@ -663,8 +683,12 @@ Page({
     })
   },
   stopGame() {
+    clearInterval(this.data.lineMoveTimer)
+    clearInterval(this.data.progressBarTimer)
     this.setData({
-      modalName: "exit"
+      //TODO modalname and new notification for early termination
+      modalName: "result",
+      earlyTermination: true
     })
   },
 
