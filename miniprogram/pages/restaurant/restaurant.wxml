@@ -1,5 +1,5 @@
 <!--miniprogram/pages/restaurant.wxml-->
-<view class="white-yellow" style="width:100vw; height:100vh;">
+<view class="bg-white-yellow" style="width:100vw; height:100vh;">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
 			<!-- <text class="cuIcon-info" style="font-size:10rem;"></text> -->
 			<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:10rem; height:10rem"></image>

@@ -1,6 +1,6 @@
 /* miniprogram/pages/restaurant.wxss */
 .bg-white-yellow {
-  color: #faf8e4;
+  background-color: #faf8e4;
 }
 
 .white-yellow {

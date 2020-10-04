@@ -2,12 +2,13 @@
 <block wx:if="{{selectedTab == 0}}">
 	<view class="bg-white-yellow" style="width:100vw; height:100vh">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
-			<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:10rem; height:10rem"></image>
+			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh"><image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png" style="width:6rem; height:6rem; padding-bottom:0.8rem"></image>
+			<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image></view>
 			<view style="padding-bottom:50rpx"><text class="text-lg " >
 				体验饥饿，珍惜粮食，拒绝浪费
 			</text></view>
 			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="showModal" data-modal-name="intro"> 活动介绍</button>
-			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="1">进入游戏</button>
+			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="1">开始挑战</button>
 			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="toRestaurant">进入饥饿餐厅</button>
 		</view>
 	</view>
@@ -130,7 +131,7 @@
 			</view>
 			<!-- <view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view> -->
 			<view class="padding-lg">
-				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战，将小程序分享给好友向他们发出挑战吧！
+				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战。你愿意把今天省下的餐费捐给还在忍受饥饿的儿童吗？
 				</text>
 				<text class="padding-lg" wx:if="{{!finalSuccess}}">差点完成饥饿24小时的你，有没有体会到饥饿的艰辛呢？对好友发起挑战，或者点击下方为饥饿的孩子们捐一餐吧~
 				</text>
@@ -179,7 +180,7 @@
 				</view>
 			</view>
 			<view class="padding-xl bg-white-yellow">
-				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为饥饿孩子捐能量吗？
+				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为还在忍受饥饿的孩子捐一餐吗？
 				</text>
 				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">当然愿意</button>
 				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="stopGame">忍心离去</button>
