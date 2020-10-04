@@ -113,6 +113,19 @@ Page({
               gameSetting
             })
             that.showCertificate()
+            
+            wx.cloud.callFunction({
+              name: 'addShovelForDonation',
+              data: {
+                value: 0
+              },
+              success: function (res) {
+                console.log({
+                  addShovelForDonation: res.result
+                })
+              },
+              fail: console.error
+            })
           },
           fail (res) {
             console.error('pay fail', err)
