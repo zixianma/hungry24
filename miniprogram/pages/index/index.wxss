@@ -126,3 +126,84 @@
 .warm-yellow {
   color: #f5ab2e;
 }
+
+.item-box {
+  width: 700rpx;
+  margin: 0 auto;
+  padding: 20rpx 0;
+}
+
+.items {
+  width: 100%;
+}
+
+.item {
+  position: relative;
+  border-top: 2rpx solid rgb(131, 131, 131);
+  height: 115rpx;
+  line-height: 115rpx;
+  overflow: hidden;
+  margin: 0rpx 20rpx 0rpx 20rpx
+}
+
+.inner.txt {
+  background-color:transparent;
+  width: 100%;
+  z-index: 5;
+  padding: 0 10rpx;
+  transition: left 0.2s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-icon {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: middle;
+  margin-right: 16rpx;
+  margin-left: 13px;
+  border-radius: 50%;
+}
+
+.item-data {
+  float: right;
+  margin-right: 5%;
+}
+
+.rankpace {
+  color:#f5ab2e;
+}
+
+.inner.del {
+  background-color: #e64340;
+  width: 180rpx;
+  text-align: center;
+  z-index: 4;
+  right: 0;
+  color: #fff;
+}
+
+view {
+  box-sizing: border-box;
+}
+
+.item:last-child {
+  border-bottom: 2rpx solid rgb(131, 131, 131);
+}
+
+.item-list view:nth-child(1) .inner i{
+  color: #DC143C;
+}
+.item-list view:nth-child(2) .inner i {
+  color: #FF4500;
+}
+.item-list view:nth-child(3) .inner i{
+  color: #FF8C00;
+}
+
+.inner {
+  position: absolute;
+  top: 0;
+}
+

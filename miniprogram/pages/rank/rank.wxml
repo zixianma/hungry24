@@ -1,0 +1,36 @@
+<!--miniprogram/pages/rank/rank.wxml-->
+<view class="bg-white-yellow" style="width:100vw;">
+<view class="item-box" >
+<view  class="text-xl round bg-warm-yellow padding-sm" style="width:50vw; margin-left:auto; margin-right:auto; margin-top:30rpx;margin-bottom:30rpx;text-align:center; "><text>排行榜</text></view>	
+  <!-- 所有项 -->
+  <view class="items">
+		<!-- 每一项 -->
+		<view class="item">
+<view class='inner txt round'>
+				<i>名次</i>
+				<!-- <image class="item-icon" mode="widthFix"></image>
+        <i>用户</i> -->
+        <span class="item-data">
+          <i>能量值</i>
+        </span>
+      </view>
+		</view>
+		<view class="item-list">
+    <view wx:for="{{list}}" wx:key="{{index}}" class="item">
+      <view class='inner txt'>
+        <!-- 排名 -->
+        <i>{{item.ranking}}</i>
+        <!-- 头像 -->
+        <image class="item-icon" mode="widthFix" src="{{item.userAvatar}}"></image>
+        <!-- 名字 -->
+        <i> {{item.userName}}</i>
+        <!-- 时间 -->
+        <span class="item-data">
+          <i class="rankpace"> {{item.userEnergy}}</i>
+        </span>
+      </view>
+		</view>
+	</view>
+  </view>
+</view>
+</view>
