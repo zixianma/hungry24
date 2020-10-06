@@ -27,7 +27,8 @@ exports.main = async (event, context) => {
       as: "userInfo"
     }).project({
       "sum": 1,
-      "userInfo._id": 1
+      "userInfo.nickName": 1,
+      "userInfo.avatarUrl": 1
     }).end()
   return list
 }
