@@ -22,7 +22,8 @@
 			</view>
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
 				<text>
-					饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费并邀请参与人为贫困受饥儿童筹款。（今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日。）
+					饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+
 				</text>
 			</view>
 		</view>
@@ -45,7 +46,7 @@
 			</view>
 			<view class="width-90-inline horizontal-center" style="margin-top:0">
 				<text class="text-white" style="width:30vw; text-size:1rem">
-					剩余时间：
+					时间进度：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
 					<view class="bg-green" style="width:{{remainingTimePercentage}}%;">{{remainingTimePercentage}}%</view>
@@ -53,7 +54,7 @@
 			</view>
 			<view class="width-90-inline horizontal-center">
 				<text class="text-white" style="width:30vw; text-size:1rem">
-					剩余能量：
+					能量进度：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
 					<view class="bg-red" style="width:{{remainingEnergyPercentage}}%;">{{remainingEnergyPercentage}}%</view>
@@ -89,7 +90,7 @@
 				</view>
 			</view>
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
-				<text>
+				<!-- <text>
 					饥饿24小时挑战已经开始...\n
 					1. 点击“在这儿挖”开始收割作物吧！\n
 					2. 每收割一种作物，你会获取相应的能量~\n
@@ -98,7 +99,12 @@
 					5. 铲子用尽时，你可以通过邀请好友或捐一餐获得一把铲子。\n
 					6. 24小时过去后，若你还有剩余的能量，就是挑战成功啦！\n
 					开始挑战吧！
-				</text>
+				</text> -->
+				<text>
+					1）时间进度和能量进度均达到满格后为挑战成功；\n
+					2）时间进度用来记录挑战者的饥饿时间，24小时为满格；如果撑不住了，点击退出可中途放弃挑战；\n
+					3）能量进度用来记录挑战者的能量值，24个能量为满格；\n
+					4）挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。</text>
 			</view>
 		</view>
 	</view>

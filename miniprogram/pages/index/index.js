@@ -414,13 +414,14 @@ Page({
         let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
         let now = Date.parse(new Date())
         // remaining time
-        let remainingTimePercentage = (100 - (now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
-        remainingTimePercentage = remainingTimePercentage > 0 ? remainingTimePercentage : 0
+        let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+        remainingTimePercentage = remainingTimePercentage <= 100 ? remainingTimePercentage : 100
 
         // remain energy
-        let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
+        // let remainingEnergy = gameSetting.energy - ((now - startTime) / (3600 * 1000))
+        let remainingEnergy = gameSetting.energy 
         let remainingEnergyPercentage = ((remainingEnergy / 24) * 100).toFixed(2)
-        remainingEnergyPercentage = remainingEnergyPercentage > 0 ? remainingEnergyPercentage : 0
+        remainingEnergyPercentage = remainingEnergyPercentage <= 100 ? remainingEnergyPercentage : 100
         // set data
         that.setData({
           remainingTimePercentage,
