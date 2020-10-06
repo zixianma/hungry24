@@ -313,7 +313,6 @@ Page({
           wx.showLoading({
             title: '加载中',
           })
-
           //set current level
           wx.setStorage({
             data: {
@@ -561,9 +560,9 @@ Page({
 
   drawPlant(cxt) {
     var that = this
-    var currentLevel = this.data.currentLevel
-    var currentCrops = this.data.cropsID[currentLevel]
-    var numberOfCrops = currentCrops.length
+    let currentLevel = this.data.currentLevel
+    let currentCrops = this.data.cropsID[currentLevel]
+    let numberOfCrops = currentCrops.length
     const image = that.data.imageObject
 
     //Generating the position of crops
@@ -599,12 +598,13 @@ Page({
     //if crop is in the range
     let collectSuccess = false
     let cropCollected = this.data.cropsID[this.data.currentLevel][min_distance_index]
+    let gainedEnergy = 0
     if (min_distance < screenWidth / 6) {
       let usedCrop = this.data.usedCrop
       usedCrop[this.data.currentLevel][min_distance_index] = 1
       let currentNumberOfCrop = this.data.currentNumberOfCrop
       let gameSetting = this.data.gameSetting
-      let gainedEnergy = parseInt(this.data.cropsData[cropCollected]['val'])
+      gainedEnergy = parseInt(this.data.cropsData[cropCollected]['val'])
       gameSetting.energy += gainedEnergy
 
       currentNumberOfCrop--
@@ -616,6 +616,7 @@ Page({
       })
       wx.setStorage({
         data: {
+          currentLevel: this.data.currentLevel,
           currentNumberOfCrop: currentNumberOfCrop,
           usedCrop: usedCrop
         },
@@ -649,15 +650,16 @@ Page({
     if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel < 2) {
       let currentLevel = this.data.currentLevel
       currentLevel++
-      let currentNumberOfCrops = this.data.usedCrop[this.data.currentLevel].length
+      let currentNumberOfCrop = this.data.usedCrop[this.data.currentLevel].length
       this.setData({
         currentLevel,
-        currentNumberOfCrops
+        currentNumberOfCrop
       })
       wx.setStorage({
         data: {
           currentLevel: currentLevel,
           currentNumberOfCrop: currentNumberOfCrop,
+          usedCrop: this.data.usedCrop
         },
         key: 'crop',
       })
