@@ -167,7 +167,6 @@ Page({
     this.setData({
       gameSetting
     })
-    app.globalData.gameSetting = gameSetting
 
     //Load all image
     await Promise.all([
@@ -273,7 +272,9 @@ Page({
     var that = this
     wx.getUserInfo({
       success: function (res) {
-        console.log({getUserInfo: res})
+        console.log({
+          getUserInfo: res
+        })
         that.setData({
           isUserInfoAuthorized: true
         })
@@ -283,7 +284,9 @@ Page({
             cloudID: res.cloudID
           },
           success: function (res) {
-            console.log({updateUserInfo: res.result})
+            console.log({
+              updateUserInfo: res.result
+            })
           },
           fail: console.error
         })
@@ -309,6 +312,20 @@ Page({
         if (!userInfo.challengeStartedAt) {
           wx.showLoading({
             title: '加载中',
+          })
+
+          //set current level
+          wx.setStorage({
+            data: {
+              currentLevel: 0,
+              currentNumberOfCrop: 3,
+              usedCrop: [
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0, 0]
+              ]
+            },
+            key: 'crop',
           })
           wx.cloud.callFunction({
             name: 'startChallenge',
@@ -338,36 +355,48 @@ Page({
             fail: console.error
           })
         }
-      }
 
-      //when game is stopped, show result in tab 1
-      if (this.data.earlyTermination) {
-        this.setData({
-          //TODO modalname and new notification for early termination
-          modalName: "result",
-          earlyTermination: true
+        // read level
+        wx.getStorage({
+          key: "crop",
+          success: (res) => {
+            this.setData({
+              currentLevel: res.data.currentLevel,
+              currentNumberOfCrop: res.data.currentNumberOfCrop,
+              usedCrop: res.data.usedCrop
+            })
+          }
         })
-      } else if (this.data.remainingTimePercentage == 0) {
-        that.setData({
-          modalName: "result"
-        })
-      } else {
-        this.startProgressBarTimer()
-        if (this.data.gameSetting.shovel > 0) {
+
+        //when game is stopped, show result in tab 1
+        if (this.data.earlyTermination) {
           this.setData({
-            isStopped: false
+            //TODO modalname and new notification for early termination
+            modalName: "result",
+            earlyTermination: true
           })
-          this.lineMove()
+        } else if (this.data.remainingTimePercentage == 0) {
+          that.setData({
+            modalName: "result"
+          })
         } else {
-          this.setData({
-            modalName: "shareShovel",
-            isStopped: true
-          })
+          this.startProgressBarTimer()
+          if (this.data.gameSetting.shovel > 0) {
+            this.setData({
+              isStopped: false
+            })
+            this.lineMove()
+          } else {
+            this.setData({
+              modalName: "shareShovel",
+              isStopped: true
+            })
+          }
         }
+      } else {
+        clearInterval(this.data.lineMoveTimer)
+        clearInterval(this.data.progressBarTimer)
       }
-    } else {
-      clearInterval(this.data.lineMoveTimer)
-      clearInterval(this.data.progressBarTimer)
     }
   },
 
@@ -578,19 +607,6 @@ Page({
       let gainedEnergy = parseInt(this.data.cropsData[cropCollected]['val'])
       gameSetting.energy += gainedEnergy
 
-      // upload game setting to db
-      wx.cloud.callFunction({
-        name: 'addGameResult',
-        data: {
-          value: gainedEnergy
-        },
-        success: function (res) {
-          console.log({
-            addGameResult: res.result
-          })
-        },
-        fail: console.error
-      })
       currentNumberOfCrop--
       collectSuccess = true
       this.setData({
@@ -598,10 +614,30 @@ Page({
         usedCrop,
         currentNumberOfCrop
       })
-      app.globalData.gameSetting = gameSetting
+      wx.setStorage({
+        data: {
+          currentNumberOfCrop: currentNumberOfCrop,
+          usedCrop: usedCrop
+        },
+        key: 'crop',
+      })
     } else {
       collectSuccess = false
     }
+
+    // upload game setting to db
+    wx.cloud.callFunction({
+      name: 'addGameResult',
+      data: {
+        value: gainedEnergy
+      },
+      success: function (res) {
+        console.log({
+          addGameResult: res.result
+        })
+      },
+      fail: console.error
+    })
 
     this.setData({
       modalName: "share",
@@ -617,6 +653,13 @@ Page({
       this.setData({
         currentLevel,
         currentNumberOfCrops
+      })
+      wx.setStorage({
+        data: {
+          currentLevel: currentLevel,
+          currentNumberOfCrop: currentNumberOfCrop,
+        },
+        key: 'crop',
       })
     }
   },
