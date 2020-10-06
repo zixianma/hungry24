@@ -2,13 +2,21 @@
 <block wx:if="{{selectedTab == 0}}">
 	<view class="bg-white-yellow" style="width:100vw; height:100vh">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
-			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh"><image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png" style="width:6rem; height:6rem; padding-bottom:0.8rem"></image>
-			<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image></view>
-			<view style="padding-bottom:50rpx"><text class="text-lg " >
-				体验饥饿，珍惜粮食，拒绝浪费
-			</text></view>
-			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="showModal" data-modal-name="intro"> 活动介绍</button>
-			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="switchTab" data-tab-index="1">开始挑战</button>
+			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
+				<image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png"
+					style="width:6rem; height:6rem; padding-bottom:0.8rem"></image>
+				<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image>
+			</view>
+			<view style="padding-bottom:50rpx"><text class="text-lg ">
+					体验饥饿，珍惜粮食，拒绝浪费
+				</text></view>
+			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="showModal" data-modal-name="intro">
+				活动介绍</button>
+			<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-yellow margin-sm"
+				open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始挑战</button>
+			<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-sm"
+				bindtap="switchTab" data-tab-index="1">开始挑战</button>
+			<button wx:else>请升级微信版本</button>
 			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="toRestaurant">进入饥饿餐厅</button>
 		</view>
 	</view>
@@ -65,7 +73,8 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel > 5? 5: gameSetting.shovel}}" src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:1.5rem; height:1.5rem"></image>
+					<image wx:for="{{gameSetting.shovel > 5? 5: gameSetting.shovel}}"
+						src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:1.5rem; height:1.5rem"></image>
 				</view>
 			</view>
 		</view>
@@ -73,7 +82,8 @@
 			<view class="" style="margin-top:auto; margin-bottom:auto;">
 				<canvas wx:if="{{modalName == null}}" style="width:100vw;height:90vw;" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
-					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px" bindtap="gameControl">{{gameStatus}}</button>
+					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
+						bindtap="gameControl">{{gameStatus}}</button>
 				</view>
 			</view>
 		</view>
@@ -123,7 +133,8 @@
 				</text>
 				<text style="text-size:2rem" wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
 				</text>
-				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友获取铲子</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
+					data-tab-index="1">邀请好友获取铲子</button>
 			</view>
 		</view>
 	</view>
@@ -157,7 +168,8 @@
 			<view class="padding-xl bg-white-yellow "><text class="padding-lg"
 					style="font-size:1rem">24小时饿肚子真的很难，你还能坚持下去继续挑战吗？\n</text>
 				<!-- <button class="index-button cu-btn round bg-yellow margin-sm" open-type="share"></button>  -->
-				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
+				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button
+					class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
 			</view>
 		</view>
 	</view>
