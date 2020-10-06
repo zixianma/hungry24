@@ -88,58 +88,7 @@ Page({
       [0, 0, 0, 0]
     ],
     showRules: true,
-    isImageLoaded: false,
-    list: [{
-        'id': 1,
-        'ranking': 1,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 2,
-        'ranking': 2,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 3,
-        'ranking': 3,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 4,
-        'ranking': 4,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 5,
-        'ranking': 5,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 6,
-        'ranking': 6,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      },
-      {
-        'id': 7,
-        'ranking': 7,
-        'userName': 'Sunnie',
-        'userAvatar': "https://hunger24.cfpa.org.cn/images/crop/3.png",
-        'userEnergy': 24
-      }
-    ],
-
+    isImageLoaded: false
   },
 
   /**
@@ -246,7 +195,6 @@ Page({
         wx.hideLoading()
       })
     })
-
   },
 
   /**

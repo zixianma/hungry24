@@ -16,17 +16,17 @@
       </view>
 		</view>
 		<view class="item-list">
-    <view wx:for="{{list}}" wx:key="{{index}}" class="item">
+    <view wx:for="{{userRank}}" wx:key="{{index}}" class="item">
       <view class='inner txt'>
         <!-- 排名 -->
-        <i>{{item.ranking}}</i>
+        <i>{{index + 1}}</i>
         <!-- 头像 -->
-        <image class="item-icon" mode="widthFix" src="{{item.userAvatar}}"></image>
+        <image class="item-icon" mode="widthFix" src="{{item.userInfo[0].avatarUrl}}"></image>
         <!-- 名字 -->
-        <i> {{item.userName}}</i>
+        <i> {{item.userInfo[0].nickName}}</i>
         <!-- 时间 -->
         <span class="item-data">
-          <i class="rankpace"> {{item.userEnergy}}</i>
+          <i class="rankpace"> {{item.sum}}</i>
         </span>
       </view>
 		</view>
