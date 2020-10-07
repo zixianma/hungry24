@@ -1,5 +1,5 @@
 <!-- homepage -->
-<block wx:if="{{selectedTab == 0}}">
+<block wx:if="{{currentTab == 0}}">
 	<view class="bg-white-yellow" style="width:100vw; height:100vh">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
 			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
@@ -30,16 +30,58 @@
 			</view>
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
 				<text>
-					饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+					<text>
+						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+					</text>
 
 				</text>
 			</view>
 		</view>
 	</view>
+	<view class="cu-modal {{modalName == 'invite'? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+				<view class='inner txt'>
+					<image class="item-icon" mode="widthFix" src="{{inviterInfo.avatarUrl}}"></image>
+					<text>「{{inviterInfo.nickName}}」邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘能量的铲子哦！</text>
+				</view>
+				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-yellow margin-lg"
+					open-type="getUserInfo" bindgetuserinfo="toGetUserInfo">接受挑战</button>
+				<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-lg"
+					bindtap="toAcceptChallenge" data-tab-index="1">接受挑战</button>
+				<button wx:else>请升级微信版本</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">残忍拒绝</button>
+			</view>
+		</view>
+	</view>
+	<!-- authorization modal -->
+	<!-- <view class="cu-modal {{modalName == 'authorize'? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+				<text>授权是为了在排行榜显示用户昵称和头像，授权后才能开始游戏哦！
+				</text>
+				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="getUserInfo"
+					bindgetuserinfo="getUserInfo">确认授权</button>
+				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">放弃游戏</button>
+			</view>
+		</view>
+	</view> -->
 </block>
 
 <!-- game page -->
-<block wx:if="{{selectedTab == 1}}">
+<block wx:if="{{currentTab == 1}}">
 	<view style="width:100vw; height:100vh; background-image: url('https://hunger24.cfpa.org.cn/images/soil.png')">
 		<view style="width:90vw;margin-left:auto;margin-right:auto;">
 			<view class="flex solid-bottom justify-between padding-top-sm">
@@ -73,7 +115,7 @@
 					剩余铲子：
 				</text>
 				<view style="margin-top:20rpx">
-					<image wx:for="{{gameSetting.shovel > 5? 5: gameSetting.shovel}}"
+					<image wx:for="{{gameSetting.shovel > 10? 10: gameSetting.shovel}}"
 						src="https://hunger24.cfpa.org.cn/images/shovel.png" style="width:1.5rem; height:1.5rem"></image>
 				</view>
 			</view>
@@ -228,7 +270,7 @@
 </block>
 
 <!-- rank page -->
-<block wx:if="{{selectedTab == 3}}">
+<block wx:if="{{currentTab == 3}}">
 
 	<!-- <view class="bg-white-yellow" style="width:100vw; height:100vh">
 <view class="item-box" >

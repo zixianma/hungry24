@@ -8,7 +8,7 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isUserInfoAuthorized: false,
-    selectedTab: 0,
+    currentTab: 0,
     gameStatus: "在这儿挖",
     remainingShovelNumber: 5,
     earlyTermination: false,
@@ -101,16 +101,6 @@ Page({
       title: '加载中',
     })
 
-    // get user info authorization state
-    wx.getSetting({
-      success(res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          that.getUserInfo()
-        }
-      }
-    })
-
     // login
     const {
       result: loginResult
@@ -134,24 +124,39 @@ Page({
       )
     }
 
+    // get user info authorization state
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          that.getUserInfo()
+        }
+      }
+    })
+
     // get the source of the user
     const fromUser = options.from_user
     console.log({
       fromUser
     })
     if (fromUser) {
-      wx.cloud.callFunction({
-        name: 'addShareRecord',
+      const {
+        result: inviterInfo
+      } = await wx.cloud.callFunction({
+        name: 'getInviterInfo',
         data: {
           fromUser
-        },
-        success: function (res) {
-          console.log({
-            addShareRecord: res.result
-          })
-        },
-        fail: console.error
+        }
       })
+      console.log({
+        inviterInfo
+      })
+      if (inviterInfo) {
+        this.setData({
+          modalName: "invite",
+          inviterInfo
+        })
+      }
     }
 
     // get game setting
@@ -270,132 +275,64 @@ Page({
 
   getUserInfo() {
     var that = this
-    wx.getUserInfo({
-      success: function (res) {
-        console.log({
-          getUserInfo: res
-        })
-        that.setData({
-          isUserInfoAuthorized: true
-        })
-        wx.cloud.callFunction({
-          name: 'updateUserInfo',
-          data: {
-            cloudID: res.cloudID
-          },
-          success: function (res) {
-            console.log({
-              updateUserInfo: res.result
-            })
-          },
-          fail: console.error
-        })
-      }
+    return new Promise((resolve, reject) => {
+      wx.getUserInfo({
+        success: function (res) {
+          console.log({
+            getUserInfo: res
+          })
+          that.setData({
+            isUserInfoAuthorized: true
+          })
+          wx.cloud.callFunction({
+            name: 'updateUserInfo',
+            data: {
+              cloudID: res.cloudID
+            },
+            success: function (res) {
+              console.log({
+                updateUserInfo: res.result
+              })
+            },
+            fail: console.error
+          })
+          resolve(res)
+        },
+        fail: function (err) {
+          console.error(err)
+          reject(err)
+        }
+      })
+    })
+  },
+
+  async toGetUserInfo() {
+    const promiseGetUserInfo = this.getUserInfo()
+    promiseGetUserInfo.then(() => {
+      this.startGame()
+      this.setData({
+        currentTab: 1
+      })
     })
   },
 
   switchTab(e) {
-    var that = this
-
     const tabIndex = e.currentTarget.dataset.tabIndex
+    const currentTab = this.data.currentTab
+
+    if (tabIndex == currentTab) {
+      return
+    }
+
     this.setData({
-      selectedTab: tabIndex
+      currentTab: tabIndex
     })
 
-    let userInfo = this.data.userInfo
-
     if (tabIndex == 1) {
-      const isUserInfoAuthorized = this.data.isUserInfoAuthorized
-      const isImageLoaded = this.data.isImageLoaded
-
-      if (isUserInfoAuthorized && userInfo && isImageLoaded) {
-        if (!userInfo.challengeStartedAt) {
-          wx.showLoading({
-            title: '加载中',
-          })
-          //set current level
-          wx.setStorage({
-            data: {
-              currentLevel: 0,
-              currentNumberOfCrop: 3,
-              usedCrop: [
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0, 0]
-              ]
-            },
-            key: 'crop',
-          })
-          wx.cloud.callFunction({
-            name: 'startChallenge',
-            data: {},
-            success: function (res) {
-              console.log({
-                startChallenge: res.result
-              })
-              userInfo.challengeStartedAt = new Date()
-              that.setData({
-                userInfo,
-                gameSetting: {
-                  shovel: 5,
-                  energy: 2
-                }
-              }, () => {
-                wx.hideLoading()
-              })
-              if (that.data.showRules) {
-                that.setData({
-                  modalName: "rule",
-                  showRules: false
-                })
-              }
-              that.lineMove()
-            },
-            fail: console.error
-          })
-        }
-
-        // read level
-        wx.getStorage({
-          key: "crop",
-          success: (res) => {
-            this.setData({
-              currentLevel: res.data.currentLevel,
-              currentNumberOfCrop: res.data.currentNumberOfCrop,
-              usedCrop: res.data.usedCrop
-            })
-          }
-        })
-
-        //when game is stopped, show result in tab 1
-        if (this.data.earlyTermination) {
-          this.setData({
-            //TODO modalname and new notification for early termination
-            modalName: "result",
-            earlyTermination: true
-          })
-        } else if (this.data.remainingTimePercentage == 0) {
-          that.setData({
-            modalName: "result"
-          })
-        } else {
-          this.startProgressBarTimer()
-          if (this.data.gameSetting.shovel > 0) {
-            this.setData({
-              isStopped: false
-            })
-            this.lineMove()
-          } else {
-            this.setData({
-              modalName: "shareShovel",
-              isStopped: true
-            })
-          }
-        }
-      } else {
-        clearInterval(this.data.lineMoveTimer)
-        clearInterval(this.data.progressBarTimer)
-      }
+      this.startGame()
+    } else {
+      clearInterval(this.data.lineMoveTimer)
+      clearInterval(this.data.progressBarTimer)
     }
   },
 
@@ -412,10 +349,128 @@ Page({
     })
   },
 
+  async toAcceptChallenge() {
+    const inviterInfo = this.data.inviterInfo
+    if (inviterInfo) {
+      const {
+        result: addShareRecordResult
+      } = await wx.cloud.callFunction({
+        name: 'addShareRecord',
+        data: {
+          fromUser: inviterInfo._id
+        }
+      })
+      console.log({
+        addShareRecordResult
+      })
+    }
+    this.setData({
+      currentTab: 1,
+      modalName: null
+    })
+    // if (currentTab == 1) {
+    this.startGame()
+    // } else {
+    //   clearInterval(this.data.lineMoveTimer)
+    //   clearInterval(this.data.progressBarTimer)
+    // }
+  },
+
   toDonate() {
     wx.navigateTo({
       url: '../donation/donation',
     })
+  },
+
+  startGame() {
+    var that = this
+    let userInfo = this.data.userInfo
+    const isUserInfoAuthorized = this.data.isUserInfoAuthorized
+    const isImageLoaded = this.data.isImageLoaded
+    if (isUserInfoAuthorized && userInfo && isImageLoaded) {
+      if (!userInfo.challengeStartedAt) {
+        wx.showLoading({
+          title: '加载中',
+        })
+        //set current level
+        wx.setStorage({
+          data: {
+            currentLevel: 0,
+            currentNumberOfCrop: 3,
+            usedCrop: [
+              [0, 0, 0],
+              [0, 0, 0],
+              [0, 0, 0, 0]
+            ]
+          },
+          key: 'crop',
+        })
+        wx.cloud.callFunction({
+          name: 'startChallenge',
+          data: {},
+          success: function (res) {
+            console.log({
+              startChallenge: res.result
+            })
+            userInfo.challengeStartedAt = new Date()
+            that.setData({
+              userInfo,
+              gameSetting: {
+                shovel: 5,
+                energy: 0
+              }
+            }, () => {
+              wx.hideLoading()
+            })
+
+            that.setData({
+              modalName: "rule",
+            })
+            // that.lineMove()
+          },
+          fail: console.error
+        })
+      }
+
+      // read level
+      wx.getStorage({
+        key: "crop",
+        success: (res) => {
+          this.setData({
+            currentLevel: res.data.currentLevel,
+            currentNumberOfCrop: res.data.currentNumberOfCrop,
+            usedCrop: res.data.usedCrop
+          })
+        }
+      })
+
+      //when game is stopped, show result in tab 1
+      if (this.data.earlyTermination) {
+        this.setData({
+          //TODO modalname and new notification for early termination
+          modalName: "result",
+          earlyTermination: true,
+          finalSuccess: false
+        })
+      } else if (this.data.remainingTimePercentage == 0) {
+        that.setData({
+          modalName: "result"
+        })
+      } else {
+        this.startProgressBarTimer()
+        if (this.data.gameSetting.shovel > 0) {
+          this.setData({
+            isStopped: false
+          })
+          this.lineMove()
+        } else {
+          this.setData({
+            modalName: "shareShovel",
+            isStopped: true
+          })
+        }
+      }
+    }
   },
 
   startProgressBarTimer() {
@@ -445,7 +500,7 @@ Page({
         if (remainingTimePercentage == 0) {
           clearInterval(progressBarTimer)
           let finalSuccess = false
-          if (remainingEnergy > 0) {
+          if (remainingEnergy == 100) {
             finalSuccess = true
           }
           that.setData({
