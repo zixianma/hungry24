@@ -47,17 +47,5 @@ exports.main = async (event, context) => {
       }
     })
   }
-  // bring back inviter info
-  const {
-    data: userInfoResult
-  } = await db.collection('user').where({
-    _id: fromUser
-  }).field({
-    nickName: 1,
-    avatarUrl: 1
-  }).get()
-  if (userInfoResult.length > 0) {
-    operationResult.inviterInfo = userInfoResult[0]
-  }
   return operationResult
 }
