@@ -15,17 +15,18 @@ exports.main = async (event, context) => {
   // function body
   const inviter = fromUser
   const invitee = openId
-  const {
-    data: openIdResult
-  } = await db.collection('share').where({
-    inviter,
-    invitee
-  }).get()
   operationResult = {
     inviter,
     invitee
   }
-  if (openIdResult.length == 0) {
+  // check if invite record already existed
+  const {
+    data: shareResult
+  } = await db.collection('share').where({
+    inviter,
+    invitee
+  }).get()
+  if (shareResult.length == 0) {
     operationResult.dbStatus1 = await db.collection('share').add({
       data: {
         inviter,
@@ -45,6 +46,18 @@ exports.main = async (event, context) => {
         console.log(res)
       }
     })
+  }
+  // bring back inviter info
+  const {
+    data: userInfoResult
+  } = await db.collection('user').where({
+    _id: fromUser
+  }).field({
+    nickName: 1,
+    avatarUrl: 1
+  }).get()
+  if (userInfoResult) {
+    operationResult.inviterInfo = userInfoResult
   }
   return operationResult
 }
