@@ -56,8 +56,8 @@ exports.main = async (event, context) => {
     nickName: 1,
     avatarUrl: 1
   }).get()
-  if (userInfoResult) {
-    operationResult.inviterInfo = userInfoResult
+  if (userInfoResult.length > 0) {
+    operationResult.inviterInfo = userInfoResult[0]
   }
   return operationResult
 }
