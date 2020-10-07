@@ -7,6 +7,7 @@ cloud.init()
 exports.main = async (event, context) => {
   // input parameter
   const transactionId = event.transactionId
+  const subOpenid = event.subOpenid
   let data = event
   delete data.userInfo
   // cloud db
@@ -18,13 +19,23 @@ exports.main = async (event, context) => {
     transactionId
   }
   const {
-    data: openIdResult
+    data: transactionResult
   } = await collection.where({
     transactionId
   }).get()
-  if (openIdResult.length == 0) {
-    operationResult.dbStatus = await db.collection('transaction').add({
+  if (transactionResult.length == 0) {
+    operationResult.dbStatus1 = await db.collection('transaction').add({
       data,
+      success: function (res) {
+        console.log(res)
+      }
+    })
+    operationResult.dbStatus2 = await db.collection('shovel').add({
+      data: {
+        openId: subOpenid,
+        number: 1,
+        reason: "donate"
+      },
       success: function (res) {
         console.log(res)
       }
