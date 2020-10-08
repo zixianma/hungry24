@@ -309,10 +309,11 @@ Page({
   async toGetUserInfo() {
     const promiseGetUserInfo = this.getUserInfo()
     promiseGetUserInfo.then(() => {
-      this.startGame()
-      this.setData({
-        currentTab: 1
-      })
+      // this.startGame()
+      // this.setData({
+      //   currentTab: 1
+      // })
+      this.toAcceptChallenge()
     })
   },
 
@@ -351,6 +352,7 @@ Page({
 
   async toAcceptChallenge() {
     const inviterInfo = this.data.inviterInfo
+    console.log("success!")
     if (inviterInfo) {
       const {
         result: addShareRecordResult
@@ -364,6 +366,7 @@ Page({
         addShareRecordResult
       })
     }
+    
     this.setData({
       currentTab: 1,
       modalName: null
@@ -431,7 +434,6 @@ Page({
           fail: console.error
         })
       }
-
       // read level
       wx.getStorage({
         key: "crop",
@@ -497,7 +499,7 @@ Page({
         })
 
         //check if game ends
-        if (remainingTimePercentage == 0) {
+        if (remainingTimePercentage == 100) {
           clearInterval(progressBarTimer)
           let finalSuccess = false
           if (remainingEnergy == 100) {

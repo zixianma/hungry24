@@ -1,7 +1,10 @@
 <!--miniprogram/pages/rank/rank.wxml-->
 <view class="bg-white-yellow" style="width:100vw;">
 <view class="item-box" >
-<view  class="text-xl round bg-warm-yellow padding-sm" style="width:50vw; margin-left:auto; margin-right:auto; margin-top:30rpx;margin-bottom:30rpx;text-align:center; "><text>排行榜</text></view>	
+  <image style="width:100vw;height:29vh" src="https://hunger24.cfpa.org.cn/images/rank_logo.png"></image>
+<!-- <view  class="text-xl round bg-warm-yellow padding-sm" style="width:50vw; margin-left:auto; margin-right:auto; margin-top:30rpx;margin-bottom:30rpx;text-align:center; ">
+  
+</view>	 -->
   <!-- 所有项 -->
   <view class="items">
 		<!-- 每一项 -->

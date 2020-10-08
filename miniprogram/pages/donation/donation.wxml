@@ -47,8 +47,11 @@
 			</view>
 			<view class="padding-xl bg-white-yellow">
         <!-- show certificate -->
-				<text > 感谢你参与中国扶贫基金会发起的“饥饿24小时公益体验活动”，用行动助力贫困受饥儿童改善营养，抗击饥饿。恭喜你获得一把铲子，快去挖掘能量吧！
-				</text>
+				<!-- <text > 感谢你参与中国扶贫基金会发起的“饥饿24小时公益体验活动”，用行动助力贫困受饥儿童改善营养，抗击饥饿。恭喜你获得一把铲子，快去挖掘能量吧！
+        </text> -->
+        <image style="width:80vw;" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
+        <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveCertificateToAlbum">保存图片</button>
+			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">再捐一餐</button>
 			</view>
 		</view>
 	</view>

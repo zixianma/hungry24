@@ -17,7 +17,7 @@
 			<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-sm"
 				bindtap="switchTab" data-tab-index="1">开始挑战</button>
 			<button wx:else>请升级微信版本</button>
-			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="toRestaurant">进入饥饿餐厅</button>
+			<!-- <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="toRestaurant">进入饥饿餐厅</button> -->
 		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'intro' ? 'show' : ''}}">
@@ -31,7 +31,15 @@
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
 				<text>
 					<text>
-						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。
+
+						游戏规则：
+						1）时间进度和能量进度均达到满格后为挑战成功；
+						2）时间进度用来记录挑战者的饥饿时间，24小时为满格；如果撑不住了，点击退出可中途放弃挑战；
+						3）能量进度用来记录挑战者的能量值，24个能量为满格；
+						4）挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。
+
+						（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
 					</text>
 
 				</text>
@@ -47,14 +55,15 @@
 				</view>
 			</view>
 			<view class="padding-xl bg-white-yellow">
-				<view class='inner txt'>
-					<image class="item-icon" mode="widthFix" src="{{inviterInfo.avatarUrl}}"></image>
-					<text>「{{inviterInfo.nickName}}」邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘能量的铲子哦！</text>
-				</view>
+				<!-- <view class='inner txt'> -->
+				<image class="item-icon" mode="widthFix" src="{{inviterInfo.avatarUrl}}"></image>
+				<text>「{{inviterInfo.nickName}}」
+					邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘能量的铲子哦！</text>
+				<!-- </view> -->
 				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-yellow margin-lg"
 					open-type="getUserInfo" bindgetuserinfo="toGetUserInfo">接受挑战</button>
 				<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-lg"
-					bindtap="toAcceptChallenge" data-tab-index="1">接受挑战</button>
+					bindtap="toAcceptChallenge">接受挑战</button>
 				<button wx:else>请升级微信版本</button>
 				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">残忍拒绝</button>
 			</view>
@@ -121,8 +130,8 @@
 			</view>
 		</view>
 		<view class="flex align-center" style="position:fixed; top:41vw; bottom:17vw;">
-			<view class="" style="margin-top:auto; margin-bottom:auto;">
-				<canvas wx:if="{{modalName == null}}" style="width:100vw;height:90vw;" canvas-id="game"></canvas>
+			<view wx:if="{{modalName == null}}" style="margin-top:auto; margin-bottom:auto;">
+				<canvas  style="width:100vw;height:90vw;" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
 					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
 						bindtap="gameControl">{{gameStatus}}</button>
