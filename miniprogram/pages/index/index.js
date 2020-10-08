@@ -135,8 +135,8 @@ Page({
     })
 
     // get the source of the user
-    const fromUser = "e656fa635f7dd452013d9a093878dc29"
-    // const fromUser = options.from_user
+    // const fromUser = "e656fa635f7dd452013d9a093878dc29"
+    const fromUser = options.from_user
     console.log({
       fromUser
     })

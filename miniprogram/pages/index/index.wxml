@@ -214,7 +214,7 @@
 			</view>
 			<!-- <view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view> -->
 			<view class="padding-lg">
-				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战。你愿意把今天省下的餐费捐给还在忍受饥饿的儿童吗？
+				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战。你愿意把今天省下的餐费捐给贫困地区和发展中国家的饥饿儿童吗？
 				</text>
 				<text class="padding-lg" wx:if="{{!finalSuccess}}">差点完成饥饿24小时的你，有没有体会到饥饿的艰辛呢？对好友发起挑战，或者点击下方为贫困地区和发展中国家儿童送去关爱吧~
 				</text>
