@@ -8,7 +8,7 @@
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#85b7ae",
+    "navigationBarBackgroundColor": "#f5ab2e",
     "navigationBarTitleText": "饥饿24小时",
     "navigationBarTextStyle": "white"
   },

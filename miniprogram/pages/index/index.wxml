@@ -1,22 +1,28 @@
 <!-- homepage -->
 <block wx:if="{{currentTab == 0}}">
-	<view class="bg-white-yellow" style="width:100vw; height:100vh">
-		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
+	<view class="bg-white-yellow" style="width:100vw; height:100vh; position: fixed">
+		<view
+			style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh; height:17vh; margin-top: auto; margin-bottom: auto">
 			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
 				<image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png"
 					style="width:6rem; height:6rem; padding-bottom:0.8rem"></image>
 				<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image>
+				<view style="padding-bottom:50rpx;"><text class="text-lg ">
+						体验饥饿 珍惜粮食 拒绝浪费
+					</text></view>
+				<view style="width: 80vw; position: fixed; bottom: 25vh">
+					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal"
+						data-modal-name="intro">
+						活动介绍</button>
+					<button wx:if="{{!isUserInfoAuthorized && canIUse}}"
+						class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo"
+						bindgetuserinfo="getUserInfo">报名挑战</button>
+					<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
+						bindtap="switchTab" data-tab-index="1">报名挑战</button>
+					<button wx:else>请升级微信版本</button>
+				</view>
 			</view>
-			<view style="padding-bottom:50rpx"><text class="text-lg ">
-					体验饥饿，珍惜粮食，拒绝浪费
-				</text></view>
-			<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="showModal" data-modal-name="intro">
-				活动介绍</button>
-			<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-yellow margin-sm"
-				open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始挑战</button>
-			<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-sm"
-				bindtap="switchTab" data-tab-index="1">开始挑战</button>
-			<button wx:else>请升级微信版本</button>
+
 			<!-- <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="toRestaurant">进入饥饿餐厅</button> -->
 		</view>
 	</view>
@@ -31,15 +37,21 @@
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
 				<text>
 					<text>
-						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日*24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困受饥儿童筹款。
+						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困地区和发展中国家儿童送去关爱。
+						（2020年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
 
 						游戏规则：
 						1）时间进度和能量进度均达到满格后为挑战成功；
-						2）时间进度用来记录挑战者的饥饿时间，24小时为满格；如果撑不住了，点击退出可中途放弃挑战；
-						3）能量进度用来记录挑战者的能量值，24个能量为满格；
-						4）挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。
+						2）时间进度用来记录挑战者的饥饿时间，24小时为满格；如果撑不住了，点击退出可中途放弃挑战；10月16日零点后可开始挑战饥饿24小时。
+						3）能量进度用来记录挑战者的能量值，24个能量为满格；挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。
 
-						（*今年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+						温馨提示：
+						1.体验者年龄在18-60周岁，体验饥饿24小时“不进食”的网友必须是身体健康的成年人，有慢性病(如高血压、低血压、糖尿病以及低血糖的人建议不要参与)；
+						2.体验饥饿24小时“不进食”的网友当天必须保证充分的饮水，建议喝2-3升白开水；
+						3.体验饥饿24小时“不进食”的网友当天不能有剧烈的体力运动或辛苦的脑力劳动；
+						4.不建议长期体验饥饿“不进食”的活动；
+						5.请勿在体验活动前后暴饮暴食。
+
 					</text>
 
 				</text>
@@ -54,18 +66,21 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-xl bg-white-yellow">
-				<!-- <view class='inner txt'> -->
-				<image class="item-icon" mode="widthFix" src="{{inviterInfo.avatarUrl}}"></image>
-				<text>「{{inviterInfo.nickName}}」
-					邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘能量的铲子哦！</text>
-				<!-- </view> -->
-				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-yellow margin-lg"
+			<view class="padding-lg bg-white-yellow">
+				<view>
+					<image class="item-icon" mode="widthFix" src="{{inviterInfo.avatarUrl}}"></image>
+					<text style="vertical-align: middle">{{inviterInfo.nickName}}</text>
+				</view>
+				<view class="margin-sm">
+				<text> 
+					邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘抗饥饿能量的铲子哦！</text>
+				</view>
+				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" 
 					open-type="getUserInfo" bindgetuserinfo="toGetUserInfo">接受挑战</button>
-				<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-yellow margin-lg"
+				<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
 					bindtap="toAcceptChallenge">接受挑战</button>
 				<button wx:else>请升级微信版本</button>
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">残忍拒绝</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="hideModal">残忍拒绝</button>
 			</view>
 		</view>
 	</view>
@@ -131,9 +146,9 @@
 		</view>
 		<view class="flex align-center" style="position:fixed; top:41vw; bottom:17vw;">
 			<view wx:if="{{modalName == null}}" style="margin-top:auto; margin-bottom:auto;">
-				<canvas  style="width:100vw;height:90vw;" canvas-id="game"></canvas>
+				<canvas style="width:100vw;height:90vw" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
-					<button class="index-button cu-btn round bg-yellow margin-sm" style="margin-top:2px"
+					<button class="index-button cu-btn round bg-warm-yellow margin-sm" style="margin-top:2px"
 						bindtap="gameControl">{{gameStatus}}</button>
 				</view>
 			</view>
@@ -177,15 +192,15 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-xl bg-white-yellow">
+			<view class="padding-lg bg-white-yellow">
 				<text style="text-size:2rem" wx:if="{{collectSuccess}}">恭喜你！收获一个{{cropsData[cropCollected]['name']}},
-					能量值+{{cropsData[cropCollected]['val']}}~\n
+					抗饥饿能量值+{{cropsData[cropCollected]['val']}}~\n
 					{{cropsData[cropCollected]['intro']}}
 				</text>
-				<text style="text-size:2rem" wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割成功，继续努力吧~
+				<text style="text-size:2rem" wx:if="{{!collectSuccess}}">哎呀！很遗憾，你没有收割到抗饥饿能量，继续努力吧~
 				</text>
-				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share"
-					data-tab-index="1">邀请好友获取铲子</button>
+				<!-- <button class="index-button cu-btn round bg-warm-yellow margin-lg" open-type="share"
+					data-tab-index="1">邀请好友获取铲子</button> -->
 			</view>
 		</view>
 	</view>
@@ -201,7 +216,7 @@
 			<view class="padding-lg">
 				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战。你愿意把今天省下的餐费捐给还在忍受饥饿的儿童吗？
 				</text>
-				<text class="padding-lg" wx:if="{{!finalSuccess}}">差点完成饥饿24小时的你，有没有体会到饥饿的艰辛呢？对好友发起挑战，或者点击下方为饥饿的孩子们捐一餐吧~
+				<text class="padding-lg" wx:if="{{!finalSuccess}}">差点完成饥饿24小时的你，有没有体会到饥饿的艰辛呢？对好友发起挑战，或者点击下方为贫困地区和发展中国家儿童送去关爱吧~
 				</text>
 			</view>
 			<view>
@@ -209,18 +224,18 @@
 				<!-- <image wx:if="{{finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/success_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/success_poster.png"></image>
 	 <image wx:if="{{!finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/failure_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/failure_poster.png"></image> -->
 
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
 			</view>
-			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">捐一餐</button>
 		</view>
 	</view>
 	<view class="cu-modal {{modalName == 'exit' ? 'show' : ''}}">
 		<view class="cu-dialog">
-			<view class="padding-xl bg-white-yellow "><text class="padding-lg"
+			<view class="padding-lg bg-white-yellow "><text class="padding-lg"
 					style="font-size:1rem">24小时饿肚子真的很难，你还能坚持下去继续挑战吗？\n</text>
-				<!-- <button class="index-button cu-btn round bg-yellow margin-sm" open-type="share"></button>  -->
-				<button class="index-button cu-btn round bg-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button
-					class="index-button cu-btn round bg-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
+				<!-- <button class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share"></button>  -->
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="hideModal">再撑一会儿</button><button
+					class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="askForDonation">撑不住了</button>
 			</view>
 		</view>
 	</view>
@@ -232,11 +247,12 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-xl bg-white-yellow">
+			<view class="padding-lg bg-white-yellow">
 				<text>哎呀，铲子没有了！邀请好友或者捐一餐获得更多的铲子吧！
 				</text>
-				<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share" data-tab-index="1">邀请好友</button>
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-lg" open-type="share"
+					data-tab-index="1">邀请好友</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">捐一餐</button>
 			</view>
 		</view>
 	</view>
@@ -248,11 +264,11 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-xl bg-white-yellow">
+			<view class="padding-lg bg-white-yellow">
 				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为还在忍受饥饿的孩子捐一餐吗？
 				</text>
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">当然愿意</button>
-				<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="stopGame">忍心离去</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">当然愿意</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="stopGame">忍心离去</button>
 			</view>
 		</view>
 	</view>
@@ -267,12 +283,12 @@
 			<view class="padding-lg">
 			</view>
 
-			<image style="width:80vw; height:80vh" src="https://hunger24.cfpa.org.cn/images/invite_before.png"></image>
+			<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before.png"></image>
 
-			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
 
-			<button class="index-button cu-btn round bg-yellow margin-lg" open-type="share">分享获得铲子</button>
-			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">捐一餐获得铲子</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享获得铲子</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate" style="margin-bottom:50rpx">捐一餐获得铲子</button>
 		</view>
 
 	</view>
@@ -314,15 +330,15 @@
 </block>
 
 <!-- navigation bar -->
-<view class="navbar" style="padding:10rpx">
+<view class="navbar" style="width: 100vw; padding-bottom:25rpx;">
 	<view class="navbar-tab" bindtap="switchTab" data-tab-index="0">
 		<text class="cuIcon-home navbar-icon" style="color:orange;"></text>
 		<view style="color:orange">主页</view>
 	</view>
-	<view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
+	<!-- <view class="navbar-tab" bindtap="switchTab" data-tab-index="1">
 		<text class="cuIcon-cardboard navbar-icon" style="color:orange"></text>
 		<view style="color:orange">游戏</view>
-	</view>
+	</view> -->
 	<view class="navbar-tab" bindtap="toDonate" data-tab-index="2">
 		<text class="cuIcon-like navbar-icon" style="color:orange"></text>
 		<view style="color:orange">捐一餐</view>

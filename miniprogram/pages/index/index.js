@@ -135,7 +135,8 @@ Page({
     })
 
     // get the source of the user
-    const fromUser = options.from_user
+    const fromUser = "e656fa635f7dd452013d9a093878dc29"
+    // const fromUser = options.from_user
     console.log({
       fromUser
     })
@@ -213,7 +214,7 @@ Page({
       for (let j = 0; j < this.data.crops[i].length; j++) {
         let positionPoint = []
         for (let t = 0; t < 2; t++) {
-          positionPoint.push(Math.random() * 0.9 * screenWidth)
+          positionPoint.push(Math.random() * 0.7 * screenWidth)
         }
         positionLevel.push(positionPoint)
       }

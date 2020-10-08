@@ -5,14 +5,14 @@
 
 .navbar {
   display: grid;
-  grid-template-columns: repeat(4, 25%);
+  grid-template-columns: repeat(3, 33%);
   position: fixed;
   bottom: 0;
   padding-bottom: 2rem;
 }
 
 .navbar-tab {
-  width: 25vw;
+  width: 33vw;
   text-align: center;
 }
 
