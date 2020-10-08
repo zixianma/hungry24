@@ -68,17 +68,6 @@ Page({
       [3, 4, 5],
       [6, 7, 8, 9]
     ],
-    cropsChinese: [
-      ['土豆', '番薯', '木薯'],
-      ['大豆', '小麦', '稻米'],
-      ['玉米', '高粱', '鹰嘴豆', '苔麸']
-    ],
-
-    crops: [
-      ['potato', 'sweet_potato', 'cassava'],
-      ['soybean', 'wheat', 'rice'],
-      ['corn', 'sorghum', 'chickpea', 'teff']
-    ],
     currentLevel: 0,
     currentNumberOfCrop: 3,
     position: [],
@@ -116,12 +105,7 @@ Page({
       app.globalData.userInfo = userInfo
       this.setData({
           userInfo
-        }
-        // hideLoading after loading shovel and crops images
-        // , () => {
-        //   wx.hideLoading()
-        // }
-      )
+        })
     }
 
     // get user info authorization state
@@ -209,12 +193,12 @@ Page({
     // get random position
     const screenWidth = app.globalData.screenWidth
     let position = this.data.position
-    for (let i = 0; i < this.data.crops.length; i++) {
+    for (let i = 0; i < this.data.cropsID.length; i++) {
       let positionLevel = []
-      for (let j = 0; j < this.data.crops[i].length; j++) {
+      for (let j = 0; j < this.data.cropsID[i].length; j++) {
         let positionPoint = []
         for (let t = 0; t < 2; t++) {
-          positionPoint.push(Math.random() * 0.7 * screenWidth)
+          positionPoint.push(Math.random() * 0.7 * screenWidth + 0.05 * screenWidth)
         }
         positionLevel.push(positionPoint)
       }
@@ -372,12 +356,7 @@ Page({
       currentTab: 1,
       modalName: null
     })
-    // if (currentTab == 1) {
     this.startGame()
-    // } else {
-    //   clearInterval(this.data.lineMoveTimer)
-    //   clearInterval(this.data.progressBarTimer)
-    // }
   },
 
   toDonate() {
@@ -435,6 +414,7 @@ Page({
           fail: console.error
         })
       }
+
       // read level
       wx.getStorage({
         key: "crop",
@@ -626,7 +606,7 @@ Page({
     //Generating the position of crops
     for (let i = 0; i < numberOfCrops; i++) {
       if (this.data.usedCrop[currentLevel][i] == 0) {
-        cxt.drawImage(image[currentLevel + 1][i].path, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 75, 75)
+        cxt.drawImage(image[currentLevel + 1][i].path, this.data.position[currentLevel][i][0], this.data.position[currentLevel][i][1], 85, 85)
       }
     }
   },
@@ -634,10 +614,10 @@ Page({
   //update the plant we need to draw
   renewDrawPlant(crossPoint_x, crossPoint_y) {
     const screenWidth = app.globalData.screenWidth
-    let min_distance = screenWidth / 6 //the range of the shovel
+    let min_distance = screenWidth / 5 //the range of the shovel
     let min_distance_index = 5
 
-    for (let i = 0; i < this.data.crops[this.data.currentLevel].length; i++) {
+    for (let i = 0; i < this.data.cropsID[this.data.currentLevel].length; i++) {
       //detected counted
       if (this.data.usedCrop[this.data.currentLevel][i] == 1) {
         continue
@@ -657,7 +637,7 @@ Page({
     let collectSuccess = false
     let cropCollected = this.data.cropsID[this.data.currentLevel][min_distance_index]
     let gainedEnergy = 0
-    if (min_distance < screenWidth / 6) {
+    if (min_distance < screenWidth / 5) {
       let usedCrop = this.data.usedCrop
       usedCrop[this.data.currentLevel][min_distance_index] = 1
       let currentNumberOfCrop = this.data.currentNumberOfCrop
