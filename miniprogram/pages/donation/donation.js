@@ -13,7 +13,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**
@@ -113,19 +112,6 @@ Page({
               gameSetting
             })
             that.showCertificate()
-            
-            wx.cloud.callFunction({
-              name: 'addShovelForDonation',
-              data: {
-                value: 0
-              },
-              success: function (res) {
-                console.log({
-                  addShovelForDonation: res.result
-                })
-              },
-              fail: console.error
-            })
           },
           fail (res) {
             console.error('pay fail', err)
