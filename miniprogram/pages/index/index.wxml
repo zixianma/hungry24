@@ -10,15 +10,18 @@
 				<view style="padding-bottom:50rpx;"><text class="text-lg ">
 						体验饥饿 珍惜粮食 拒绝浪费
 					</text></view>
-				<view style="width: 80vw; position: fixed; bottom: 25vh">
+				<view style="width: 80vw; position: fixed; bottom: 20vh">
 					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal"
 						data-modal-name="intro">
 						活动介绍</button>
+					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal"
+						data-modal-name="signup">报名挑战</button>
 					<button wx:if="{{!isUserInfoAuthorized && canIUse}}"
 						class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo"
-						bindgetuserinfo="getUserInfo">报名挑战</button>
+						bindgetuserinfo="getUserInfo">进入游戏</button>
 					<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
-						bindtap="switchTab" data-tab-index="1">报名挑战</button>
+						bindtap="switchTab" data-tab-index="1">进入游戏</button>
+
 					<button wx:else>请升级微信版本</button>
 				</view>
 			</view>
@@ -35,29 +38,56 @@
 				</view>
 			</view>
 			<view class="padding-lg bg-white-yellow" style="text-align:left">
+				<text class="text-bold">挑战介绍：</text>
 				<text>
-					<text>
-						饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日24：00期间，挑战24小时不吃饭，体验饥饿，珍惜粮食，拒绝浪费；并邀请参与人为贫困地区和发展中国家儿童送去关爱。
-						（2020年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
+					饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日24：00期间，挑战24小时不吃饭，体验饥饿、珍惜粮食、拒绝浪费；并邀请参与人为贫困地区和发展中国家儿童送去关爱。（2020年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
 
-						游戏规则：
-						1）时间进度和能量进度均达到满格后为挑战成功；
-						2）时间进度用来记录挑战者的饥饿时间，24小时为满格；如果撑不住了，点击退出可中途放弃挑战；10月16日零点后可开始挑战饥饿24小时。
-						3）能量进度用来记录挑战者的能量值，24个能量为满格；挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。
+				</text>
+				<text class="text-bold">游戏规则：</text>
+				<text>
+					1.饥饿时间进度和抗饥饿能量均达到满格后为挑战成功；
+					2.饥饿时间进度用来记录挑战者的饥饿时间，24小时为满格。10月16日8：00 后点击“开始挑战”开启挑战计时；
+					3.抗饥饿能量进度用来记录挑战者的能量值，24个能量为满格；
+					4.挑战者通过挖农作物小游戏来积攒能量，每个挑战者有5个铲子，每邀请一个朋友或者捐一餐，可获得一个新的铲子。报名成功后可随时通过玩游戏开始积攒能量。
 
-						温馨提示：
-						1.体验者年龄在18-60周岁，体验饥饿24小时“不进食”的网友必须是身体健康的成年人，有慢性病(如高血压、低血压、糖尿病以及低血糖的人建议不要参与)；
-						2.体验饥饿24小时“不进食”的网友当天必须保证充分的饮水，建议喝2-3升白开水；
-						3.体验饥饿24小时“不进食”的网友当天不能有剧烈的体力运动或辛苦的脑力劳动；
-						4.不建议长期体验饥饿“不进食”的活动；
-						5.请勿在体验活动前后暴饮暴食。
-
-					</text>
+				</text>
+				<text style="font-size:0.75rem; color:rgb(131,131,131)">
+					温馨提示：
+					1.体验者年龄在18-60周岁，体验饥饿24小时“不进食”的网友必须是身体健康的成年人，有慢性病(如高血压、低血压、糖尿病以及低血糖的人建议不要参与)；
+					2.体验饥饿24小时“不进食”的网友当天必须保证充分的饮水，建议喝2-3升白开水；
+					3.体验饥饿24小时“不进食”的网友当天不能有剧烈的体力运动或辛苦的脑力劳动；
+					4.不建议长期体验饥饿“不进食”的活动；
+					5.请勿在体验活动前后暴饮暴食。
 
 				</text>
 			</view>
 		</view>
 	</view>
+
+	<view class="cu-modal {{modalName == 'signup'? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-lg bg-white-yellow">
+				<view class="margin-sm">
+					<text>
+						你报名参加饥饿24小时挑战成功啦！
+						现在就可以点击「进入游戏」开始积攒抗饥饿能量了~10月16日8:00 后点击「开始挑战」开启挑战计时。
+					</text>
+				</view>
+				<view class="margin-sm"> <text>这么有意义的活动当然要邀请朋友为我加油了～点击「上方按钮」，或者保存「下方海报」分享朋友圈吧！</text></view>
+				<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before.png"></image>
+
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
+				<button id="signup" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享给好友</button>
+			</view>
+		</view>
+	</view>
+
 	<view class="cu-modal {{modalName == 'invite'? 'show' : ''}}">
 		<view class="cu-dialog">
 			<view class="cu-bar justify-end bg-white-yellow">
@@ -72,10 +102,10 @@
 					<text style="vertical-align: middle">{{inviterInfo.nickName}}</text>
 				</view>
 				<view class="margin-sm">
-				<text> 
-					邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘抗饥饿能量的铲子哦！</text>
+					<text>
+						邀请你参加饥饿24小时挑战！接受邀请可以赠送{{inviterInfo.nickName}}一把挖掘抗饥饿能量的铲子哦！</text>
 				</view>
-				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" 
+				<button wx:if="{{!isUserInfoAuthorized && canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
 					open-type="getUserInfo" bindgetuserinfo="toGetUserInfo">接受挑战</button>
 				<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
 					bindtap="toAcceptChallenge">接受挑战</button>
@@ -120,7 +150,7 @@
 			</view>
 			<view class="width-90-inline horizontal-center" style="margin-top:0">
 				<text class="text-white" style="width:30vw; text-size:1rem">
-					时间进度：
+					饥饿时间：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
 					<view class="bg-green" style="width:{{remainingTimePercentage}}%;">{{remainingTimePercentage}}%</view>
@@ -128,7 +158,7 @@
 			</view>
 			<view class="width-90-inline horizontal-center">
 				<text class="text-white" style="width:30vw; text-size:1rem">
-					能量进度：
+					抗饥饿能量：
 				</text>
 				<view class="cu-progress round sm striped" style="margin-top:40rpx;">
 					<view class="bg-red" style="width:{{remainingEnergyPercentage}}%;">{{remainingEnergyPercentage}}%</view>
@@ -144,15 +174,19 @@
 				</view>
 			</view>
 		</view>
-		<view class="flex align-center" style="position:fixed; top:41vw; bottom:17vw;">
+		<view class="flex align-center" style="position:fixed; top:33vw; bottom:25vw;">
 			<view wx:if="{{modalName == null}}" style="margin-top:auto; margin-bottom:auto;">
 				<canvas style="width:100vw;height:90vw" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
-					<button class="index-button cu-btn round bg-warm-yellow margin-sm" style="margin-top:2px"
-						bindtap="gameControl">{{gameStatus}}</button>
+					<!-- <button class="index-button cu-btn round bg-warm-yellow margin-sm" style="margin-top:2px"
+						bindtap="gameControl">{{gameStatus}}</button> -->
 				</view>
+
 			</view>
 		</view>
+		<view wx:if="{{gameSetting.shovel > 0 && modalName == null}}"
+			style="width:100vw;position:fixed; bottom:20vw; text-align:center"><button
+				class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="gameControl">{{gameStatus}}</button></view>
 	</view>
 	<!-- modals -->
 
@@ -220,7 +254,7 @@
 				</text>
 			</view>
 			<view>
-				<image style="width:80vw; height:80vh" src="https://hunger24.cfpa.org.cn/images/share_poster.png"></image>
+				<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/share_poster.png"></image>
 				<!-- <image wx:if="{{finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/success_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/success_poster.png"></image>
 	 <image wx:if="{{!finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/failure_poster.png" data-image-url="https://hunger24.cfpa.org.cn/images/failure_poster.png"></image> -->
 
@@ -287,8 +321,9 @@
 
 			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
 
-			<button class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享获得铲子</button>
-			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate" style="margin-bottom:50rpx">捐一餐获得铲子</button>
+			<button id="shovel" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享获得铲子</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate"
+				style="margin-bottom:50rpx">捐一餐获得铲子</button>
 		</view>
 
 	</view>

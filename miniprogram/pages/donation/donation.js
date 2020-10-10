@@ -92,6 +92,7 @@ Page({
   toPay() {
     const amount = this.data.amount
     var that = this
+    if ((amount * 10) % 10 != 0 && amount > 0) {
     wx.cloud.callFunction({
       name: 'unifiedOrder',
       data: {
@@ -120,6 +121,11 @@ Page({
       },
       fail: console.error
     })
+  } else {
+    this.setData({
+      modalName: "invalid"
+    })
+  }
   },
 
   showCertificate(){

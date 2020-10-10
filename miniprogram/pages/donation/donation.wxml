@@ -4,14 +4,14 @@
     </web-view>
   </view> -->
 <view>
-  <image src="https://hunger24.cfpa.org.cn/images/新海报.jpg" style="width:100vw; height:62.685vh;"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/新海报.jpg" style="width:100vw; height:135.73vw;"></image>
   <view class="cu-bar justify-center bg-white">
     <view class="sub-title">
       <text class="text-xl text-bold warm-yellow">项目介绍</text>
       <text class="bg-warm-yellow" style="width:2rem"></text>
     </view>
   </view>
-  <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg" style="width:100vw; height:375.115vh"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg" style="width:100vw; height:872.27vw"></image>
   <view class="cu-bar tabbar border shop text-center">
     <view class="action">
       <button class="bg-red submit" bindtap="showModal" data-modal-name="pay" style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
@@ -30,8 +30,8 @@
           </view>
         </view>
         <view class="cu-bar text-lg bg-white-yellow" >
-          <view class="text-red"  bindtap="hideModal"><text class="text-bold" style="text-size:10rem; margin-left:25rpx" >取消</text></view>
-          <view class="text-yellow" bindtap="toPay" ><text class="text-bold" style="text-size:10rem; margin-right:25rpx">确认</text></view>
+          <view   bindtap="hideModal"><text class="text-bold" style="text-size:10rem; margin-left:25rpx; color: rgb(131,131,131)" >取消</text></view>
+          <view class="text-red" bindtap="toPay" ><text class="text-bold" style="text-size:10rem; margin-right:25rpx">确认</text></view>
         </view>
       </view>
     </view>
@@ -49,11 +49,23 @@
         <!-- show certificate -->
 				<!-- <text > 感谢你参与中国扶贫基金会发起的“饥饿24小时公益体验活动”，用行动助力贫困受饥儿童改善营养，抗击饥饿。恭喜你获得一把铲子，快去挖掘能量吧！
         </text> -->
-        <image style="width:80vw;" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
+        <image style="width:80vw; height:66.68vw" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
         <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveCertificateToAlbum">保存图片</button>
 			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">再捐一餐</button>
 			</view>
 		</view>
 	</view>
-
+  <view class="cu-modal {{modalName == 'invalid' ? 'show' : ''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar justify-end bg-white-yellow">
+				<view class="content"></view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
+				</view>
+			</view>
+			<view class="padding-xl bg-white-yellow">
+      输入金额无效，请再次输入。
+			</view>
+		</view>
+	</view>
 </view>

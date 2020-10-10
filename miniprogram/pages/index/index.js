@@ -104,8 +104,8 @@ Page({
       const userInfo = loginResult.userInfo
       app.globalData.userInfo = userInfo
       this.setData({
-          userInfo
-        })
+        userInfo
+      })
     }
 
     // get user info authorization state
@@ -251,11 +251,51 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (options) {
     const userId = this.data.userInfo._id
-    return {
-      path: '/pages/index/index?from_user=' + userId
-    }
+    // return {
+    //   path: '/pages/index/index?from_user=' + userId
+    // }
+    var that = this;
+    // 设置菜单中的转发按钮触发转发事件时的转发内容
+    var shareObj = {
+        title: "饥饿24小时", // 默认是小程序的名称(可以写slogan等)
+        path: '/pages/index/index?from_user=' + userId, // 默认是当前页面，必须是以‘/'开头的完整路径
+        imageUrl: '../../../placeholder.png',
+        success: function (res) {
+          // 转发成功之后的回调
+          if (res.errMsg == 'shareAppMessage:ok') {}
+        },
+        fail: function () {
+          // 转发失败之后的回调
+          if (res.errMsg == 'shareAppMessage:fail cancel') {
+            // 用户取消转发
+          } else if (res.errMsg == 'shareAppMessage:fail') {
+            // 转发失败，其中 detail message 为详细失败信息
+          }
+        },
+        // complete: fucntion(){
+        //   // 转发结束之后的回调（转发成不成功都会执行）
+        // }
+      }
+      // 来自页面内的按钮的转发
+      if (options.from == 'button') {
+        var targetID = options.target.id;
+        console.log(targetID); // shareBtn
+        // 此处可以修改 shareObj 中的内容
+        if (targetID == "shovel") {
+        shareObj.title = "分享铲子";
+        // shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
+        shareObj.imageUrl = 'https://hunger24.cfpa.org.cn/images/placeholder.png'
+        } else if (targetID == "signup") {
+
+        shareObj.title = "分享报名";
+        shareObj.imageUrl = "../../../placeholder.png"
+        }
+      }
+    // 返回shareObj
+    console.log(shareObj)
+    return shareObj;
   },
 
   getUserInfo() {
@@ -351,7 +391,7 @@ Page({
         addShareRecordResult
       })
     }
-    
+
     this.setData({
       currentTab: 1,
       modalName: null
@@ -783,7 +823,17 @@ Page({
   exitGame() {},
 
   saveImageToAlbum() {
-    const imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
+    let imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
+    const modalName = this.data.modalName
+    console.log(modalName)
+    if (modalName == "result") {
+      imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
+    } else if (modalName == "forward") {
+      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before.png"
+    } else if (modalName == "signup") {
+      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before.png"
+    }
+    console.log(imageURL)
     // console.log(imageURL)
     wx.downloadFile({
       url: imageURL,
