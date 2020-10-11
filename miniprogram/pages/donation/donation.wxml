@@ -4,7 +4,7 @@
     </web-view>
   </view> -->
 <view>
-  <image src="https://hunger24.cfpa.org.cn/images/新海报.jpg" style="width:100vw; height:135.73vw;"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/new_poster.jpg" style="width:100vw; height:135.73vw;"></image>
   <view class="cu-bar justify-center bg-white">
     <view class="sub-title">
       <text class="text-xl text-bold warm-yellow">项目介绍</text>

@@ -121,9 +121,6 @@ Page({
     // get the source of the user
     // const fromUser = "e656fa635f7dd452013d9a093878dc29"
     const fromUser = options.from_user
-    console.log({
-      fromUser
-    })
     if (fromUser) {
       const {
         result: inviterInfo
@@ -171,13 +168,16 @@ Page({
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/7.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/8.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/9.png'),
-    ]).then(([shovel, potato, sweet_potato, cassava, soybean, wheat, rice, corn, sorghum, chickpea, teff]) => {
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/signup_preview.png'),
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/signup_preview.png')
+    ]).then(([shovel, potato, sweet_potato, cassava, soybean, wheat, rice, corn, sorghum, chickpea, teff, signup_preview, shovel_preview]) => {
       that.setData({
         imageObject: [
           [shovel],
           [potato, sweet_potato, cassava],
           [soybean, wheat, rice],
-          [corn, sorghum, chickpea, teff]
+          [corn, sorghum, chickpea, teff],
+          [signup_preview, shovel_preview]
         ],
         isImageLoaded: true
       }, () => {
@@ -254,48 +254,28 @@ Page({
   onShareAppMessage: function (options) {
     const userId = this.data.userInfo._id
     // return {
-    //   path: '/pages/index/index?from_user=' + userId
+    //   path: '/pages/index/index?from_user=' + userId,
+    //   imageUrl: '../../../placeholder.png'
     // }
-    var that = this;
-    // 设置菜单中的转发按钮触发转发事件时的转发内容
     var shareObj = {
-        title: "饥饿24小时", // 默认是小程序的名称(可以写slogan等)
-        path: '/pages/index/index?from_user=' + userId, // 默认是当前页面，必须是以‘/'开头的完整路径
-        imageUrl: '../../../placeholder.png',
-        success: function (res) {
-          // 转发成功之后的回调
-          if (res.errMsg == 'shareAppMessage:ok') {}
-        },
-        fail: function () {
-          // 转发失败之后的回调
-          if (res.errMsg == 'shareAppMessage:fail cancel') {
-            // 用户取消转发
-          } else if (res.errMsg == 'shareAppMessage:fail') {
-            // 转发失败，其中 detail message 为详细失败信息
-          }
-        },
-        // complete: fucntion(){
-        //   // 转发结束之后的回调（转发成不成功都会执行）
-        // }
+      title: this.data.userInfo.nickName + '已报名参加饥饿24小时公益体验活动',
+      path: '/pages/index/index?from_user=' + userId,
+      imageUrl: this.data.imageObject[4][1].path
+    }
+    // 来自页面内的按钮的转发
+    if (options.from == 'button') {
+      var targetID = options.target.id
+      console.log(targetID)
+      // 此处可以修改 shareObj 中的内容
+      if (targetID == "shovel") {
+        shareObj.imageUrl = this.data.imageObject[4][1].path
+      } else if (targetID == "signup") {
+        shareObj.imageUrl = this.data.imageObject[4][0].path
       }
-      // 来自页面内的按钮的转发
-      if (options.from == 'button') {
-        var targetID = options.target.id;
-        console.log(targetID); // shareBtn
-        // 此处可以修改 shareObj 中的内容
-        if (targetID == "shovel") {
-        shareObj.title = "分享铲子";
-        // shareObj.path = '/pages/btnname/btnname?btn_name=' + eData.name;
-        shareObj.imageUrl = 'https://hunger24.cfpa.org.cn/images/placeholder.png'
-        } else if (targetID == "signup") {
-
-        shareObj.title = "分享报名";
-        shareObj.imageUrl = "../../../placeholder.png"
-        }
-      }
+    }
     // 返回shareObj
     console.log(shareObj)
-    return shareObj;
+    return shareObj
   },
 
   getUserInfo() {
@@ -823,11 +803,13 @@ Page({
   exitGame() {},
 
   saveImageToAlbum() {
-    let imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
+    let imageURL = "https://hunger24.cfpa.org.cn/images/success_poster.png"
     const modalName = this.data.modalName
     console.log(modalName)
     if (modalName == "result") {
-      imageURL = "https://hunger24.cfpa.org.cn/images/share_poster.png"
+      if (!this.data.finalSuccess) {
+        imageURL = "https://hunger24.cfpa.org.cn/images/failure_poster.png"
+      }
     } else if (modalName == "forward") {
       imageURL = "https://hunger24.cfpa.org.cn/images/invite_before.png"
     } else if (modalName == "signup") {
