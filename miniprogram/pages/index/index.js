@@ -708,7 +708,7 @@ Page({
     if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel < 2) {
       let currentLevel = this.data.currentLevel
       currentLevel++
-      let currentNumberOfCrop = this.data.usedCrop[this.data.currentLevel].length
+      let currentNumberOfCrop = this.data.usedCrop[currentLevel].length
       this.setData({
         currentLevel,
         currentNumberOfCrop
@@ -718,6 +718,31 @@ Page({
           currentLevel: currentLevel,
           currentNumberOfCrop: currentNumberOfCrop,
           usedCrop: this.data.usedCrop
+        },
+        key: 'crop',
+      })
+    }
+
+    // end of three levels
+    if (this.data.currentNumberOfCrop == 0 && this.data.currentLevel == 2) {
+      this.setData({
+        currentLevel: 0,
+        currentNumberOfCrop: 3,
+        usedCrop: [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0, 0]
+        ]
+      })
+      wx.setStorage({
+        data: {
+          currentLevel: 0,
+          currentNumberOfCrop: 3,
+          usedCrop: [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0, 0]
+          ]
         },
         key: 'crop',
       })
