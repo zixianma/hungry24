@@ -23,7 +23,7 @@
           <view class="flex-sub">
             <view class="solid-bottom text-xl padding">
               <view class="cu-form-group margin-top">
-                <input placeholder="请输入您想捐赠的金额（大于1元）" bindinput="onInput"></input>
+                <input placeholder="请输入您想捐赠的金额（≥1元）" bindinput="onInput"></input>
               </view>
             </view>
             <!-- <view class="padding" style="text-align:left;">*一日餐费约为4元</view> -->
