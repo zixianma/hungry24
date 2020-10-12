@@ -7,7 +7,8 @@ Page({
    */
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isUserInfoAuthorized: false
+    isUserInfoAuthorized: false,
+    isTimeAfter202010160000: false
   },
 
   /**
@@ -15,6 +16,13 @@ Page({
    */
   async onLoad(options) {
     var that = this
+
+    const now = Date.parse(new Date())
+    if (now > 1602777600000) {
+      this.setData({
+        isTimeAfter202010160000: true
+      })
+    }
 
     wx.showLoading({
       title: '加载中',

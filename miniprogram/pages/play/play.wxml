@@ -35,9 +35,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="flex align-center" style="position:fixed; top:33vw; bottom:25vw;">
+		<view class="flex align-center" style="position:fixed; top:33vw; bottom:20vw;">
 			<view style="margin-top:auto; margin-bottom:auto;">
-				<canvas style="width:100vw;height:90vw" canvas-id="game"></canvas>
+				<canvas wx:if="{{!modalName}}" style="width:100vw;height:90vw" canvas-id="game"></canvas>
 				<view wx:if="{{gameSetting.shovel > 0}}" style="text-align:center">
 					<!-- <button class="index-button cu-btn round bg-warm-yellow margin-sm" style="margin-top:2px"
 						bindtap="gameControl">{{gameStatus}}</button> -->

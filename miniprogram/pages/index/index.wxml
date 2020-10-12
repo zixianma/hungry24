@@ -28,10 +28,10 @@
 				</block>
 				<block wx:else>
 					<block wx:if="{{isUserInfoAuthorized}}">
-						<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toPlay">进入游戏</button>
+						<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toPlay">{{isTimeAfter202010160000 ? '开始挑战' : '进入游戏'}}</button>
 					</block>
 					<block wx:else>
-						<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="toGetUserInfoAndPlay">进入游戏</button>
+						<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="toGetUserInfoAndPlay">{{isTimeAfter202010160000 ? '开始挑战' : '进入游戏'}}</button>
 						<button wx:else>请升级微信版本</button>
 					</block>
 				</block>
@@ -69,7 +69,8 @@
 		</view>
 		<view class="padding-lg bg-white-yellow" style="height:80vh;overflow-y:scroll;">
 			<view class="margin-sm">
-				<text>你报名参加饥饿24小时挑战成功啦！\n 现在就可以点击「进入游戏」开始积攒抗饥饿能量了~10月16日08:00 后点击「开始挑战」开启挑战计时。</text>
+				<text>你参加饥饿24小时挑战成功啦！\n 现在就可以点击首页“进入游戏”积攒抗饥饿能量了~\n </text>
+				<text class="text-bold">10月16日08：00后，点击首页“开始挑战”方开启饥饿计时。\n 注意：16号后08：00后，记得去首页找“开始挑战”按钮点击哦~\n</text>
 			</view>
 			<view class="margin-sm">
 				<text>这么有意义的活动当然要邀请朋友为我加油了～点击下方按钮「分享给好友」或者「保存海报」分享朋友圈吧！</text>
