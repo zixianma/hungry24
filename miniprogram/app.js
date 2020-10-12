@@ -7,6 +7,7 @@ App({
       success: function(res) {
         that.globalData.screenHeight = res.screenHeight
         that.globalData.screenWidth = res.screenWidth
+        that.globalData.platform = res.platform
       },
     })
 
