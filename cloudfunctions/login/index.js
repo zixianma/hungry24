@@ -21,11 +21,11 @@ exports.main = async (event, context) => {
     openId
   }).get()
   if (openIdResult.length > 0) {
-    operationResult.code = 1
+    operationResult.code = 0
     operationResult.status = "exists"
     operationResult.userInfo = openIdResult[0]
   } else {
-    operationResult.code = 0
+    operationResult.code = 1
     operationResult.status = "created"
     operationResult.userInfo = {
       openId
