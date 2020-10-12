@@ -13,39 +13,50 @@ exports.main = async (event, context) => {
   // cloud db
   const db = cloud.database()
   // function body
-  const inviter = fromUser
-  const invitee = openId
+  const inviterUserId = fromUser
+  const inviteeOpenId = openId
   operationResult = {
-    inviter,
-    invitee
+    inviterUserId,
+    inviteeOpenId
   }
   // check if invite record already existed
   const {
     data: shareResult
   } = await db.collection('share').where({
-    inviter,
-    invitee
+    inviterUserId,
+    inviteeOpenId
   }).get()
   if (shareResult.length == 0) {
+    // add share record
     operationResult.dbStatus1 = await db.collection('share').add({
       data: {
-        inviter,
-        invitee
+        inviterUserId,
+        inviteeOpenId
       },
       success: function (res) {
         console.log(res)
       }
     })
-    operationResult.dbStatus2 = await db.collection('shovel').add({
-      data: {
-        openId,
-        number: 1,
-        reason: "invite"
-      },
-      success: function (res) {
-        console.log(res)
-      }
-    })
+    // find inviter openId
+    const {
+      data: openIdResult
+    } = await db.collection('user').where({
+      _id: fromUser
+    }).get()
+    if (openIdResult.length > 0) {
+      const inviterOpenId = openIdResult[0].openId
+      // add shovel for inviter
+      operationResult.dbStatus2 = await db.collection('shovel').add({
+        data: {
+          openId: inviterOpenId,
+          number: 1,
+          reason: "invite"
+        },
+        success: function (res) {
+          console.log(res)
+        }
+      })
+    }
   }
   return operationResult
 }
