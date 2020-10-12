@@ -84,9 +84,6 @@ Page({
       imageObject: app.globalData.imageObject,
       position: app.globalData.cropPosition
     })
-    this.generateCropPosition().then(() => {
-      this.startGame()
-    })
   },
 
   /**
@@ -117,6 +114,10 @@ Page({
     })
     this.setData({
       gameSetting
+    })
+
+    this.generateCropPosition().then(() => {
+      this.startGame()
     })
   },
 
@@ -558,7 +559,7 @@ Page({
     })
   },
 
-  stopGame() {
+  terminateChallenge() {
     clearInterval(this.data.lineMoveTimer)
     clearInterval(this.data.progressBarTimer)
     this.setData({
