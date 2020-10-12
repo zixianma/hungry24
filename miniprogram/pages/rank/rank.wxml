@@ -1,7 +1,7 @@
 <!--miniprogram/pages/rank/rank.wxml-->
-<view class="bg-white-yellow" style="width:100vw;">
+<view class="bg-white-yellow" style="width:100vw;height:1000vh">
 <view class="item-box" >
-  <image style="width:100vw;height:29vh" src="https://hunger24.cfpa.org.cn/images/rank_logo.png"></image>
+  <image style="width:100vw;height:55.5vw" src="https://hunger24.cfpa.org.cn/images/rank_logo.png"></image>
 <!-- <view  class="text-xl round bg-warm-yellow padding-sm" style="width:50vw; margin-left:auto; margin-right:auto; margin-top:30rpx;margin-bottom:30rpx;text-align:center; ">
   
 </view>	 -->

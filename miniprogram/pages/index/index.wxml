@@ -4,9 +4,10 @@
 		<view
 			style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh; height:17vh; margin-top: auto; margin-bottom: auto">
 			<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto; padding-top:8vh">
-				<image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png"
+				<!-- <image src="https://hunger24.cfpa.org.cn/images/cfpa_logo.png"
 					style="width:6rem; height:6rem; padding-bottom:0.8rem"></image>
-				<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image>
+				<image src="https://hunger24.cfpa.org.cn/images/logo.png" style="width:7rem; height:7rem"></image> -->
+				<image src="https://hunger24.cfpa.org.cn/images/index_logo.png" style="width:60vw; height:24.82vw"></image>
 				<view style="padding-bottom:50rpx;"><text class="text-lg ">
 						体验饥饿 珍惜粮食 拒绝浪费
 					</text></view>
@@ -14,8 +15,13 @@
 					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal"
 						data-modal-name="intro">
 						活动介绍</button>
-					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal"
-						data-modal-name="signup">报名挑战</button>
+						<button wx:if="{{!isUserInfoAuthorized && canIUse}}"
+						class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo"
+						bindgetuserinfo="getUserInfo">报名挑战</button>
+					<button wx:elif="{{isUserInfoAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm"
+						bindtap="showModal" data-modal-name="signup">报名挑战</button>
+						<!-- <button class="index-button cu-btn round bg-warm-yellow margin-sm"
+						bindtap="showModal" data-modal-name="signup">报名挑战</button> -->
 					<button wx:if="{{!isUserInfoAuthorized && canIUse}}"
 						class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo"
 						bindgetuserinfo="getUserInfo">进入游戏</button>
@@ -37,7 +43,7 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-lg bg-white-yellow" style="text-align:left">
+			<view class="padding-lg bg-white-yellow" style="text-align:left;height:80vh;overflow-y:scroll;">
 				<text class="text-bold">挑战介绍：</text>
 				<text>
 					饥饿24公益体验活动由中国扶贫基金会发起，倡导18-60周岁有条件的人在10月16日8：00—10月17日24：00期间，挑战24小时不吃饭，体验饥饿、珍惜粮食、拒绝浪费；并邀请参与人为贫困地区和发展中国家儿童送去关爱。（2020年10月16日是联合国确定的第40个世界粮食日，10月17日是中国第7个扶贫日）
@@ -72,17 +78,18 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-lg bg-white-yellow">
+			<view class="padding-lg bg-white-yellow" style="height:80vh;overflow-y:scroll;">
 				<view class="margin-sm">
 					<text>
 						你报名参加饥饿24小时挑战成功啦！
 						现在就可以点击「进入游戏」开始积攒抗饥饿能量了~10月16日8:00 后点击「开始挑战」开启挑战计时。
 					</text>
 				</view>
-				<view class="margin-sm"> <text>这么有意义的活动当然要邀请朋友为我加油了～点击「上方按钮」，或者保存「下方海报」分享朋友圈吧！</text></view>
-				<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before.png"></image>
+				<view class="margin-sm"> <text>这么有意义的活动当然要邀请朋友为我加油了～点击下方按钮「分享给好友」或者「保存海报」分享朋友圈吧！</text></view>
+				<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before_poster.png">
+				</image>
 
-				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存海报</button>
 				<button id="signup" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享给好友</button>
 			</view>
 		</view>
@@ -199,7 +206,7 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-lg bg-white-yellow" style="text-align:left">
+			<view class="padding-lg bg-white-yellow" style="text-align:left;">
 				<!-- <text>
 					饥饿24小时挑战已经开始...\n
 					1. 点击“在这儿挖”开始收割作物吧！\n
@@ -246,23 +253,27 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			
+
 			<!-- <view><canvas canvas-id="shareResult" style="width:600px;height:900px"> </canvas></view> -->
-			<view class="padding-lg">
-				<text wx:if="{{finalSuccess}}">恭喜你！在24小时过去之后还有剩余能量，完成了饥饿24的挑战。你愿意把今天省下的餐费捐给贫困地区和发展中国家的饥饿儿童吗？
+			<view class="padding-lg" style="height:80vh;overflow-y:scroll;">
+				<text wx:if="{{finalSuccess}}">祝贺你！成功完成了饥饿24小时挑战，有没有体会到忍受饥饿的艰辛呢？将你的体验分享给更多朋友或点击「捐一餐」为贫困地区和发展中国家受饥儿童送去关爱吧～
 				</text>
-				<text class="padding-lg" wx:if="{{!finalSuccess}}">差点完成饥饿24小时的你，有没有体会到饥饿的艰辛呢？对好友发起挑战，或者点击下方为贫困地区和发展中国家儿童送去关爱吧~
+				<text class="padding-lg"
+					wx:if="{{!finalSuccess}}">你差点就完成饥饿24小时挑战了，有没有体会到忍受饥饿的艰辛呢？邀请好友也来参与体验，或者点击「捐一餐」为贫困地区和发展中国家儿童送去关爱吧～
 				</text>
-			</view>
+		
 			<view>
 				<!-- <image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/share_poster.png"></image> -->
-				<image wx:if="{{finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/success_poster.png" style="width:80vw; height:173.2vw"></image>
-	 <image wx:if="{{!finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/failure_poster.png" style="width:80vw; height:173.2vw"></image>
+				<image wx:if="{{finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/res_success_poster.png"
+					style="width:80vw; height:173.2vw"></image>
+				<image wx:if="{{!finalSuccess}}" src="https://hunger24.cfpa.org.cn/images/res_failure_poster.png"
+					style="width:80vw; height:173.2vw"></image>
 
-				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="saveImageToAlbum">保存图片</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
 			</view>
-			<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">捐一餐</button>
+			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate">捐一餐</button>
 		</view>
+	</view>
 	</view>
 	<view class="cu-modal {{modalName == 'exit' ? 'show' : ''}}">
 		<view class="cu-dialog">
@@ -282,12 +293,12 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-lg bg-white-yellow">
+			<view class="padding-lg bg-white-yellow" >
 				<text>哎呀，铲子没有了！邀请好友或者捐一餐获得更多的铲子吧！
 				</text>
-				<button class="index-button cu-btn round bg-warm-yellow margin-lg" open-type="share"
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" id="shovel" open-type="share"
 					data-tab-index="1">邀请好友</button>
-				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">捐一餐</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate">捐一餐</button>
 			</view>
 		</view>
 	</view>
@@ -302,8 +313,8 @@
 			<view class="padding-lg bg-white-yellow">
 				<text>24小时饥饿真的很难，难以想象饥饿的孩子们是怎么撑下来的，你愿意为还在忍受饥饿的孩子捐一餐吗？
 				</text>
-				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="toDonate">当然愿意</button>
-				<button class="index-button cu-btn round bg-warm-yellow margin-lg" bindtap="stopGame">忍心离去</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate">当然愿意</button>
+				<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="stopGame">忍心离去</button>
 			</view>
 		</view>
 	</view>
@@ -315,16 +326,18 @@
 					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
-			<view class="padding-lg">
-			</view>
+			<view class="padding-lg" style="height:80vh;overflow-y:scroll;">
+	
 
-			<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before.png"></image>
+			<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before_poster.png">
+			</image>
 
 			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存图片</button>
 
 			<button id="shovel" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享获得铲子</button>
 			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toDonate"
 				style="margin-bottom:50rpx">捐一餐获得铲子</button>
+			</view>
 		</view>
 
 	</view>

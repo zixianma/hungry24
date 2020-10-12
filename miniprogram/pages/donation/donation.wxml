@@ -11,7 +11,7 @@
       <text class="bg-warm-yellow" style="width:2rem"></text>
     </view>
   </view>
-  <image src="https://hunger24.cfpa.org.cn/images/donation_intro.jpeg" style="width:100vw; height:872.27vw"></image>
+  <image src="https://hunger24.cfpa.org.cn/images/long_program_intro.jpeg" style="width:100vw; height:745.82vw"></image>
   <view class="cu-bar tabbar border shop text-center">
     <view class="action">
       <button class="bg-red submit" bindtap="showModal" data-modal-name="pay" style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
@@ -19,11 +19,11 @@
     <view class="cu-modal bottom-modal {{modalName == 'pay' ? 'show' : ''}}">
       <view class="cu-dialog">
         <view class="padding-xl" style="text-align: left">
-          请输入您想捐赠的金额：
+          为孩子们捐献一份爱心：
           <view class="flex-sub">
             <view class="solid-bottom text-xl padding">
               <view class="cu-form-group margin-top">
-                <input placeholder="请填写1以上的整数" bindinput="onInput"></input>
+                <input placeholder="请输入您想捐赠的金额（大于1元）" bindinput="onInput"></input>
               </view>
             </view>
             <!-- <view class="padding" style="text-align:left;">*一日餐费约为4元</view> -->
@@ -51,7 +51,7 @@
         </text> -->
         <image style="width:80vw; height:66.68vw" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
         <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveCertificateToAlbum">保存图片</button>
-			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="toDonate">再捐一餐</button>
+			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">再捐一餐</button>
 			</view>
 		</view>
 	</view>

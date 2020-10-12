@@ -14,27 +14,27 @@ Page({
     earlyTermination: false,
     cropsData: [{
         'name': '土豆',
-        'val': '1',
+        'val': '2',
         'intro': '土豆，别称马铃薯、地蛋、洋芋等，茄科茄属，一年生草本植物。马铃薯是中国五大主食之一，其营养价值高、适应力强、产量大，是全球重要的粮食作物。'
       },
       {
         'name': '番薯',
-        'val': '1',
+        'val': '2',
         'intro': '番薯，别称地瓜、红薯、红苕等。一年生草本植物，番薯是一种高产而适应性强的粮食作物，全世界的热带、亚热带地区广泛栽培，中国大多数地区普遍栽培。 '
       },
       {
         'name': '木薯',
-        'val': '1',
+        'val': '4',
         'intro': '木薯，直立灌木，块根圆柱状。原产巴西，现全世界热带地区广泛栽培。中国福建、台湾、广东、海南、广西、贵州及云南等省区有栽培。非洲的木薯产量占全世界60%，木薯在非洲的地位相当于我国的小麦、稻米,它是非洲人民的主食之一。'
       },
       {
         'name': '小麦',
-        'val': '2',
+        'val': '3',
         'intro': '小麦是小麦系植物的统称，是一种在世界各地广泛种植的禾木科植物，人类的主食之一，小麦是三大谷物之。中国是世界最早种植小麦的国家之一。'
       },
       {
         'name': '稻米',
-        'val': '2',
+        'val': '3',
         'intro': '稻米也叫稻或水稻，脱壳的粮食是大米，是我国的主要粮食作物之一。稻米不仅是食粮，同时还可以作为酿酒、制造饴糖的原料。全世界有一半的人口食用它，因能维持较多人口的生活，联合国规定2004年为"国际稻米"年。'
       },
       {
@@ -64,9 +64,9 @@ Page({
       }
     ],
     cropsID: [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8, 9]
+      [2, 8, 9],
+      [4, 5, 6, 7],
+      [0, 1, 3]
     ],
     currentLevel: 0,
     currentNumberOfCrop: 3,
@@ -101,7 +101,13 @@ Page({
       loginResult
     })
     if (loginResult) {
-      const userInfo = loginResult.userInfo
+      let userInfo = null
+      if (loginResult.code == 0) {
+        userInfo = loginResult.userInfo
+      } else if (loginResult.code == 1) {
+        userInfo = loginResult.userInfo
+        userInfo._id = loginResult.dbStatus._id
+      }
       app.globalData.userInfo = userInfo
       this.setData({
         userInfo
@@ -134,26 +140,14 @@ Page({
         inviterInfo
       })
       if (inviterInfo) {
-        this.setData({
-          modalName: "invite",
-          inviterInfo
-        })
+        if (options.scenario == "shovel") {
+          this.setData({
+            modalName: "invite",
+            inviterInfo
+          })
+        }
       }
     }
-
-    // get game setting
-    const {
-      result: gameSetting
-    } = await wx.cloud.callFunction({
-      name: 'getGameSetting',
-      data: {}
-    })
-    console.log({
-      gameSetting
-    })
-    this.setData({
-      gameSetting
-    })
 
     //Load all image
     await Promise.all([
@@ -169,14 +163,14 @@ Page({
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/8.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/crop/9.png'),
       that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/signup_preview.png'),
-      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/signup_preview.png')
+      that.promiseGetImageInfo('https://hunger24.cfpa.org.cn/images/shovel_preview.png')
     ]).then(([shovel, potato, sweet_potato, cassava, soybean, wheat, rice, corn, sorghum, chickpea, teff, signup_preview, shovel_preview]) => {
       that.setData({
         imageObject: [
           [shovel],
-          [potato, sweet_potato, cassava],
-          [soybean, wheat, rice],
-          [corn, sorghum, chickpea, teff],
+          [cassava, chickpea, teff],
+          [wheat, rice, corn, sorghum, ],
+          [soybean, potato, sweet_potato],
           [signup_preview, shovel_preview]
         ],
         isImageLoaded: true
@@ -213,10 +207,24 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  async onShow() {
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
+    })
+
+    // get game setting
+    const {
+      result: gameSetting
+    } = await wx.cloud.callFunction({
+      name: 'getGameSetting',
+      data: {}
+    })
+    console.log({
+      gameSetting
+    })
+    this.setData({
+      gameSetting
     })
   },
 
@@ -257,23 +265,22 @@ Page({
     //   path: '/pages/index/index?from_user=' + userId,
     //   imageUrl: '../../../placeholder.png'
     // }
+    const userNickname = this.data.userInfo.nickName ? this.data.userInfo.nickName : '我'
+    // console.log(userNickname)
     var shareObj = {
-      title: this.data.userInfo.nickName + '已报名参加饥饿24小时公益体验活动',
-      path: '/pages/index/index?from_user=' + userId,
-      imageUrl: this.data.imageObject[4][1].path
+      title: userNickname + '已报名参加饥饿24小时公益体验活动',
+      path: '/pages/index/index?from_user=' + userId + '&scenario=signup',
+      imageUrl: this.data.imageObject[4][0].path
     }
-    // 来自页面内的按钮的转发
     if (options.from == 'button') {
       var targetID = options.target.id
-      console.log(targetID)
-      // 此处可以修改 shareObj 中的内容
       if (targetID == "shovel") {
         shareObj.imageUrl = this.data.imageObject[4][1].path
+        shareObj.path = '/pages/index/index?from_user=' + userId + '&scenario=shovel'
       } else if (targetID == "signup") {
         shareObj.imageUrl = this.data.imageObject[4][0].path
       }
     }
-    // 返回shareObj
     console.log(shareObj)
     return shareObj
   },
@@ -485,7 +492,8 @@ Page({
         let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
         let now = Date.parse(new Date())
         // remaining time
-        let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+        // let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
+        let remainingTimePercentage = 0
         remainingTimePercentage = remainingTimePercentage <= 100 ? remainingTimePercentage : 100
 
         // remain energy
@@ -609,7 +617,7 @@ Page({
         })
         clearInterval(that.data.lineMoveTimer)
       }
-    }, 1)
+    }, 3)
     that.setData({
       lineMoveTimer
     })
@@ -828,17 +836,17 @@ Page({
   exitGame() {},
 
   saveImageToAlbum() {
-    let imageURL = "https://hunger24.cfpa.org.cn/images/success_poster.png"
+    let imageURL = "https://hunger24.cfpa.org.cn/images/res_success_poster.png"
     const modalName = this.data.modalName
     console.log(modalName)
     if (modalName == "result") {
       if (!this.data.finalSuccess) {
-        imageURL = "https://hunger24.cfpa.org.cn/images/failure_poster.png"
+        imageURL = "https://hunger24.cfpa.org.cn/images/res_failure_poster.png"
       }
     } else if (modalName == "forward") {
-      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before.png"
+      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before_poster.png"
     } else if (modalName == "signup") {
-      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before.png"
+      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before_poster.png"
     }
     console.log(imageURL)
     // console.log(imageURL)
