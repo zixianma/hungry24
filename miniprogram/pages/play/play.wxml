@@ -44,7 +44,7 @@
 				</view>
 			</view>
 		</view>
-		<view wx:if="{{gameSetting.shovel > 0 && modalName == null}}" style="width:100vw;position:fixed; bottom:20vw; text-align:center"><button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="gameControl" style="height:15vw;font-size:1.5rem;">{{gameStatus}}</button></view>
+		<view wx:if="{{gameSetting.shovel > 0 && modalName == null}}" style="width:100vw;position:fixed; bottom:12vw; text-align:center"><button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="gameControl" style="height:15vw;font-size:1.5rem;">{{gameStatus}}</button></view>
 	</view>
 	<!-- modals -->
 	<view class="cu-modal {{modalName == 'rule' ? 'show' : ''}}">

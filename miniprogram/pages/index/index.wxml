@@ -1,7 +1,7 @@
 <view class="bg-white-yellow" style="width:100vw; height:100vh; position: fixed">
 	<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;padding-top:8vh; height:17vh; margin-top: auto; margin-bottom: auto">
 		<view style="width:80vw;text-align:center;margin-left:auto;margin-right:auto;padding-top:8vh">
-			<image src="https://hunger24.cfpa.org.cn/images/index_logo.png" style="width:60vw;height:24.82vw"></image>
+			<image src="https://hunger24.cfpa.org.cn/images/index_logo.png" style="width:60vw;height:24.82vw; margin-bottom:30rpx"></image>
 			<view style="padding-bottom:50rpx;">
 				<text class="text-lg ">体验饥饿 珍惜粮食 拒绝浪费</text>
 			</view>
@@ -67,18 +67,21 @@
 				<text class="cuIcon-close text-red"></text>
 			</view>
 		</view>
-		<view class="padding-lg bg-white-yellow" style="height:80vh;overflow-y:scroll;">
+		<view class="padding-lg bg-white-yellow" style="text-align:left; height:80vh;overflow-y:scroll;">
 			<view class="margin-sm">
-				<text>你参加饥饿24小时挑战成功啦！\n 现在就可以点击首页“进入游戏”积攒抗饥饿能量了~\n </text>
-				<text class="text-bold">10月16日08：00后，点击首页“开始挑战”方开启饥饿计时。\n 注意：16号后08：00后，记得去首页找“开始挑战”按钮点击哦~\n</text>
+				<text>你报名参加饥饿24小时挑战成功啦！\n 现在就可以点击首页「进入游戏」积攒抗饥饿能量了~\n\n</text>
+				<text class="text-bold">10月16日08：00后，点击首页「开始挑战」方开启饥饿计时。\n 注意：16号后08：00后，记得去首页找「开始挑战」按钮点击哦~\n</text>
 			</view>
 			<view class="margin-sm">
 				<text>这么有意义的活动当然要邀请朋友为我加油了～点击下方按钮「分享给好友」或者「保存海报」分享朋友圈吧！</text>
 			</view>
 			<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before_poster.png" />
+		<view style="text-align: center">
 			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存海报</button>
 			<button id="signup" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享给好友</button>
 		</view>
+		</view>
+	
 	</view>
 </view>
 
