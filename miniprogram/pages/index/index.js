@@ -1,4 +1,6 @@
 const app = getApp()
+// note: timestamp of 202010160000 shoule be 1602860400000
+const timestampOf202010160000 = 1602860400000
 
 Page({
 
@@ -18,7 +20,7 @@ Page({
     var that = this
 
     const now = Date.parse(new Date())
-    if (now > 1602777600000) {
+    if (now > timestampOf202010160000) {
       this.setData({
         isTimeAfter202010160000: true
       })
@@ -28,10 +30,7 @@ Page({
       title: '加载中',
     })
 
-    // note: login is conducted in Promise.all at the end of this function
-
-    // get user info authorization state
-
+    // note: login, getGameSetting and getUserInfoAuthorizationStatus is conducted in Promise.all at the end of this function
 
     // get the source of the user
     // const fromUser = "e656fa635f7dd452013d9a093878dc29"
@@ -274,7 +273,18 @@ Page({
     })
   },
 
-  toPlay() {
+  async toPlay() {
+    const userInfo = this.data.userInfo
+    if (!userInfo.challengeStartedAt) {
+      this.startChallenge()
+    } else {
+      const challengeStartedAt = Date.parse(userInfo.challengeStartedAt)
+      const now = Date.parse(new Date())
+      if (challengeStartedAt < timestampOf202010160000 && now > timestampOf202010160000) {
+        this.startChallenge()
+      }
+    }
+
     wx.navigateTo({
       url: '../play/play',
     })
@@ -315,7 +325,6 @@ Page({
 
   async toAcceptChallenge() {
     const inviterInfo = this.data.inviterInfo
-    console.log("success!")
     if (inviterInfo) {
       const {
         result: addShareRecordResult
@@ -331,5 +340,20 @@ Page({
     }
 
     this.toPlay()
+  },
+
+  async startChallenge() {
+    let userInfo = this.data.userInfo
+    const {
+      result: startChallengeResult
+    } = await wx.cloud.callFunction({
+      name: 'startChallenge',
+      data: {}
+    })
+    console.log({
+      startChallengeResult
+    })
+    userInfo.challengeStartedAt = new Date()
+    app.globalData.userInfo = userInfo
   }
 })

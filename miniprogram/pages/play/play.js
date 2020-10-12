@@ -1,4 +1,6 @@
 const app = getApp()
+// note: timestamp of 202010160000 shoule be 1602860400000
+const timestampOf202010160000 = 1602860400000
 
 Page({
 
@@ -254,9 +256,9 @@ Page({
     if (userInfo.challengeStartedAt) {
       let progressBarTimer = setInterval(function () {
         let startTime = Date.parse(new Date(userInfo.challengeStartedAt))
-        startTime = startTime > 1602860400000 ? startTime : 1602860400000
+        startTime = startTime > timestampOf202010160000 ? startTime : timestampOf202010160000
         let now = Date.parse(new Date())
-        now = now > 1602860400000 ? now : 1602860400000
+        now = now > timestampOf202010160000 ? now : timestampOf202010160000
         // remaining time
         let remainingTimePercentage = ((now - startTime) / (3600 * 24 * 1000) * 100).toFixed(2)
         remainingTimePercentage = remainingTimePercentage <= 100 ? remainingTimePercentage : 100
