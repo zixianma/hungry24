@@ -291,6 +291,10 @@ Page({
   async toPlay() {
     const userInfo = this.data.userInfo
     if (!userInfo.challengeStartedAt) {
+      let gameSetting = app.globalData.gameSetting
+      gameSetting.shovel = 5
+      gameSetting.energy = 2
+      app.globalData.gameSetting = gameSetting
       await this.startChallenge()
     } else {
       const challengeStartedAt = Date.parse(userInfo.challengeStartedAt)
@@ -363,10 +367,6 @@ Page({
       let userInfo = this.data.userInfo
       userInfo.challengeStartedAt = new Date()
       app.globalData.userInfo = userInfo
-      let gameSetting = app.globalData.gameSetting
-      gameSetting.shovel = 5
-      gameSetting.energy = 2
-      app.globalData.gameSetting = gameSetting
       // update remote
       wx.cloud.callFunction({
         name: 'startChallenge',
