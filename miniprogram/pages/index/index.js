@@ -260,6 +260,15 @@ Page({
     })
   },
 
+  async toGetUserInfoAndShowSignupModal() {
+    const promiseGetUserInfo = this.getUserInfo()
+    promiseGetUserInfo.then(() => {
+      this.setData({
+        modalName: "signup"
+      })
+    })
+  },
+
   showModal(e) {
     const modalName = e.currentTarget.dataset.modalName
     this.setData({

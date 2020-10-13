@@ -17,7 +17,7 @@
 						<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="showModal" data-modal-name="signup">报名挑战</button>
 					</block>
 					<block wx:else>
-						<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="">报名挑战</button>
+						<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="toGetUserInfoAndShowSignupModal">报名挑战</button>
 						<button wx:else>请升级微信版本</button>
 					</block>
 				</block>
