@@ -47,10 +47,15 @@ exports.main = async (event, context) => {
   const outTradeNo = generateTradeNumber()
   const spbillCreateIp = "127.0.0.1"
   const subMchId = "1603050771"
-  const totalFee = event.totalFee * 100
+  let totalFee = parseFloat(event.totalFee)
   const envId = "cfpa-jwovu"
   const functionName = "paymentCallback"
   // function body
+  if (isNaN(totalFee)) {
+    console.log("invalid totalFee")
+  } else {
+    totalFee = Math.round(totalFee * 100)
+  }
   const order = {
     body,
     outTradeNo,

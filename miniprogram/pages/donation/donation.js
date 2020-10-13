@@ -12,8 +12,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -68,7 +67,7 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }, 
+  },
 
   showModal(e) {
     const modalName = e.currentTarget.dataset.modalName
@@ -90,50 +89,46 @@ Page({
   },
 
   toPay() {
-    const amount = this.data.amount
     var that = this
-    // (amount * 10) % 10 == 0
-    if (amount >= 1) {
-    wx.cloud.callFunction({
-      name: 'unifiedOrder',
-      data: {
-        totalFee: amount
-      },
-      success: (res) => {
-        const payment = res.result.payment
-        wx.requestPayment({
-          ...payment,
-          success (res) {
-            console.log('pay success', res)
-            //add shovel
-            let pages = getCurrentPages()
-            let gamePage = pages[pages.length - 2]
-            let gameSetting = gamePage.data.gameSetting
-            gameSetting.shovel++
-            gamePage.setData({
-              gameSetting
-            })
-            that.showCertificate()
-          },
-          fail (err) {
-            console.error('pay fail', err)
-          }
-        })
-      },
-      fail: console.error
-    })
-  } else {
-    this.setData({
-      modalName: "invalid"
-    })
-  }
+    const amount = parseFloat(this.data.amount)
+    if (isNaN(amount) || amount < 1) {
+      wx.showModal({
+        title: "输入无效",
+        content: "输入金额无效，请再次输入。",
+        showCancel: false
+      })
+    } else {
+      wx.cloud.callFunction({
+        name: 'unifiedOrder',
+        data: {
+          totalFee: amount
+        },
+        success: (res) => {
+          const payment = res.result.payment
+          wx.requestPayment({
+            ...payment,
+            success(res) {
+              console.log('pay success', res)
+              //add shovel
+              let gameSetting = app.globalData.gameSetting
+              gameSetting.shovel++
+              that.showCertificate()
+            },
+            fail(err) {
+              console.error('pay fail', err)
+            }
+          })
+        },
+        fail: console.error
+      })
+    }
   },
 
-  showCertificate(){
+  showCertificate() {
     this.setData({
       modalName: "certificate"
     })
-  }, 
+  },
 
   saveCertificateToAlbum() {
     const imageURL = "https://hunger24.cfpa.org.cn/images/certificate.png"

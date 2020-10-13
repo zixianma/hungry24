@@ -79,7 +79,7 @@ Page({
       const imageObject = [
         [shovel],
         [cassava, chickpea, teff],
-        [wheat, rice, corn, sorghum, ],
+        [wheat, rice, corn, sorghum],
         [soybean, potato, sweet_potato],
         [signup_preview, shovel_preview]
       ]
@@ -231,6 +231,7 @@ Page({
   },
 
   getUserInfo() {
+    var that = this
     return new Promise((resolve, reject) => {
       wx.getUserInfo({
         success: function (res) {
@@ -248,6 +249,9 @@ Page({
               })
             },
             fail: console.error
+          })
+          that.setData({
+            isUserInfoAuthorized: true
           })
           resolve(res)
         },
@@ -342,7 +346,7 @@ Page({
     })
   },
 
-  async toAcceptChallenge() {
+  async toAcceptChallengeAndPlay() {
     const inviterInfo = this.data.inviterInfo
     if (inviterInfo) {
       const {

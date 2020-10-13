@@ -1,8 +1,3 @@
-<!-- <view class="container">
-    <web-view
-      src="http://10000001.juanzeng.org.cn/Product/Product.html?product_id=10052&donation_type=0&openid=oubstuD5xqIe9wbVYVPmf2SKESjk&code=041rDl1004vMnK1DOy100rZyPF2rDl1f">
-    </web-view>
-  </view> -->
 <view>
   <image src="https://hunger24.cfpa.org.cn/images/new_poster.jpg" style="width:100vw; height:135.73vw;"></image>
   <view class="cu-bar justify-center bg-white">
@@ -14,7 +9,8 @@
   <image src="https://hunger24.cfpa.org.cn/images/long_program_intro.jpeg" style="width:100vw; height:745.82vw"></image>
   <view class="cu-bar tabbar border shop text-center">
     <view class="action">
-      <button class="bg-red submit" bindtap="showModal" data-modal-name="pay" style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
+      <button class="bg-red submit" bindtap="showModal" data-modal-name="pay"
+        style="width:100vw;margin-left:auto;margin-right:auto; position:fixed;bottom:0;">捐一餐</button>
     </view>
     <view class="cu-modal bottom-modal {{modalName == 'pay' ? 'show' : ''}}">
       <view class="cu-dialog">
@@ -26,46 +22,31 @@
                 <input placeholder="请输入您想捐赠的金额（≥1元）" bindinput="onInput"></input>
               </view>
             </view>
-            <!-- <view class="padding" style="text-align:left;">*一日餐费约为4元</view> -->
           </view>
         </view>
-        <view class="cu-bar text-lg bg-white-yellow" >
-          <view   bindtap="hideModal"><text class="text-bold" style="text-size:10rem; margin-left:25rpx; color: rgb(131,131,131)" >取消</text></view>
-          <view class="text-red" bindtap="toPay" ><text class="text-bold" style="text-size:10rem; margin-right:25rpx">确认</text></view>
+        <view class="cu-bar text-lg bg-white-yellow">
+          <view bindtap="hideModal"><text class="text-bold"
+              style="text-size:10rem; margin-left:25rpx; color: rgb(131,131,131)">取消</text></view>
+          <view class="text-red" bindtap="toPay"><text class="text-bold"
+              style="text-size:10rem; margin-right:25rpx">确认</text></view>
         </view>
       </view>
     </view>
   </view>
 
   <view class="cu-modal {{modalName == 'certificate' ? 'show' : ''}}">
-		<view class="cu-dialog">
-			<view class="cu-bar justify-end bg-white-yellow">
-				<view class="content"></view>
-				<view class="action" bindtap="hideModal">
-					<text class="cuIcon-close text-red"></text>
-				</view>
-			</view>
-			<view class="padding-xl bg-white-yellow">
-        <!-- show certificate -->
-				<!-- <text > 感谢你参与中国扶贫基金会发起的“饥饿24小时公益体验活动”，用行动助力贫困受饥儿童改善营养，抗击饥饿。恭喜你获得一把铲子，快去挖掘能量吧！
-        </text> -->
+    <view class="cu-dialog">
+      <view class="cu-bar justify-end bg-white-yellow">
+        <view class="content"></view>
+        <view class="action" bindtap="hideModal">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl bg-white-yellow">
         <image style="width:80vw; height:66.68vw" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
         <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="saveCertificateToAlbum">保存图片</button>
-			<button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">再捐一餐</button>
-			</view>
-		</view>
-	</view>
-  <view class="cu-modal {{modalName == 'invalid' ? 'show' : ''}}">
-		<view class="cu-dialog">
-			<view class="cu-bar justify-end bg-white-yellow">
-				<view class="content"></view>
-				<view class="action" bindtap="hideModal">
-					<text class="cuIcon-close text-red"></text>
-				</view>
-			</view>
-			<view class="padding-xl bg-white-yellow">
-      输入金额无效，请再次输入。
-			</view>
-		</view>
-	</view>
+        <button class="index-button cu-btn round bg-yellow margin-lg" bindtap="hideModal">再捐一餐</button>
+      </view>
+    </view>
+  </view>
 </view>

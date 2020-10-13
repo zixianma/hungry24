@@ -107,7 +107,7 @@
 			</block>
 			<block wx:else>
 				<block wx:if="{{isUserInfoAuthorized}}">
-					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toAcceptChallenge">接受挑战</button>
+					<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toAcceptChallengeAndPlay">接受挑战</button>
 				</block>
 				<block wx:else>
 					<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="toGetUserInfo">接受挑战</button>
