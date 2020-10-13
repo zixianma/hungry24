@@ -574,25 +574,20 @@ Page({
   saveImageToAlbum() {
     let imageURL = "https://hunger24.cfpa.org.cn/images/res_success_poster.png"
     const modalName = this.data.modalName
-    console.log(modalName)
     if (modalName == "result") {
       if (!this.data.finalSuccess) {
         imageURL = "https://hunger24.cfpa.org.cn/images/res_failure_poster.png"
       }
     } else if (modalName == "forward") {
       imageURL = "https://hunger24.cfpa.org.cn/images/invite_before_poster.png"
-    } else if (modalName == "signup") {
-      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before_poster.png"
     }
-    console.log(imageURL)
-    // console.log(imageURL)
     wx.downloadFile({
       url: imageURL,
       success: function (res) {
-        var benUrl = res.tempFilePath;
+        var tempFilePath = res.tempFilePath;
         //图片保存到本地相册
         wx.saveImageToPhotosAlbum({
-          filePath: benUrl,
+          filePath: tempFilePath,
           //授权成功，保存图片
           success: function (data) {
             wx.showToast({
@@ -606,7 +601,7 @@ Page({
             if (err.errMsg) { //重新授权弹框确认
               wx.showModal({
                 title: '提示',
-                content: '您好,请先授权，在保存此图片。',
+                content: '需要授权才能保存图片',
                 showCancel: false,
                 success(res) {
                   if (res.confirm) { //重新授权弹框用户点击了确定
@@ -626,8 +621,8 @@ Page({
                           })
                         } else { //用户未打开保存图片到相册的授权开关
                           wx.showModal({
-                            title: '温馨提示',
-                            content: '授权失败，请稍后重新获取',
+                            title: '提示',
+                            content: '授权失败，请授权后重试',
                             showCancel: false,
                           })
                         }
