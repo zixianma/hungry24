@@ -79,7 +79,7 @@ Page({
       const imageObject = [
         [shovel],
         [cassava, chickpea, teff],
-        [wheat, rice, corn, sorghum,],
+        [wheat, rice, corn, sorghum, ],
         [soybean, potato, sweet_potato],
         [signup_preview, shovel_preview]
       ]
@@ -155,7 +155,9 @@ Page({
         shareSetting.imageUrl = this.data.imageObject[4][0].path
       }
     }
-    console.log({ shareSetting })
+    console.log({
+      shareSetting
+    })
     return shareSetting
   },
 
@@ -165,7 +167,9 @@ Page({
         name: 'login',
         data: {},
         success: (res) => {
-          console.log({ login: res.result })
+          console.log({
+            login: res.result
+          })
           let userInfo = res.result.userInfo
           if (res.result.code == 1) {
             userInfo._id = res.result.dbStatus._id
@@ -190,7 +194,9 @@ Page({
         name: 'getGameSetting',
         data: {},
         success: (res) => {
-          console.log({ gameSetting: res.result })
+          console.log({
+            gameSetting: res.result
+          })
           app.globalData.gameSetting = res.result
           resolve(res.result)
         },
@@ -285,12 +291,12 @@ Page({
   async toPlay() {
     const userInfo = this.data.userInfo
     if (!userInfo.challengeStartedAt) {
-      this.startChallenge()
+      await this.startChallenge()
     } else {
       const challengeStartedAt = Date.parse(userInfo.challengeStartedAt)
       const now = Date.parse(new Date())
       if (challengeStartedAt < timestampOf202010160000 && now > timestampOf202010160000) {
-        this.startChallenge()
+        await this.startChallenge()
       }
     }
 
@@ -352,17 +358,30 @@ Page({
   },
 
   async startChallenge() {
-    let userInfo = this.data.userInfo
-    const {
-      result: startChallengeResult
-    } = await wx.cloud.callFunction({
-      name: 'startChallenge',
-      data: {}
+    return new Promise((resolve, reject) => {
+      // update local
+      let userInfo = this.data.userInfo
+      userInfo.challengeStartedAt = new Date()
+      app.globalData.userInfo = userInfo
+      let gameSetting = app.globalData.gameSetting
+      gameSetting.shovel = 5
+      gameSetting.energy = 2
+      app.globalData.gameSetting = gameSetting
+      // update remote
+      wx.cloud.callFunction({
+        name: 'startChallenge',
+        data: {},
+        success: (res) => {
+          console.log({
+            startChallenge: res.result
+          })
+          resolve()
+        },
+        fail: (err) => {
+          console.error(err)
+          reject(err)
+        }
+      })
     })
-    console.log({
-      startChallengeResult
-    })
-    userInfo.challengeStartedAt = new Date()
-    app.globalData.userInfo = userInfo
   }
 })
