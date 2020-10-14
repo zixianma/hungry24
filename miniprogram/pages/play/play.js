@@ -214,6 +214,16 @@ Page({
         })
       },
       fail: (err) => {
+        this.setData({
+          currentLevel: 0,
+          currentNumberOfCrop: 3,
+          usedCrop: [
+            [0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0]
+          ]
+        })
+        
         wx.setStorage({
           data: {
             currentLevel: 0,
