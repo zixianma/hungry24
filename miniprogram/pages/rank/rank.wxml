@@ -1,7 +1,7 @@
 <!--miniprogram/pages/rank/rank.wxml-->
 <view class="bg-white-yellow" style="width:100vw;">
   <view class="item-box">
-    <image style="width:100vw;height:57vw" src="https://hunger24.cfpa.org.cn/images/rank_logo_100.png"></image>
+    <image style="width:100vw;height:53.2vw" src="https://hunger24.cfpa.org.cn/images/rank_logo_100.png"></image>
     <!-- 所有项 -->
     <view class="items">
       <!-- 每一项 -->
