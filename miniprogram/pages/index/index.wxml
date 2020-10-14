@@ -79,7 +79,8 @@
 			</view>
 			<image style="width:80vw; height:173.2vw" src="https://hunger24.cfpa.org.cn/images/invite_before_poster.png" />
 		<view style="text-align: center">
-			<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum">保存海报</button>
+			<button wx:if="{{isWritePhotosAlbumAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="saveImageToAlbum" data-image-url="https://hunger24.cfpa.org.cn/images/invite_before_poster.png">保存图片</button>
+			<button wx:if="{{!isWritePhotosAlbumAuthorized}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="openSetting" bindopensetting="requestAuthorizationOfWritePhotosAlbum">保存图片</button>
 			<button id="signup" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="share">分享给好友</button>
 		</view>
 		</view>

@@ -44,7 +44,8 @@
       </view>
       <view class="padding-xl bg-white-yellow">
         <image style="width:80vw; height:66.68vw" src="https://hunger24.cfpa.org.cn/images/certificate.png"></image>
-        <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="saveCertificateToAlbum">保存图片</button>
+        <button wx:if="{{isWritePhotosAlbumAuthorized}}" class="index-button cu-btn round bg-yellow margin-sm" bindtap="saveImageToAlbum" data-image-url="https://hunger24.cfpa.org.cn/images/certificate.png">保存图片</button>
+        <button wx:if="{{!isWritePhotosAlbumAuthorized}}" class="index-button cu-btn round bg-yellow margin-sm" open-type="openSetting" bindopensetting="requestAuthorizationOfWritePhotosAlbum">保存图片</button>
         <button class="index-button cu-btn round bg-yellow margin-sm" bindtap="showModal" data-modal-name="pay">再捐一餐</button>
       </view>
     </view>

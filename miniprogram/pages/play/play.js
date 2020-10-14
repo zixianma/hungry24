@@ -8,6 +8,7 @@ Page({
    * Page initial data
    */
   data: {
+    isWritePhotosAlbumAuthorized: true,
     gameStatus: "挖!",
     remainingShovelNumber: 5,
     earlyTermination: false,
@@ -568,18 +569,11 @@ Page({
     })
   },
 
-  saveImageToAlbum() {
-    let imageURL = "https://hunger24.cfpa.org.cn/images/res_success_poster.png"
-    const modalName = this.data.modalName
-    if (modalName == "result") {
-      if (!this.data.finalSuccess) {
-        imageURL = "https://hunger24.cfpa.org.cn/images/res_failure_poster.png"
-      }
-    } else if (modalName == "forward") {
-      imageURL = "https://hunger24.cfpa.org.cn/images/invite_before_poster.png"
-    }
+  saveImageToAlbum(e) {
+    var that = this
+    const imageUrl = e.currentTarget.dataset.imageUrl
     wx.downloadFile({
-      url: imageURL,
+      url: imageUrl,
       success: function (res) {
         var tempFilePath = res.tempFilePath;
         //图片保存到本地相册
@@ -595,44 +589,39 @@ Page({
           },
           //授权失败
           fail: function (err) {
-            if (err.errMsg) { //重新授权弹框确认
-              wx.showModal({
-                title: '提示',
-                content: '需要授权才能保存图片',
-                showCancel: false,
-                success(res) {
-                  if (res.confirm) { //重新授权弹框用户点击了确定
-                    wx.openSetting({ //进入小程序授权设置页面
-                      success(settingdata) {
-                        console.log(settingdata)
-                        if (settingdata.authSetting['scope.writePhotosAlbum']) { //用户打开了保存图片授权开关
-                          wx.saveImageToPhotosAlbum({
-                            filePath: benUrl,
-                            success: function (data) {
-                              wx.showToast({
-                                title: '保存成功',
-                                icon: 'success',
-                                duration: 2000
-                              })
-                            },
-                          })
-                        } else { //用户未打开保存图片到相册的授权开关
-                          wx.showModal({
-                            title: '提示',
-                            content: '授权失败，请授权后重试',
-                            showCancel: false,
-                          })
-                        }
-                      }
-                    })
-                  }
-                }
-              })
-            }
+            console.error(err)
+            that.setData({
+              isWritePhotosAlbumAuthorized: false
+            })
+            wx.showModal({
+              title: '提示',
+              content: '保存图片需要您的授权哦',
+              showCancel: false
+            })
           }
         })
       }
     })
+  },
+
+  requestAuthorizationOfWritePhotosAlbum(e) {
+    console.log(e)
+    if (e.detail.authSetting['scope.writePhotosAlbum']) { //用户打开了保存图片授权开关
+      this.setData({
+        isWritePhotosAlbumAuthorized: true
+      })
+      wx.showModal({
+        title: '授权成功',
+        content: '再点一次「保存图片」即可保存',
+        showCancel: false,
+      })
+    } else { //用户未打开保存图片到相册的授权开关
+      wx.showModal({
+        title: '授权失败',
+        content: '需要您的授权才能保存图片哦',
+        showCancel: false,
+      })
+    }
   },
 
   generateCropPosition() {
