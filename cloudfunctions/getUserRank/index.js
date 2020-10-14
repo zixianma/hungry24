@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
     }).sort({
       sum: -1
     })
-    .limit(50)
+    .limit(100)
     .lookup({
       from: "user",
       localField: "_id",

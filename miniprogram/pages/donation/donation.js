@@ -153,7 +153,7 @@ Page({
             if (err.errMsg) { //重新授权弹框确认
               wx.showModal({
                 title: '提示',
-                content: '您好,请先授权，在保存此图片。',
+                content: '您好，请先授权，再保存此图片。',
                 showCancel: false,
                 success(res) {
                   if (res.confirm) { //重新授权弹框用户点击了确定
@@ -173,8 +173,8 @@ Page({
                           })
                         } else { //用户未打开保存图片到相册的授权开关
                           wx.showModal({
-                            title: '温馨提示',
-                            content: '授权失败，请稍后重新获取',
+                            title: '提示',
+                            content: '您好，请先授权，再保存此图片。',
                             showCancel: false,
                           })
                         }
