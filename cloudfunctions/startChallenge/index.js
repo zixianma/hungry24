@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-// note: timestamp of 202010160000 shoule be 1602860400000
-const timestampOf202010160000 = 1602860400000
+// note: timestamp of 202010160000 shoule be 1602777600000
+const timestampOf202010160000 = 1602777600000
 
 cloud.init()
 
