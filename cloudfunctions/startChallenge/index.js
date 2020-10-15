@@ -20,8 +20,7 @@ exports.main = async (event, context) => {
   const {
     data: openIdResult
   } = await db.collection('user').where({
-    openId,
-    challengeStartedAt: _.exists(false)
+    openId
   }).get()
   if (openIdResult.length > 0) {
     let userInfo = openIdResult[0]
