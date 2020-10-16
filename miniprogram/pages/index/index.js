@@ -1,6 +1,7 @@
 const app = getApp()
 // note: timestamp of 202010160000 shoule be 1602777600000
 const timestampOf202010160000 = 1602777600000
+const timestampOf202010160800 = 1602806400000
 
 Page({
 
@@ -11,7 +12,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isUserInfoAuthorized: false,
     isWritePhotosAlbumAuthorized: true,
-    isTimeAfter202010160000: false
+    isTimeAfter202010160800: false
   },
 
   /**
@@ -21,9 +22,9 @@ Page({
     var that = this
 
     const now = Date.parse(new Date())
-    if (now > timestampOf202010160000) {
+    if (now > timestampOf202010160800) {
       this.setData({
-        isTimeAfter202010160000: true
+        isTimeAfter202010160800: true
       })
     }
 
@@ -304,7 +305,7 @@ Page({
     } else {
       const challengeStartedAt = Date.parse(userInfo.challengeStartedAt)
       const now = Date.parse(new Date())
-      if (challengeStartedAt < timestampOf202010160000 && now > timestampOf202010160000) {
+      if (challengeStartedAt < timestampOf202010160800 && now > timestampOf202010160800) {
         await this.startChallenge()
       }
     }

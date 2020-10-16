@@ -28,7 +28,7 @@
 				</block>
 				<block wx:else>
 					<block wx:if="{{isUserInfoAuthorized}}">
-						<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toPlay">{{isTimeAfter202010160000 ? '开始挑战' : '进入游戏'}}</button>
+						<button class="index-button cu-btn round bg-warm-yellow margin-sm" bindtap="toPlay">{{isTimeAfter202010160800 ? '开始挑战' : '进入游戏'}}</button>
 					</block>
 					<block wx:else>
 						<button wx:if="{{canIUse}}" class="index-button cu-btn round bg-warm-yellow margin-sm" open-type="getUserInfo" bindgetuserinfo="toGetUserInfoAndPlay">{{isTimeAfter202010160000 ? '开始挑战' : '进入游戏'}}</button>
