@@ -20,15 +20,12 @@ exports.main = async (event, context) => {
   const db = cloud.database()
   const collection = db.collection('user')
   // function body
-  var operationResult = {
+  let operationResult = {
     openId,
     userInfo
   }
   operationResult.dbStatus = await collection.where({openId: openId}).update({
-    data: userInfo,
-    success: function(res) {
-      console.log(res.data)
-    }
+    data: userInfo
   })
   return operationResult
 }

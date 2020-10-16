@@ -25,19 +25,13 @@ exports.main = async (event, context) => {
   }).get()
   if (transactionResult.length == 0) {
     operationResult.dbStatus1 = await db.collection('transaction').add({
-      data,
-      success: function (res) {
-        console.log(res)
-      }
+      data
     })
     operationResult.dbStatus2 = await db.collection('shovel').add({
       data: {
         openId: subOpenid,
         number: 1,
         reason: "donate"
-      },
-      success: function (res) {
-        console.log(res)
       }
     })
   }

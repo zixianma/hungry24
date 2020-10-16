@@ -30,9 +30,6 @@ exports.main = async (event, context) => {
       }).update({
         data: {
           challengeStartedAt: new Date()
-        },
-        success: function (res) {
-          console.log(res)
         }
       })
       operationResult.dbStatus2 = await db.collection('energy').add({
@@ -40,9 +37,6 @@ exports.main = async (event, context) => {
           openId,
           value: 2,
           reason: "initialize"
-        },
-        success: function (res) {
-          console.log(res)
         }
       })
       operationResult.dbStatus3 = await db.collection('shovel').add({
@@ -50,9 +44,6 @@ exports.main = async (event, context) => {
           openId,
           number: 5,
           reason: "initialize"
-        },
-        success: function (res) {
-          console.log(res)
         }
       })
     } else {
@@ -64,9 +55,6 @@ exports.main = async (event, context) => {
         }).update({
           data: {
             challengeStartedAt: new Date()
-          },
-          success: function (res) {
-            console.log(res)
           }
         })
       }

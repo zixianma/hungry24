@@ -32,9 +32,6 @@ exports.main = async (event, context) => {
       data: {
         inviterUserId,
         inviteeOpenId
-      },
-      success: function (res) {
-        console.log(res)
       }
     })
     // find inviter openId
@@ -51,9 +48,6 @@ exports.main = async (event, context) => {
           openId: inviterOpenId,
           number: 1,
           reason: "invite"
-        },
-        success: function (res) {
-          console.log(res)
         }
       })
     }
